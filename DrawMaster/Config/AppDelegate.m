@@ -17,21 +17,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    _window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     //底部选项卡设置
-    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor grayColor],NSForegroundColorAttributeName,nil]forState:UIControlStateNormal];
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kTabColor,NSForegroundColorAttributeName,nil]forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kTabSelectColor,NSForegroundColorAttributeName,nil] forState:UIControlStateSelected];
     [[UITabBar appearance] setItemWidth:200];
 
-    DMSplashViewController * splash = [[DMSplashViewController alloc] init];
-    
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:splash];
-    self.navigationController.navigationBarHidden = YES;
-    
-    // Display the window
-    _window.rootViewController = _navigationController;
-    [_window makeKeyAndVisible];
     return YES;
 }
 

@@ -7,21 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B0E638A1D1BEA820086F87A /* DMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0E63891D1BEA820086F87A /* DMHomeViewController.m */; };
 		4B83F3BB1D1A889E00F065D2 /* DMSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3BA1D1A889E00F065D2 /* DMSplashViewController.m */; };
 		4B83F3C11D1A93CB00F065D2 /* DMCopyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C01D1A93CB00F065D2 /* DMCopyViewController.m */; };
 		4B83F3C41D1A93DE00F065D2 /* DMLearnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C31D1A93DE00F065D2 /* DMLearnViewController.m */; };
 		4B83F3C71D1A95ED00F065D2 /* DMMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C61D1A95ED00F065D2 /* DMMineViewController.m */; };
+		4B83F3CA1D1B743A00F065D2 /* DMCopySubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C91D1B743A00F065D2 /* DMCopySubViewController.m */; };
+		4B87449F1D1C06FE00ABB590 /* DMAPIManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B87449E1D1C06FE00ABB590 /* DMAPIManager.m */; };
+		4B8744A21D1C0FF700ABB590 /* DMBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744A11D1C0FF700ABB590 /* DMBaseModel.m */; };
+		4B8744A51D1C104200ABB590 /* DMCopyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744A41D1C104200ABB590 /* DMCopyModel.m */; };
+		4B8744A81D1C132E00ABB590 /* DMCopyViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744A71D1C132E00ABB590 /* DMCopyViewModel.m */; };
+		4B8744AB1D1CC09800ABB590 /* DMLearnViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744AA1D1CC09800ABB590 /* DMLearnViewModel.m */; };
+		4B8744AE1D1CC18900ABB590 /* DMLearnModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744AD1D1CC18900ABB590 /* DMLearnModel.m */; };
+		4B8744B11D1CC47F00ABB590 /* DMLearnSubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744B01D1CC47F00ABB590 /* DMLearnSubViewController.m */; };
+		4B8744BD1D1CDFF200ABB590 /* DMCopyCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744BB1D1CDFF200ABB590 /* DMCopyCollectionViewCell.m */; };
+		4B8744BE1D1CDFF200ABB590 /* DMCopyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B8744BC1D1CDFF200ABB590 /* DMCopyCollectionViewCell.xib */; };
+		4B8744C21D1D0D9E00ABB590 /* DMLearnCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744C01D1D0D9E00ABB590 /* DMLearnCollectionViewCell.m */; };
+		4B8744C31D1D0D9E00ABB590 /* DMLearnCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B8744C11D1D0D9E00ABB590 /* DMLearnCollectionViewCell.xib */; };
+		4B8744C71D1D2BFE00ABB590 /* DMMineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744C51D1D2BFE00ABB590 /* DMMineTableViewCell.m */; };
+		4B8744C81D1D2BFE00ABB590 /* DMMineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B8744C61D1D2BFE00ABB590 /* DMMineTableViewCell.xib */; };
 		4B97F0EA1D1A2492004F4686 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97F0DC1D1A2492004F4686 /* AppDelegate.m */; };
 		4B97F0EB1D1A2492004F4686 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0DD1D1A2492004F4686 /* Info.plist */; };
 		4B97F0EC1D1A2492004F4686 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97F0DE1D1A2492004F4686 /* main.m */; };
 		4B97F0ED1D1A2492004F4686 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0E11D1A2492004F4686 /* Assets.xcassets */; };
-		4B97F0EE1D1A2492004F4686 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97F0E51D1A2492004F4686 /* ViewController.m */; };
 		4B97F0EF1D1A2492004F4686 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0E71D1A2492004F4686 /* Main.storyboard */; };
 		7408595D0696E06C3634C98E /* libPods-DrawMaster.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78200341B9188AAA79C6E903 /* libPods-DrawMaster.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1C6646B2A4C24D13FF923331 /* Pods-DrawMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrawMaster.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DrawMaster/Pods-DrawMaster.debug.xcconfig"; sourceTree = "<group>"; };
+		4B0E63881D1BEA820086F87A /* DMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMHomeViewController.h; sourceTree = "<group>"; };
+		4B0E63891D1BEA820086F87A /* DMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMHomeViewController.m; sourceTree = "<group>"; };
 		4B61F9311D197C0000AFF155 /* DrawMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B83F3B91D1A889E00F065D2 /* DMSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSplashViewController.h; sourceTree = "<group>"; };
 		4B83F3BA1D1A889E00F065D2 /* DMSplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSplashViewController.m; sourceTree = "<group>"; };
@@ -34,13 +50,36 @@
 		4B83F3C31D1A93DE00F065D2 /* DMLearnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMLearnViewController.m; sourceTree = "<group>"; };
 		4B83F3C51D1A95ED00F065D2 /* DMMineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMMineViewController.h; sourceTree = "<group>"; };
 		4B83F3C61D1A95ED00F065D2 /* DMMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMMineViewController.m; sourceTree = "<group>"; };
+		4B83F3C81D1B743A00F065D2 /* DMCopySubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMCopySubViewController.h; sourceTree = "<group>"; };
+		4B83F3C91D1B743A00F065D2 /* DMCopySubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMCopySubViewController.m; sourceTree = "<group>"; };
+		4B87449D1D1C06FE00ABB590 /* DMAPIManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMAPIManager.h; sourceTree = "<group>"; };
+		4B87449E1D1C06FE00ABB590 /* DMAPIManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMAPIManager.m; sourceTree = "<group>"; };
+		4B8744A01D1C0FF700ABB590 /* DMBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMBaseModel.h; sourceTree = "<group>"; };
+		4B8744A11D1C0FF700ABB590 /* DMBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMBaseModel.m; sourceTree = "<group>"; };
+		4B8744A31D1C104200ABB590 /* DMCopyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMCopyModel.h; sourceTree = "<group>"; };
+		4B8744A41D1C104200ABB590 /* DMCopyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMCopyModel.m; sourceTree = "<group>"; };
+		4B8744A61D1C132E00ABB590 /* DMCopyViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMCopyViewModel.h; sourceTree = "<group>"; };
+		4B8744A71D1C132E00ABB590 /* DMCopyViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMCopyViewModel.m; sourceTree = "<group>"; };
+		4B8744A91D1CC09800ABB590 /* DMLearnViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMLearnViewModel.h; sourceTree = "<group>"; };
+		4B8744AA1D1CC09800ABB590 /* DMLearnViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMLearnViewModel.m; sourceTree = "<group>"; };
+		4B8744AC1D1CC18900ABB590 /* DMLearnModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMLearnModel.h; sourceTree = "<group>"; };
+		4B8744AD1D1CC18900ABB590 /* DMLearnModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMLearnModel.m; sourceTree = "<group>"; };
+		4B8744AF1D1CC47F00ABB590 /* DMLearnSubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMLearnSubViewController.h; sourceTree = "<group>"; };
+		4B8744B01D1CC47F00ABB590 /* DMLearnSubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMLearnSubViewController.m; sourceTree = "<group>"; };
+		4B8744BA1D1CDFF200ABB590 /* DMCopyCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMCopyCollectionViewCell.h; sourceTree = "<group>"; };
+		4B8744BB1D1CDFF200ABB590 /* DMCopyCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMCopyCollectionViewCell.m; sourceTree = "<group>"; };
+		4B8744BC1D1CDFF200ABB590 /* DMCopyCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMCopyCollectionViewCell.xib; sourceTree = "<group>"; };
+		4B8744BF1D1D0D9E00ABB590 /* DMLearnCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMLearnCollectionViewCell.h; sourceTree = "<group>"; };
+		4B8744C01D1D0D9E00ABB590 /* DMLearnCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMLearnCollectionViewCell.m; sourceTree = "<group>"; };
+		4B8744C11D1D0D9E00ABB590 /* DMLearnCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMLearnCollectionViewCell.xib; sourceTree = "<group>"; };
+		4B8744C41D1D2BFE00ABB590 /* DMMineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMMineTableViewCell.h; sourceTree = "<group>"; };
+		4B8744C51D1D2BFE00ABB590 /* DMMineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMMineTableViewCell.m; sourceTree = "<group>"; };
+		4B8744C61D1D2BFE00ABB590 /* DMMineTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMMineTableViewCell.xib; sourceTree = "<group>"; };
 		4B97F0DB1D1A2492004F4686 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4B97F0DC1D1A2492004F4686 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4B97F0DD1D1A2492004F4686 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4B97F0DE1D1A2492004F4686 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B97F0E11D1A2492004F4686 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4B97F0E41D1A2492004F4686 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		4B97F0E51D1A2492004F4686 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4B97F0E71D1A2492004F4686 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		78200341B9188AAA79C6E903 /* libPods-DrawMaster.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DrawMaster.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E46B36F69724706BF7B19A5B /* Pods-DrawMaster.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrawMaster.release.xcconfig"; path = "Pods/Target Support Files/Pods-DrawMaster/Pods-DrawMaster.release.xcconfig"; sourceTree = "<group>"; };
@@ -98,6 +137,8 @@
 				4B97F0DC1D1A2492004F4686 /* AppDelegate.m */,
 				4B97F0DD1D1A2492004F4686 /* Info.plist */,
 				4B97F0DE1D1A2492004F4686 /* main.m */,
+				4B87449D1D1C06FE00ABB590 /* DMAPIManager.h */,
+				4B87449E1D1C06FE00ABB590 /* DMAPIManager.m */,
 			);
 			path = Config;
 			sourceTree = "<group>";
@@ -105,6 +146,12 @@
 		4B97F0DF1D1A2492004F4686 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4B8744A01D1C0FF700ABB590 /* DMBaseModel.h */,
+				4B8744A11D1C0FF700ABB590 /* DMBaseModel.m */,
+				4B8744A31D1C104200ABB590 /* DMCopyModel.h */,
+				4B8744A41D1C104200ABB590 /* DMCopyModel.m */,
+				4B8744AC1D1CC18900ABB590 /* DMLearnModel.h */,
+				4B8744AD1D1CC18900ABB590 /* DMLearnModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -130,8 +177,6 @@
 		4B97F0E31D1A2492004F4686 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4B97F0E41D1A2492004F4686 /* ViewController.h */,
-				4B97F0E51D1A2492004F4686 /* ViewController.m */,
 				4B83F3B91D1A889E00F065D2 /* DMSplashViewController.h */,
 				4B83F3BA1D1A889E00F065D2 /* DMSplashViewController.m */,
 				4B83F3BF1D1A93CB00F065D2 /* DMCopyViewController.h */,
@@ -140,6 +185,12 @@
 				4B83F3C31D1A93DE00F065D2 /* DMLearnViewController.m */,
 				4B83F3C51D1A95ED00F065D2 /* DMMineViewController.h */,
 				4B83F3C61D1A95ED00F065D2 /* DMMineViewController.m */,
+				4B83F3C81D1B743A00F065D2 /* DMCopySubViewController.h */,
+				4B83F3C91D1B743A00F065D2 /* DMCopySubViewController.m */,
+				4B0E63881D1BEA820086F87A /* DMHomeViewController.h */,
+				4B0E63891D1BEA820086F87A /* DMHomeViewController.m */,
+				4B8744AF1D1CC47F00ABB590 /* DMLearnSubViewController.h */,
+				4B8744B01D1CC47F00ABB590 /* DMLearnSubViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -155,6 +206,15 @@
 		4B97F0E81D1A2492004F4686 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4B8744BA1D1CDFF200ABB590 /* DMCopyCollectionViewCell.h */,
+				4B8744BB1D1CDFF200ABB590 /* DMCopyCollectionViewCell.m */,
+				4B8744BC1D1CDFF200ABB590 /* DMCopyCollectionViewCell.xib */,
+				4B8744BF1D1D0D9E00ABB590 /* DMLearnCollectionViewCell.h */,
+				4B8744C01D1D0D9E00ABB590 /* DMLearnCollectionViewCell.m */,
+				4B8744C11D1D0D9E00ABB590 /* DMLearnCollectionViewCell.xib */,
+				4B8744C41D1D2BFE00ABB590 /* DMMineTableViewCell.h */,
+				4B8744C51D1D2BFE00ABB590 /* DMMineTableViewCell.m */,
+				4B8744C61D1D2BFE00ABB590 /* DMMineTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -162,6 +222,10 @@
 		4B97F0E91D1A2492004F4686 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				4B8744A61D1C132E00ABB590 /* DMCopyViewModel.h */,
+				4B8744A71D1C132E00ABB590 /* DMCopyViewModel.m */,
+				4B8744A91D1CC09800ABB590 /* DMLearnViewModel.h */,
+				4B8744AA1D1CC09800ABB590 /* DMLearnViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -243,6 +307,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B8744C31D1D0D9E00ABB590 /* DMLearnCollectionViewCell.xib in Resources */,
+				4B8744C81D1D2BFE00ABB590 /* DMMineTableViewCell.xib in Resources */,
+				4B8744BE1D1CDFF200ABB590 /* DMCopyCollectionViewCell.xib in Resources */,
 				4B97F0EF1D1A2492004F4686 /* Main.storyboard in Resources */,
 				4B97F0ED1D1A2492004F4686 /* Assets.xcassets in Resources */,
 				4B97F0EB1D1A2492004F4686 /* Info.plist in Resources */,
@@ -305,12 +372,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B97F0EA1D1A2492004F4686 /* AppDelegate.m in Sources */,
+				4B8744C21D1D0D9E00ABB590 /* DMLearnCollectionViewCell.m in Sources */,
+				4B83F3CA1D1B743A00F065D2 /* DMCopySubViewController.m in Sources */,
+				4B87449F1D1C06FE00ABB590 /* DMAPIManager.m in Sources */,
+				4B0E638A1D1BEA820086F87A /* DMHomeViewController.m in Sources */,
+				4B8744AB1D1CC09800ABB590 /* DMLearnViewModel.m in Sources */,
+				4B8744B11D1CC47F00ABB590 /* DMLearnSubViewController.m in Sources */,
+				4B8744A81D1C132E00ABB590 /* DMCopyViewModel.m in Sources */,
+				4B8744A51D1C104200ABB590 /* DMCopyModel.m in Sources */,
+				4B8744BD1D1CDFF200ABB590 /* DMCopyCollectionViewCell.m in Sources */,
+				4B8744AE1D1CC18900ABB590 /* DMLearnModel.m in Sources */,
 				4B97F0EC1D1A2492004F4686 /* main.m in Sources */,
+				4B8744A21D1C0FF700ABB590 /* DMBaseModel.m in Sources */,
 				4B83F3BB1D1A889E00F065D2 /* DMSplashViewController.m in Sources */,
-				4B97F0EE1D1A2492004F4686 /* ViewController.m in Sources */,
 				4B83F3C41D1A93DE00F065D2 /* DMLearnViewController.m in Sources */,
 				4B83F3C71D1A95ED00F065D2 /* DMMineViewController.m in Sources */,
 				4B83F3C11D1A93CB00F065D2 /* DMCopyViewController.m in Sources */,
+				4B8744C71D1D2BFE00ABB590 /* DMMineTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

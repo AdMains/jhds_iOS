@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface DMCopyViewController : UIViewController
+#import "QGCollectionMenu.h"
+@interface DMCopyViewController : UIViewController<QGCollectionMenuDelegate,QGCollectionMenuDataSource>
 
 @end

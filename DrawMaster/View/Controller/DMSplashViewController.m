@@ -8,6 +8,7 @@
 
 #import "DMSplashViewController.h"
 #define degressToRadius(ang) (M_PI*(ang)/180.0f)
+#define kskipBtnRadius 18
 @interface DMSplashViewController ()
 @property (nonatomic,readwrite,strong) UIButton * skipBtn;
 @end
@@ -33,18 +34,18 @@
     
     self.skipBtn = [[UIButton alloc] init];
     {
-        self.skipBtn.alpha = 0.8;
-        self.skipBtn.layer.backgroundColor = mRGBToColor(0x777777).CGColor;
+        self.skipBtn.alpha = 0.7;
+        self.skipBtn.layer.backgroundColor = mRGBToColor(0x333333).CGColor;
         [self.skipBtn setTitle:@"跳过" forState:UIControlStateNormal];
-        self.skipBtn.layer.cornerRadius = 25;
+        self.skipBtn.layer.cornerRadius = kskipBtnRadius;
         [self.skipBtn setTitleColor:kWhiteColor forState:UIControlStateNormal];
-        self.skipBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+        self.skipBtn.titleLabel.font = [UIFont systemFontOfSize:11];
         [self.view addSubview:self.skipBtn];
         [self.skipBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.width.mas_equalTo(50);
+            make.width.mas_equalTo(kskipBtnRadius*2);
             make.right.mas_equalTo(-20);
             make.top.mas_equalTo(20);
-            make.height.mas_equalTo(50);
+            make.height.mas_equalTo(kskipBtnRadius*2);
         }];
         self.skipBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
             self.skipBtn.tag = 1;
@@ -138,38 +139,19 @@
 
 - (void)goToHome
 {
-    UITabBarController *homeTabBarController = [[UITabBarController alloc] init];
-    {
-        NSArray *titleArray = @[@"临摹",@"课程",@"我的"];
-        NSArray *classArray = @[@"DMCopyViewController",@"DMLearnViewController",@"DMMineViewController"];
-        NSMutableArray *childControllers = [NSMutableArray arrayWithCapacity:0];
-        for(NSInteger i = 0;i<classArray.count;i++)
-        {
-            UIViewController *childViewController = [[ objc_getClass(((NSString*)classArray[i]).UTF8String) alloc] init];
-            childViewController.tabBarItem.title= titleArray[i];
-            childViewController.view.backgroundColor = [UIColor whiteColor];
-            childViewController.automaticallyAdjustsScrollViewInsets = NO;
-            childViewController.tabBarItem.image=[[UIImage imageNamed:[@"eduHome" stringByAppendingString:@(i+1).stringValue]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            childViewController.tabBarItem.selectedImage=[ [[UIImage imageNamed:[@"eduHome" stringByAppendingString:@(i+1).stringValue]] qgocc_imageMaskedWithColor:kTabSelectColor ] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-            
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:childViewController];
-            [childControllers addObject:navController];
-        }
-        homeTabBarController.viewControllers = childControllers;
-        
-    }
-    
-    [self.navigationController pushViewController:homeTabBarController animated:YES];
+    UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"appHome"];
+    [self.navigationController pushViewController:modal animated:NO];
 }
 
 
 - (void)skipButtonBorderAnimation:(UIButton *)skipButton withDurationTime:(CGFloat)duration
 {
-    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:skipButton.center radius:25 startAngle:degressToRadius(-90) endAngle:degressToRadius(270) clockwise:YES];
+    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:skipButton.center radius:kskipBtnRadius startAngle:degressToRadius(-90) endAngle:degressToRadius(270) clockwise:YES];
     
     CAShapeLayer * progressLayer;
     progressLayer = [CAShapeLayer layer];
-    progressLayer.frame =CGRectMake(25, 25, 25, 25);
+    progressLayer.frame =CGRectMake(kskipBtnRadius, kskipBtnRadius, kskipBtnRadius, kskipBtnRadius);
     progressLayer.fillColor =  [[UIColor clearColor] CGColor];
     progressLayer.strokeColor=[UIColor redColor].CGColor;
     progressLayer.lineCap = kCALineCapButt;

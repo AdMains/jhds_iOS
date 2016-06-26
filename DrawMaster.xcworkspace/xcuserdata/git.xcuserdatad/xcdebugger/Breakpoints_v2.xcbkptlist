@@ -9,45 +9,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DrawMaster/View/Controller/DMSplashViewController.m"
-            timestampString = "488300091.343249"
+            filePath = "DrawMaster/ViewModel/DMLearnViewModel.m"
+            timestampString = "488447220.845715"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "-loadView"
+            startingLineNumber = "77"
+            endingLineNumber = "77"
+            landmarkName = "-urlLearnWithIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "DrawMaster/Config/AppDelegate.m"
-            timestampString = "488294512.253311"
+            filePath = "DrawMaster/ViewModel/DMCopyViewModel.m"
+            timestampString = "488592690.574847"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "-application:didFinishLaunchingWithOptions:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "DrawMaster/View/Controller/DMSplashViewController.m"
-            timestampString = "488304217.619293"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "170"
-            endingLineNumber = "170"
-            landmarkName = "-skipButtonBorderAnimation:withDurationTime:"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "-urlCopyWithIndex:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

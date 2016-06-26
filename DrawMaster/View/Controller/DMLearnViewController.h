@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface DMLearnViewController : UIViewController
+#import "QGCollectionMenu.h"
+@interface DMLearnViewController : UIViewController<QGCollectionMenuDelegate,QGCollectionMenuDataSource>
 
 @end

@@ -3,8 +3,7 @@
 /*－－－－－－－－－－－－－－－－－－－－app的相关配置－－－－－－－－－－－－－－－－－－*/
 /*---------------------------------相关值根据需要自行更改------------------------*/
 
-#define kAPIBaseURI @"http://192.168.6.226:9998"
-//#define kAPIBaseURI @"http://msedu.csdn.net"
+#define kAPIBaseURI @"http://quangelab.com"
 #define kBaiduAPIKey @"02296dd93f1940a39913d9a406332486"
 #define kBaiduSecretKey @"c790af68cc294b82b52fc87cc1b79264"
 #define kUMengKey       @"55597d3f67e58e3a8e000aac"
@@ -76,7 +75,9 @@
 
 //几个常用色彩
 
-#define kTabSelectColor         mRGBToColor(0x0494ba)
+#define kTabSelectColor         mRGBToColor(0x11bb11)
+#define kTabColor         mRGBToColor(0x666666)
+
 #define kNavTitleColor          mRGBToColor(0x262626)
 #define kWhiteColor             [UIColor whiteColor]
 #define kBlackColor             [UIColor blackColor]
