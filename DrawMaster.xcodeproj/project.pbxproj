@@ -26,6 +26,9 @@
 		4B8744C31D1D0D9E00ABB590 /* DMLearnCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B8744C11D1D0D9E00ABB590 /* DMLearnCollectionViewCell.xib */; };
 		4B8744C71D1D2BFE00ABB590 /* DMMineTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8744C51D1D2BFE00ABB590 /* DMMineTableViewCell.m */; };
 		4B8744C81D1D2BFE00ABB590 /* DMMineTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B8744C61D1D2BFE00ABB590 /* DMMineTableViewCell.xib */; };
+		4B90265C1D22AAA900BC1DAD /* DMWithCanvasBtnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B90265B1D22AAA900BC1DAD /* DMWithCanvasBtnViewController.m */; };
+		4B90265F1D22B87500BC1DAD /* DMDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B90265E1D22B87500BC1DAD /* DMDrawViewController.m */; };
+		4B9026621D22BC0E00BC1DAD /* DMDrawView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9026611D22BC0E00BC1DAD /* DMDrawView.m */; };
 		4B97F0EA1D1A2492004F4686 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97F0DC1D1A2492004F4686 /* AppDelegate.m */; };
 		4B97F0EB1D1A2492004F4686 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0DD1D1A2492004F4686 /* Info.plist */; };
 		4B97F0EC1D1A2492004F4686 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97F0DE1D1A2492004F4686 /* main.m */; };
@@ -75,6 +78,12 @@
 		4B8744C41D1D2BFE00ABB590 /* DMMineTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMMineTableViewCell.h; sourceTree = "<group>"; };
 		4B8744C51D1D2BFE00ABB590 /* DMMineTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMMineTableViewCell.m; sourceTree = "<group>"; };
 		4B8744C61D1D2BFE00ABB590 /* DMMineTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMMineTableViewCell.xib; sourceTree = "<group>"; };
+		4B90265A1D22AAA900BC1DAD /* DMWithCanvasBtnViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMWithCanvasBtnViewController.h; sourceTree = "<group>"; };
+		4B90265B1D22AAA900BC1DAD /* DMWithCanvasBtnViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMWithCanvasBtnViewController.m; sourceTree = "<group>"; };
+		4B90265D1D22B87500BC1DAD /* DMDrawViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMDrawViewController.h; sourceTree = "<group>"; };
+		4B90265E1D22B87500BC1DAD /* DMDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMDrawViewController.m; sourceTree = "<group>"; };
+		4B9026601D22BC0E00BC1DAD /* DMDrawView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMDrawView.h; sourceTree = "<group>"; };
+		4B9026611D22BC0E00BC1DAD /* DMDrawView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMDrawView.m; sourceTree = "<group>"; };
 		4B97F0DB1D1A2492004F4686 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4B97F0DC1D1A2492004F4686 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4B97F0DD1D1A2492004F4686 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -191,6 +200,10 @@
 				4B0E63891D1BEA820086F87A /* DMHomeViewController.m */,
 				4B8744AF1D1CC47F00ABB590 /* DMLearnSubViewController.h */,
 				4B8744B01D1CC47F00ABB590 /* DMLearnSubViewController.m */,
+				4B90265A1D22AAA900BC1DAD /* DMWithCanvasBtnViewController.h */,
+				4B90265B1D22AAA900BC1DAD /* DMWithCanvasBtnViewController.m */,
+				4B90265D1D22B87500BC1DAD /* DMDrawViewController.h */,
+				4B90265E1D22B87500BC1DAD /* DMDrawViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -215,6 +228,8 @@
 				4B8744C41D1D2BFE00ABB590 /* DMMineTableViewCell.h */,
 				4B8744C51D1D2BFE00ABB590 /* DMMineTableViewCell.m */,
 				4B8744C61D1D2BFE00ABB590 /* DMMineTableViewCell.xib */,
+				4B9026601D22BC0E00BC1DAD /* DMDrawView.h */,
+				4B9026611D22BC0E00BC1DAD /* DMDrawView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -378,12 +393,15 @@
 				4B0E638A1D1BEA820086F87A /* DMHomeViewController.m in Sources */,
 				4B8744AB1D1CC09800ABB590 /* DMLearnViewModel.m in Sources */,
 				4B8744B11D1CC47F00ABB590 /* DMLearnSubViewController.m in Sources */,
+				4B90265F1D22B87500BC1DAD /* DMDrawViewController.m in Sources */,
 				4B8744A81D1C132E00ABB590 /* DMCopyViewModel.m in Sources */,
+				4B9026621D22BC0E00BC1DAD /* DMDrawView.m in Sources */,
 				4B8744A51D1C104200ABB590 /* DMCopyModel.m in Sources */,
 				4B8744BD1D1CDFF200ABB590 /* DMCopyCollectionViewCell.m in Sources */,
 				4B8744AE1D1CC18900ABB590 /* DMLearnModel.m in Sources */,
 				4B97F0EC1D1A2492004F4686 /* main.m in Sources */,
 				4B8744A21D1C0FF700ABB590 /* DMBaseModel.m in Sources */,
+				4B90265C1D22AAA900BC1DAD /* DMWithCanvasBtnViewController.m in Sources */,
 				4B83F3BB1D1A889E00F065D2 /* DMSplashViewController.m in Sources */,
 				4B83F3C41D1A93DE00F065D2 /* DMLearnViewController.m in Sources */,
 				4B83F3C71D1A95ED00F065D2 /* DMMineViewController.m in Sources */,

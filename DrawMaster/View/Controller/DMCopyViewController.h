@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "QGCollectionMenu.h"
-@interface DMCopyViewController : UIViewController<QGCollectionMenuDelegate,QGCollectionMenuDataSource>
+#import "DMWithCanvasBtnViewController.h"
+@interface DMCopyViewController : DMWithCanvasBtnViewController<QGCollectionMenuDelegate,QGCollectionMenuDataSource>
 
 @end

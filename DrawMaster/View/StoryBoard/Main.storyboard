@@ -96,6 +96,50 @@
             </objects>
             <point key="canvasLocation" x="1173" y="881"/>
         </scene>
+        <!--涂鸦版-->
+        <scene sceneID="btI-cX-VcB">
+            <objects>
+                <viewController storyboardIdentifier="DMDrawViewController" id="agX-HZ-UA8" userLabel="涂鸦版" customClass="DMDrawViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ryk-OD-V2j"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hgo-SC-fRb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="N3C-YC-SyQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oE7-Zm-vTN" customClass="DMDrawView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPa-LZ-qZR">
+                                <rect key="frame" x="16" y="36" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="WMb-p0-V2L"/>
+                                    <constraint firstAttribute="width" constant="45" id="uOn-7B-YGO"/>
+                                </constraints>
+                                <state key="normal" image="back"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oE7-Zm-vTN" firstAttribute="top" secondItem="N3C-YC-SyQ" secondAttribute="top" id="2mi-AR-36T"/>
+                            <constraint firstItem="Hgo-SC-fRb" firstAttribute="top" secondItem="oE7-Zm-vTN" secondAttribute="bottom" id="HyJ-de-uiv"/>
+                            <constraint firstItem="TPa-LZ-qZR" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" constant="16" id="JMv-ao-xhG"/>
+                            <constraint firstAttribute="trailing" secondItem="oE7-Zm-vTN" secondAttribute="trailing" id="QxP-oN-bbL"/>
+                            <constraint firstItem="TPa-LZ-qZR" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" constant="16" id="abe-MC-lGd"/>
+                            <constraint firstItem="oE7-Zm-vTN" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" id="bDH-Ht-kXf"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backBtn" destination="TPa-LZ-qZR" id="nzq-N9-Igw"/>
+                        <outlet property="drawView" destination="oE7-Zm-vTN" id="EaA-X0-rRu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FUc-zR-Tmw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1834" y="1234"/>
+        </scene>
         <!--临摹-->
         <scene sceneID="ug5-GU-qgu">
             <objects>
@@ -168,4 +212,7 @@
             <point key="canvasLocation" x="-376" y="-141"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="back" width="20" height="30"/>
+    </resources>
 </document>

@@ -184,7 +184,7 @@
 
 - (RACSignal *)fetchCopyNumWithType:(NSString*)type
 {
-    NSString * str = [NSString stringWithFormat:@"images/jhds/copy/copy_%@.txt",type];
+    NSString * str = [NSString stringWithFormat:@"images/jhds/copy_%@.txt",type];
     return [[self fetchDataWithURLString:mUrlString(str)
                                   params:nil
                                  headers:nil
@@ -198,7 +198,7 @@
 
 - (RACSignal *)fetchCopyListWithType:(NSString*)type PageIndex:(NSString*)page
 {
-    NSString * str = [NSString stringWithFormat:@"images/jhds/copy/copy_%@_%@.txt",type,page];
+    NSString * str = [NSString stringWithFormat:@"images/jhds/copy_%@_%@.txt",type,page];
     return [[self fetchDataWithURLString:mUrlString(str)
                                   params:nil
                                  headers:nil
