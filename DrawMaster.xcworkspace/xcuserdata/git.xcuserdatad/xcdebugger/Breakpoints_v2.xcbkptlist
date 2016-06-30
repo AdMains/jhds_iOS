@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DrawMaster/View/View/DMDrawView.m"
-            timestampString = "488817120.991573"
+            timestampString = "488983016.094152"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
             landmarkName = "-initWithCoder:"
             landmarkType = "5">
          </BreakpointContent>
@@ -54,15 +54,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DrawMaster/View/View/DMDrawView.m"
-            timestampString = "488817310.398921"
+            timestampString = "488983016.094152"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "47"
+            endingLineNumber = "47"
             landmarkName = "-initWithFrame:"
             landmarkType = "5">
          </BreakpointContent>
@@ -330,11 +330,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DrawMaster/View/Controller/DMDrawViewController.m"
-            timestampString = "488975940.399912"
+            timestampString = "488979556.0602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "481"
-            endingLineNumber = "481"
+            startingLineNumber = "485"
+            endingLineNumber = "485"
             landmarkName = "-collectionView:cellForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -346,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DrawMaster/View/Controller/DMDrawViewController.m"
-            timestampString = "488975940.399912"
+            timestampString = "488979556.0602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "483"
-            endingLineNumber = "483"
+            startingLineNumber = "487"
+            endingLineNumber = "487"
             landmarkName = "-collectionView:cellForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -362,11 +362,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DrawMaster/View/Controller/DMDrawViewController.m"
-            timestampString = "488975940.399912"
+            timestampString = "488979556.0602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "484"
-            endingLineNumber = "484"
+            startingLineNumber = "488"
+            endingLineNumber = "488"
             landmarkName = "-collectionView:cellForItemAtIndexPath:"
             landmarkType = "5">
          </BreakpointContent>
@@ -374,16 +374,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DrawMaster/View/View/DMDrawView.m"
-            timestampString = "488975781.09014"
+            timestampString = "488983445.579291"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "-updateBrushWidth:BrushColor:"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
+            landmarkName = "-touchesEnded:withEvent:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DrawMaster/View/View/DMDrawView.m"
+            timestampString = "488983005.707983"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "-initWithCoder:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

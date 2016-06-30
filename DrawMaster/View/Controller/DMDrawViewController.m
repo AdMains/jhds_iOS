@@ -89,7 +89,7 @@
     
     
     //
-    self.selectBrushBackGroundView.backgroundColor = mRGBToColor(0xcccccc);
+    self.selectBrushBackGroundView.backgroundColor = mRGBAToColor(0xcccccc, 0.8);
     self.selectBrushBackGroundView.hidden = YES;
     self.selectBrushBackGroundView.alpha = 0;
     UIView * backGround = [[UIView alloc] init];
@@ -290,7 +290,7 @@
     {
         self.selectBrushBackGroundView.hidden = NO;
         [UIView animateWithDuration:0.5 animations:^{
-            self.selectBrushBackGroundView.alpha = 0.8;
+            self.selectBrushBackGroundView.alpha = 1.0;
         }];
         
         self.brushView.tag = 1;
@@ -428,6 +428,10 @@
         NSLog(@"摇动结束");
         [self shakeshake];
         [self.drawView shakeToClear];
+        NSString* brushWidth =  [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushWidth"];
+        NSData *brushColor = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushColor"];
+        [self.drawView updateBrushWidth:[brushWidth floatValue] BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
+        
     }
     return;
 }
@@ -658,7 +662,7 @@
 
 - (void)colorWheelDidChangeColor:(ISColorWheel *)colorWheel
 {
-    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:colorWheel.currentColor];
+    //NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:colorWheel.currentColor];
     /*
      const CGFloat  *components = CGColorGetComponents(pColor.CGColor);
      NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
