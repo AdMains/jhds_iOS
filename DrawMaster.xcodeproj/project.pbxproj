@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4B0E638A1D1BEA820086F87A /* DMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0E63891D1BEA820086F87A /* DMHomeViewController.m */; };
+		4B72ECBC1D24BAA4008934BB /* DMBrushView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B72ECBB1D24BAA4008934BB /* DMBrushView.m */; };
+		4B72ECBF1D250070008934BB /* ISColorWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B72ECBE1D250070008934BB /* ISColorWheel.m */; };
 		4B83F3BB1D1A889E00F065D2 /* DMSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3BA1D1A889E00F065D2 /* DMSplashViewController.m */; };
 		4B83F3C11D1A93CB00F065D2 /* DMCopyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C01D1A93CB00F065D2 /* DMCopyViewController.m */; };
 		4B83F3C41D1A93DE00F065D2 /* DMLearnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C31D1A93DE00F065D2 /* DMLearnViewController.m */; };
@@ -42,6 +44,10 @@
 		4B0E63881D1BEA820086F87A /* DMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMHomeViewController.h; sourceTree = "<group>"; };
 		4B0E63891D1BEA820086F87A /* DMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMHomeViewController.m; sourceTree = "<group>"; };
 		4B61F9311D197C0000AFF155 /* DrawMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B72ECBA1D24BAA4008934BB /* DMBrushView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMBrushView.h; sourceTree = "<group>"; };
+		4B72ECBB1D24BAA4008934BB /* DMBrushView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMBrushView.m; sourceTree = "<group>"; };
+		4B72ECBD1D250070008934BB /* ISColorWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISColorWheel.h; sourceTree = "<group>"; };
+		4B72ECBE1D250070008934BB /* ISColorWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISColorWheel.m; sourceTree = "<group>"; };
 		4B83F3B91D1A889E00F065D2 /* DMSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSplashViewController.h; sourceTree = "<group>"; };
 		4B83F3BA1D1A889E00F065D2 /* DMSplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSplashViewController.m; sourceTree = "<group>"; };
 		4B83F3BC1D1A898200F065D2 /* AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfig.h; sourceTree = "<group>"; };
@@ -219,6 +225,8 @@
 		4B97F0E81D1A2492004F4686 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4B72ECBD1D250070008934BB /* ISColorWheel.h */,
+				4B72ECBE1D250070008934BB /* ISColorWheel.m */,
 				4B8744BA1D1CDFF200ABB590 /* DMCopyCollectionViewCell.h */,
 				4B8744BB1D1CDFF200ABB590 /* DMCopyCollectionViewCell.m */,
 				4B8744BC1D1CDFF200ABB590 /* DMCopyCollectionViewCell.xib */,
@@ -230,6 +238,8 @@
 				4B8744C61D1D2BFE00ABB590 /* DMMineTableViewCell.xib */,
 				4B9026601D22BC0E00BC1DAD /* DMDrawView.h */,
 				4B9026611D22BC0E00BC1DAD /* DMDrawView.m */,
+				4B72ECBA1D24BAA4008934BB /* DMBrushView.h */,
+				4B72ECBB1D24BAA4008934BB /* DMBrushView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -386,8 +396,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B72ECBF1D250070008934BB /* ISColorWheel.m in Sources */,
 				4B97F0EA1D1A2492004F4686 /* AppDelegate.m in Sources */,
 				4B8744C21D1D0D9E00ABB590 /* DMLearnCollectionViewCell.m in Sources */,
+				4B72ECBC1D24BAA4008934BB /* DMBrushView.m in Sources */,
 				4B83F3CA1D1B743A00F065D2 /* DMCopySubViewController.m in Sources */,
 				4B87449F1D1C06FE00ABB590 /* DMAPIManager.m in Sources */,
 				4B0E638A1D1BEA820086F87A /* DMHomeViewController.m in Sources */,

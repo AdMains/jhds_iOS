@@ -37,10 +37,7 @@
         [self setMultipleTouchEnabled:NO];
         path = [UIBezierPath bezierPath];
         [path setLineWidth:2.0];
-        // 设置允许摇一摇功能
-        [UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;
-        // 并让自己成为第一响应者
-        [self becomeFirstResponder];
+        
     }
     return self;
 }
@@ -121,7 +118,12 @@
     [self setNeedsDisplay];
 }
 
-
+- (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor *)bc
+{
+    CGColorRef colorRef = bc.CGColor;
+    NSString *colorString = [CIColor colorWithCGColor:colorRef].stringRepresentation;
+    NSLog(@"新的画笔颜色为%@",colorString);
+}
 
 
 @end

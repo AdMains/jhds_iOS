@@ -11,4 +11,5 @@
 @interface DMDrawView : UIView
 
 - (void)shakeToClear;
+- (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor *)bc;
 @end
