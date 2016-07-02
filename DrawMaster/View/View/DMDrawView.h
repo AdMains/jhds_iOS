@@ -8,8 +8,20 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DMDrawView : UIView
+@protocol DMDrawViewDelegate <NSObject>
 
+/**
+ *  由于撤销 而更改画笔的宽度 和颜色
+ */
+- (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor *)bc;
+
+@end
+
+
+
+@interface DMDrawView : UIView
+@property (nonatomic, weak) id <DMDrawViewDelegate> delegate;
 - (void)shakeToClear;
 - (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor *)bc;
+- (void)backToFront;
 @end

@@ -17,6 +17,7 @@ def pods
 	pod 'FXBlurView'
 	pod 'Fabric'
 	pod 'Crashlytics'
+    pod 'KYAnimatedPageControl', '~> 1.0.5'
 end
 target 'DrawMaster' do
   pods

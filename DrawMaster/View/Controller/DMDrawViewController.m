@@ -13,7 +13,7 @@
 #import "ISColorWheel.h"
 #import <AVFoundation/AVAudioSession.h>
 #import <MediaPlayer/MediaPlayer.h>
-@interface DMDrawViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
+@interface DMDrawViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,ISColorWheelDelegate,HJCActionSheetDelegate,DMDrawViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *backBtn;
 @property (weak, nonatomic) IBOutlet DMDrawView *drawView;
 @property (nonatomic,readwrite,strong) MPVolumeView *volumeView;
@@ -31,6 +31,7 @@
 @property (nonatomic,readwrite,strong) NSMutableArray *brushColors;
 
 
+
 @end
 
 @implementation DMDrawViewController
@@ -38,7 +39,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //
     
+    self.drawView.delegate = self;
     //返回按钮相关
     self.backBtn.layer.backgroundColor= mRGBToColor(0xeeeeee).CGColor;
     self.backBtn.layer.cornerRadius = 22.5;
@@ -46,7 +49,8 @@
     @weakify(self)
     self.backBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         @strongify(self)
-        [self.navigationController popViewControllerAnimated:YES];
+        HJCActionSheet *sheet = [[HJCActionSheet alloc] initWithDelegate:self CancelTitle:@"取消" OtherTitles:@"分享",@"保存",@"撤销",@"返回", nil];
+        [sheet show];
         return [RACSignal empty];
     }];
     
@@ -129,6 +133,22 @@
                 
             }];
         }
+        
+        
+        UIButton * closeBtn = [[UIButton alloc] init];
+        {
+            [closeBtn setImage:[UIImage imageNamed:@"deletePhoto"] forState:UIControlStateNormal];
+            closeBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+            [self.selectBrushBoxView addSubview:closeBtn];
+            [closeBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(24);
+                make.height.mas_equalTo(24);
+                make.top.mas_equalTo(5);
+                make.right.mas_equalTo(-5);
+            }];
+            [closeBtn addTarget:self action:@selector(openSelectBrush:) forControlEvents:UIControlEventTouchUpInside];
+        }
+
         UICollectionViewFlowLayout *copyLayout=[[UICollectionViewFlowLayout alloc] init];
         {
             copyLayout.minimumLineSpacing = 10;
@@ -156,6 +176,18 @@
             
         }
         
+        UIView * line = [[UIView alloc] init];
+        {
+            line.backgroundColor = mRGBToColor(0xcccccc);
+            [self.selectBrushBoxView addSubview:line];
+            [line mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.mas_equalTo(0);
+                make.bottom.mas_equalTo(-48);
+                make.height.mas_equalTo(0.5);
+                
+            }];
+        }
+        
         UIButton * colorEditBtn = [[UIButton alloc] init];
         {
             colorEditBtn.layer.borderWidth = 1.0;
@@ -173,6 +205,51 @@
             }];
         }
         [colorEditBtn addTarget:self action:@selector(openEditColor:) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIButton * saveBtn = [[UIButton alloc] init];
+        {
+            saveBtn.layer.borderWidth = 1.0;
+            saveBtn.layer.cornerRadius = 3.0;
+            saveBtn.layer.borderColor =mRGBToColor(0x333333).CGColor;
+            [saveBtn setTitle:@"保存作品" forState:UIControlStateNormal];
+            [saveBtn setTitleColor:mRGBToColor(0x333333) forState:UIControlStateNormal];
+            saveBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+            [self.selectBrushBoxView addSubview:saveBtn];
+            [saveBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(70);
+                make.height.mas_equalTo(30);
+                make.bottom.mas_equalTo(-5);
+                make.left.mas_equalTo(5);
+            }];
+            @weakify(self)
+            saveBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+                @strongify(self)
+                [self save];
+                return [RACSignal empty];
+            }];
+        }
+        
+        UIButton * shareBtn = [[UIButton alloc] init];
+        {
+            shareBtn.layer.borderWidth = 1.0;
+            shareBtn.layer.cornerRadius = 3.0;
+            shareBtn.layer.borderColor =mRGBToColor(0x333333).CGColor;
+            [shareBtn setTitle:@"分享作品" forState:UIControlStateNormal];
+            [shareBtn setTitleColor:mRGBToColor(0x333333) forState:UIControlStateNormal];
+            shareBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+            [self.selectBrushBoxView addSubview:shareBtn];
+            [shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.width.mas_equalTo(70);
+                make.height.mas_equalTo(30);
+                make.bottom.mas_equalTo(-5);
+                make.right.mas_equalTo(-5);
+            }];
+            
+            shareBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+                
+                return [RACSignal empty];
+            }];
+        }
     }
     
     
@@ -205,6 +282,7 @@
         self.editBrushColorView = [[ISColorWheel alloc] init];
         {
             [self.editBrushBoxView addSubview:self.editBrushColorView];
+            self.editBrushColorView.delegate = self;
             [self.editBrushColorView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.width.height.mas_equalTo((mScreenWidth*2/3)*thescale);
                 make.centerX.mas_equalTo(0);
@@ -214,33 +292,33 @@
         
         UIButton * okBtn = [[UIButton alloc] init];
         {
+            okBtn.layer.borderWidth = 1.0;
+            okBtn.layer.cornerRadius = 3.0;
+            okBtn.layer.borderColor =mRGBToColor(0x333333).CGColor;
+            [okBtn setTitle:@"完成" forState:UIControlStateNormal];
+            [okBtn setTitleColor:mRGBToColor(0x333333) forState:UIControlStateNormal];
+            okBtn.titleLabel.font = [UIFont systemFontOfSize:12];
             [self.editBrushBoxView addSubview:okBtn];
             [okBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                okBtn.layer.borderWidth = 1.0;
-                okBtn.layer.cornerRadius = 3.0;
-                okBtn.layer.borderColor =mRGBToColor(0x333333).CGColor;
-                [okBtn setTitle:@"完成" forState:UIControlStateNormal];
-                [okBtn setTitleColor:mRGBToColor(0x333333) forState:UIControlStateNormal];
-                okBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-                [self.editBrushBoxView addSubview:okBtn];
-                [okBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.width.mas_equalTo(50);
-                    make.height.mas_equalTo(30);
-                    make.bottom.mas_equalTo(-5);
-                    make.right.mas_equalTo(-10);
-                }];
-
-                
+                make.width.mas_equalTo(50);
+                make.height.mas_equalTo(30);
+                make.bottom.mas_equalTo(-5);
+                make.right.mas_equalTo(-10);
             }];
+
             @weakify(self)
             okBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
                 @strongify(self)
-                NSMutableArray *customBrushColors = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMCustomBrushColors"];
-                NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:self.editBrushColorView.currentColor];
-                NSMutableArray *temp = [NSMutableArray arrayWithArray:customBrushColors];
-                [temp addObject:colorData];
-                [[NSUserDefaults standardUserDefaults] setObject:temp forKey:@"DMCustomBrushColors"];
-                [self.collecttionView reloadData];
+                if(self.view.tag == 1)
+                {
+                    NSMutableArray *customBrushColors = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMCustomBrushColors"];
+                    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:self.editBrushColorView.currentColor];
+                    NSMutableArray *temp = [NSMutableArray arrayWithArray:customBrushColors];
+                    [temp addObject:colorData];
+                    [[NSUserDefaults standardUserDefaults] setObject:temp forKey:@"DMCustomBrushColors"];
+                    [self.collecttionView reloadData];
+                    self.view.tag = 0;
+                }
                 [self openEditColor:nil];
                 return [RACSignal empty];
             }];
@@ -256,6 +334,21 @@
                         @(0x87C35B),@(0xCADC57),@(0xFFEB5F),@(0xFFBF3E),@(0xFF512F),
                         @(0x73554B),@(0x9E9E00),@(0x5F7D8A),@(0xeeeeee),@(0xcccccc),
                         @(0x888888),@(0x555555),@(0x333333),@(0x111111),@(0x000000),nil];
+    
+}
+
+
+- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *) contextInfo {
+    NSString *message;
+    
+    if (!error) {
+        
+        message = @"成功保存到相册";
+    } else {
+        
+        message = [error description];
+    }
+    [self showLoadAlertView:message imageName:nil autoHide:YES];
     
 }
 
@@ -671,8 +764,82 @@
      [prefs setFloat:components[2]  forKey:@"cb"];
      [prefs setFloat:components[3]  forKey:@"ca"];
      */
-    
+    self.view.tag = 1;
    
 }
 
+- (void)save
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString * FolderName = [NSString stringWithFormat:@"%@/jhdsSaveImg",kDocuments];
+    NSError *error;
+    if (![fileManager fileExistsAtPath:FolderName]) {
+        
+        [fileManager createDirectoryAtPath:FolderName withIntermediateDirectories:NO attributes:nil error:&error];
+    }
+    NSDate * endDate=[NSDate dateWithTimeIntervalSinceNow:0];
+    NSTimeInterval time =[endDate timeIntervalSince1970];
+    NSString * imageSavePath = [NSString stringWithFormat:@"%@/jhdsSaveImg/%@",kDocuments,@(time).stringValue];
+
+    //UIImageWriteToSavedPhotosAlbum([ UIImage grabImageWithView:self.captureBoxView scale:2], self, @selector(imageSavedToPhotosAlbum: didFinishSavingWithError: contextInfo:), nil);
+    UIImage * img = [ UIImage grabImageWithView:self.captureBoxView scale:2];
+    NSData * imgData = UIImageJPEGRepresentation(img,1.0);
+    if([imgData writeToFile:imageSavePath atomically:YES])
+        [self showLoadAlertView:@"保存成功" imageName:nil autoHide:YES];
+    else
+        [self showLoadAlertView:@"保存失败" imageName:nil autoHide:YES];
+    
+    NSArray *childerFiles=[fileManager subpathsAtPath:FolderName];
+    NSLog(@"这里保存图片有%@",childerFiles);
+}
+
+- (void)share
+{
+    NSLog(@"这里分享图片");
+}
+- (void)actionSheet:(HJCActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+       case 5:
+            
+            if(self.brushView.tag == 0)
+            {
+                [self.navigationController popViewControllerAnimated:YES];
+            }else
+            {
+                [UIView animateWithDuration:0.5 animations:^{
+                    self.selectBrushBackGroundView.alpha = 0.0;
+                } completion:^(BOOL finished) {
+                    self.selectBrushBackGroundView.hidden = YES;
+                }];
+                
+                self.brushView.tag = 0;
+            }
+            break;
+        case 1:
+        
+            break;
+        case 2:
+            [self share];
+            break;
+        case 3:
+            [self save];
+            break;
+        case 4:
+            [self.drawView backToFront];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor*)bc
+{
+    
+    [[NSUserDefaults standardUserDefaults] setObject:@(bw).stringValue forKey:@"DMBrushWidth"];
+    NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:bc];
+    [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:@"DMBrushColor"];
+    
+    
+}
 @end

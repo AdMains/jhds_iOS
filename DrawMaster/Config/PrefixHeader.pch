@@ -27,7 +27,8 @@
     #import <objc/runtime.h>
     #import "UIKit+AFNetworking.h"
     #import "QGOCCategory.h"
-
+    #import "CategoryUtils.h"
+    #import "HJCActionSheet.h"
 #endif
 
 #endif

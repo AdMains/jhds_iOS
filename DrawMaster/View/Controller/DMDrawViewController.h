@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface DMDrawViewController : UIViewController
+@property (nonatomic,readwrite,strong) IBOutlet UIView * captureBoxView;
 
 @end

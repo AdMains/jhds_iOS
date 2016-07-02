@@ -10,6 +10,10 @@
 		4B0E638A1D1BEA820086F87A /* DMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0E63891D1BEA820086F87A /* DMHomeViewController.m */; };
 		4B72ECBC1D24BAA4008934BB /* DMBrushView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B72ECBB1D24BAA4008934BB /* DMBrushView.m */; };
 		4B72ECBF1D250070008934BB /* ISColorWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B72ECBE1D250070008934BB /* ISColorWheel.m */; };
+		4B76218C1D2601D8006F252E /* UIViewController+MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B76218B1D2601D8006F252E /* UIViewController+MBProgressHUD.m */; };
+		4B7621901D260277006F252E /* UIImage+Addition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B76218F1D260277006F252E /* UIImage+Addition.m */; };
+		4B7621941D2602AE006F252E /* HJCActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7621931D2602AE006F252E /* HJCActionSheet.m */; };
+		4B7621971D26683C006F252E /* DMBrushModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7621961D26683C006F252E /* DMBrushModel.m */; };
 		4B83F3BB1D1A889E00F065D2 /* DMSplashViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3BA1D1A889E00F065D2 /* DMSplashViewController.m */; };
 		4B83F3C11D1A93CB00F065D2 /* DMCopyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C01D1A93CB00F065D2 /* DMCopyViewController.m */; };
 		4B83F3C41D1A93DE00F065D2 /* DMLearnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C31D1A93DE00F065D2 /* DMLearnViewController.m */; };
@@ -48,6 +52,15 @@
 		4B72ECBB1D24BAA4008934BB /* DMBrushView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMBrushView.m; sourceTree = "<group>"; };
 		4B72ECBD1D250070008934BB /* ISColorWheel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISColorWheel.h; sourceTree = "<group>"; };
 		4B72ECBE1D250070008934BB /* ISColorWheel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISColorWheel.m; sourceTree = "<group>"; };
+		4B76218A1D2601D8006F252E /* UIViewController+MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MBProgressHUD.h"; sourceTree = "<group>"; };
+		4B76218B1D2601D8006F252E /* UIViewController+MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MBProgressHUD.m"; sourceTree = "<group>"; };
+		4B76218D1D260277006F252E /* CategoryUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoryUtils.h; sourceTree = "<group>"; };
+		4B76218E1D260277006F252E /* UIImage+Addition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Addition.h"; sourceTree = "<group>"; };
+		4B76218F1D260277006F252E /* UIImage+Addition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Addition.m"; sourceTree = "<group>"; };
+		4B7621921D2602AE006F252E /* HJCActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HJCActionSheet.h; sourceTree = "<group>"; };
+		4B7621931D2602AE006F252E /* HJCActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HJCActionSheet.m; sourceTree = "<group>"; };
+		4B7621951D26683C006F252E /* DMBrushModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMBrushModel.h; sourceTree = "<group>"; };
+		4B7621961D26683C006F252E /* DMBrushModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMBrushModel.m; sourceTree = "<group>"; };
 		4B83F3B91D1A889E00F065D2 /* DMSplashViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMSplashViewController.h; sourceTree = "<group>"; };
 		4B83F3BA1D1A889E00F065D2 /* DMSplashViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMSplashViewController.m; sourceTree = "<group>"; };
 		4B83F3BC1D1A898200F065D2 /* AppConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfig.h; sourceTree = "<group>"; };
@@ -115,6 +128,7 @@
 		4B61F9281D197C0000AFF155 = {
 			isa = PBXGroup;
 			children = (
+				4B7621881D2601D8006F252E /* Lib */,
 				4B61F9331D197C0000AFF155 /* DrawMaster */,
 				4B61F9321D197C0000AFF155 /* Products */,
 				BFA81EF249F584D91FDD9794 /* Pods */,
@@ -142,6 +156,36 @@
 			path = DrawMaster;
 			sourceTree = "<group>";
 		};
+		4B7621881D2601D8006F252E /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				4B7621911D2602AE006F252E /* HJCActionSheet */,
+				4B7621891D2601D8006F252E /* Category */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		4B7621891D2601D8006F252E /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				4B76218D1D260277006F252E /* CategoryUtils.h */,
+				4B76218E1D260277006F252E /* UIImage+Addition.h */,
+				4B76218F1D260277006F252E /* UIImage+Addition.m */,
+				4B76218A1D2601D8006F252E /* UIViewController+MBProgressHUD.h */,
+				4B76218B1D2601D8006F252E /* UIViewController+MBProgressHUD.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		4B7621911D2602AE006F252E /* HJCActionSheet */ = {
+			isa = PBXGroup;
+			children = (
+				4B7621921D2602AE006F252E /* HJCActionSheet.h */,
+				4B7621931D2602AE006F252E /* HJCActionSheet.m */,
+			);
+			path = HJCActionSheet;
+			sourceTree = "<group>";
+		};
 		4B97F0DA1D1A2492004F4686 /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -167,6 +211,8 @@
 				4B8744A41D1C104200ABB590 /* DMCopyModel.m */,
 				4B8744AC1D1CC18900ABB590 /* DMLearnModel.h */,
 				4B8744AD1D1CC18900ABB590 /* DMLearnModel.m */,
+				4B7621951D26683C006F252E /* DMBrushModel.h */,
+				4B7621961D26683C006F252E /* DMBrushModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -404,6 +450,8 @@
 				4B87449F1D1C06FE00ABB590 /* DMAPIManager.m in Sources */,
 				4B0E638A1D1BEA820086F87A /* DMHomeViewController.m in Sources */,
 				4B8744AB1D1CC09800ABB590 /* DMLearnViewModel.m in Sources */,
+				4B76218C1D2601D8006F252E /* UIViewController+MBProgressHUD.m in Sources */,
+				4B7621941D2602AE006F252E /* HJCActionSheet.m in Sources */,
 				4B8744B11D1CC47F00ABB590 /* DMLearnSubViewController.m in Sources */,
 				4B90265F1D22B87500BC1DAD /* DMDrawViewController.m in Sources */,
 				4B8744A81D1C132E00ABB590 /* DMCopyViewModel.m in Sources */,
@@ -413,7 +461,9 @@
 				4B8744AE1D1CC18900ABB590 /* DMLearnModel.m in Sources */,
 				4B97F0EC1D1A2492004F4686 /* main.m in Sources */,
 				4B8744A21D1C0FF700ABB590 /* DMBaseModel.m in Sources */,
+				4B7621901D260277006F252E /* UIImage+Addition.m in Sources */,
 				4B90265C1D22AAA900BC1DAD /* DMWithCanvasBtnViewController.m in Sources */,
+				4B7621971D26683C006F252E /* DMBrushModel.m in Sources */,
 				4B83F3BB1D1A889E00F065D2 /* DMSplashViewController.m in Sources */,
 				4B83F3C41D1A93DE00F065D2 /* DMLearnViewController.m in Sources */,
 				4B83F3C71D1A95ED00F065D2 /* DMMineViewController.m in Sources */,

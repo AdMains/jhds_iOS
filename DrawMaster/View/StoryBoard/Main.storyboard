@@ -108,12 +108,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oE7-Zm-vTN" customClass="DMDrawView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IiQ-lU-aiR">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oE7-Zm-vTN" customClass="DMDrawView">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="oE7-Zm-vTN" firstAttribute="top" secondItem="IiQ-lU-aiR" secondAttribute="top" id="9lC-X2-ILy"/>
+                                    <constraint firstAttribute="trailing" secondItem="oE7-Zm-vTN" secondAttribute="trailing" id="GkN-Of-dk6"/>
+                                    <constraint firstAttribute="bottom" secondItem="oE7-Zm-vTN" secondAttribute="bottom" id="Owm-ln-B1U"/>
+                                    <constraint firstItem="oE7-Zm-vTN" firstAttribute="leading" secondItem="IiQ-lU-aiR" secondAttribute="leading" id="s19-sP-gHy"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EsR-zv-BNV">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPa-LZ-qZR">
@@ -135,23 +147,36 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="oE7-Zm-vTN" firstAttribute="top" secondItem="N3C-YC-SyQ" secondAttribute="top" id="2mi-AR-36T"/>
                             <constraint firstItem="EsR-zv-BNV" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" id="4KH-GP-U1g"/>
                             <constraint firstAttribute="trailing" secondItem="tH7-RV-yT1" secondAttribute="trailing" constant="16" id="7Gh-38-xcF"/>
-                            <constraint firstItem="Hgo-SC-fRb" firstAttribute="top" secondItem="oE7-Zm-vTN" secondAttribute="bottom" id="HyJ-de-uiv"/>
+                            <constraint firstAttribute="bottom" secondItem="IiQ-lU-aiR" secondAttribute="bottom" id="7zx-oG-7lD"/>
+                            <constraint firstItem="IiQ-lU-aiR" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" id="9u9-pU-8eT"/>
+                            <constraint firstAttribute="trailing" secondItem="IiQ-lU-aiR" secondAttribute="trailing" id="FSe-yx-gnT"/>
                             <constraint firstItem="EsR-zv-BNV" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" id="I0q-M0-Z24"/>
+                            <constraint firstItem="EsR-zv-BNV" firstAttribute="top" secondItem="N3C-YC-SyQ" secondAttribute="top" id="J1r-2c-erc"/>
                             <constraint firstItem="TPa-LZ-qZR" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" constant="16" id="JMv-ao-xhG"/>
                             <constraint firstItem="tH7-RV-yT1" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" constant="16" id="KEo-Qn-Rj2"/>
-                            <constraint firstAttribute="trailing" secondItem="oE7-Zm-vTN" secondAttribute="trailing" id="QxP-oN-bbL"/>
+                            <constraint firstItem="Hgo-SC-fRb" firstAttribute="top" secondItem="IiQ-lU-aiR" secondAttribute="bottom" id="Yvx-36-W4W"/>
                             <constraint firstItem="TPa-LZ-qZR" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" constant="16" id="abe-MC-lGd"/>
-                            <constraint firstItem="oE7-Zm-vTN" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" id="bDH-Ht-kXf"/>
                             <constraint firstItem="Hgo-SC-fRb" firstAttribute="top" secondItem="EsR-zv-BNV" secondAttribute="bottom" id="ddJ-eS-uhE"/>
+                            <constraint firstAttribute="bottom" secondItem="EsR-zv-BNV" secondAttribute="bottom" id="e09-Hb-BYg"/>
+                            <constraint firstItem="IiQ-lU-aiR" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" id="qTS-cy-LM9"/>
                             <constraint firstAttribute="trailing" secondItem="EsR-zv-BNV" secondAttribute="trailing" id="vg6-a8-4SW"/>
+                            <constraint firstItem="IiQ-lU-aiR" firstAttribute="top" secondItem="N3C-YC-SyQ" secondAttribute="top" id="xaw-hf-n6y"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="I0q-M0-Z24"/>
+                                <exclude reference="9u9-pU-8eT"/>
+                                <exclude reference="Yvx-36-W4W"/>
+                                <exclude reference="ddJ-eS-uhE"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="backBtn" destination="TPa-LZ-qZR" id="nzq-N9-Igw"/>
                         <outlet property="brushView" destination="tH7-RV-yT1" id="qLQ-Q8-KAl"/>
+                        <outlet property="captureBoxView" destination="IiQ-lU-aiR" id="4ys-Yc-MwH"/>
                         <outlet property="drawView" destination="oE7-Zm-vTN" id="EaA-X0-rRu"/>
                         <outlet property="selectBrushBackGroundView" destination="EsR-zv-BNV" id="a3Q-d5-qPA"/>
                     </connections>
