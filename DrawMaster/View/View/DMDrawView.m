@@ -22,7 +22,9 @@
         [self setMultipleTouchEnabled:NO];
         [self setBackgroundColor:[UIColor whiteColor]];
         self.allBrushs = [NSMutableArray array];
-        
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [self loadFromSave];
+        });
        
     }
     return self;
@@ -35,6 +37,7 @@
         [self setMultipleTouchEnabled:NO];
         [self setBackgroundColor:[UIColor whiteColor]];
         self.allBrushs = [NSMutableArray array];
+        [self loadFromSave];
     }
     return self;
 }
@@ -93,13 +96,11 @@
     UITouch *touch = [touches anyObject];
     CGPoint p = [touch locationInView:self];
     NSLog(@"差距为x:%f     y:%f",(p.x -self.lastPoint.x),(p.y-self.lastPoint.y));
-    
-    if(fabs(p.x -self.lastPoint.x)<3.0f &&fabs(p.y-self.lastPoint.y)<3.0f)
+    NSMutableArray *lines = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines;
+    if(fabs(p.x -self.lastPoint.x)<5.0f &&fabs(p.y-self.lastPoint.y)<5.0f && lines.count<3)
     {
         
-        NSMutableArray *lines = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines;
-        if(lines.count == 0)
-            [self.allBrushs removeObjectAtIndex:self.allBrushs.count -1];
+        
         //画点需要添加新的类型
         
         DMBrushModel * bm = [[DMBrushModel alloc] init];
@@ -107,7 +108,17 @@
         bm.brushWidth = ((DMBrushModel*)[self.allBrushs lastObject]).brushWidth;
         bm.brushColor = ((DMBrushModel*)[self.allBrushs lastObject]).brushColor;
         bm.brushType = 0;
+        [bm.brushLines addObject:[NSMutableArray array]];
+        NSMutableArray *lastPoints = bm.brushLines.lastObject;
+        [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x-bm.brushWidth).stringValue,@(p.y-bm.brushWidth).stringValue]];
+        //因为这里要添加一个新的，所以之前的要删除
+        if(lines.count == 0 || lines.count == 1)
+            [self.allBrushs removeObjectAtIndex:self.allBrushs.count -1];
+        //
         [self.allBrushs addObject:bm];
+        
+        
+
       
         //画点画完后需要切换回来
         
@@ -122,7 +133,10 @@
         
     }
     
-   
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        [self save];
+    });
+    
     [self setNeedsDisplay];
   
     
@@ -200,6 +214,134 @@
     [self setNeedsDisplay];
     
     NSLog(@"撤销");
+}
+
+
+- (void)save
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString * FolderName = [NSString stringWithFormat:@"%@/jhdsLineData",kDocuments];
+    NSError *error;
+    if (![fileManager fileExistsAtPath:FolderName]) {
+        
+        [fileManager createDirectoryAtPath:FolderName withIntermediateDirectories:NO attributes:nil error:&error];
+    }
+    NSString * jsonString = @"[";
+    for (DMBrushModel* brush in self.allBrushs) {
+        NSString *brushLinesStr = @"";
+        NSMutableArray * tempLines = [NSMutableArray array];
+        for (NSArray * points in brush.brushLines) {
+            NSString* pointsStr = [points componentsJoinedByString:@";"];
+            [tempLines addObject:pointsStr];
+        }
+        brushLinesStr = [tempLines componentsJoinedByString:@"="];
+
+        const CGFloat* colors = CGColorGetComponents( brush.brushColor.CGColor );
+        jsonString = [jsonString stringByAppendingString:@"{"];
+        NSString *colorStr = [NSString stringWithFormat:@"%@,%@,%@",@(colors[0]).stringValue,@(colors[1]).stringValue,@(colors[2]).stringValue];
+        jsonString = [jsonString stringByAppendingString:[NSString stringWithFormat:@"\"brushColor\":\"%@\",\"brushWidth\":\"%@\",\"brushType\":\"%@\",\"brushLines\":\"%@\"",colorStr,@(brush.brushWidth).stringValue,@(brush.brushType).stringValue,brushLinesStr]];
+        jsonString = [jsonString stringByAppendingString:@"},"];
+    }
+    jsonString = [jsonString substringToIndex:jsonString.length-1];
+    jsonString = [jsonString stringByAppendingString:@"]"];
+    NSLog(@"json数据为:%@",jsonString);
+    NSString * jsonSavePath = [NSString stringWithFormat:@"%@/jhdsLineData/%@",kDocuments,@"lineData.json"];
+    
+    
+    [jsonString writeToFile:jsonSavePath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    if(error)
+    {
+        //[(UIViewController*)self.delegate showLoadAlertView:@"保存失败" imageName:nil autoHide:YES];
+        UALog(@"%@",NSLocalizedString([error userInfo][NSUnderlyingErrorKey], nil));
+    }
+    else
+    {
+        //[(UIViewController*)self.delegate showLoadAlertView:@"保存成功" imageName:nil autoHide:YES];
+    }
+
+}
+
+
+
+- (BOOL)loadFromSave
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString * FolderName = [NSString stringWithFormat:@"%@/jhdsLineData",kDocuments];
+    NSError *error;
+    if (![fileManager fileExistsAtPath:FolderName]) {
+        
+        return NO;
+    }
+    
+    NSString * jsonSavePath = [NSString stringWithFormat:@"%@/jhdsLineData/%@",kDocuments,@"lineData.json"];
+    if (![fileManager fileExistsAtPath:jsonSavePath]) {
+        
+        return NO;
+    }
+    NSString * lineStr = [NSString stringWithContentsOfFile:jsonSavePath encoding:NSUTF8StringEncoding error:nil];
+    
+    NSData * lineData = [NSData dataWithContentsOfFile:jsonSavePath];
+  
+    NSArray* jsonObject = [NSJSONSerialization JSONObjectWithData:lineData options:NSJSONReadingAllowFragments error:&error];
+    NSLog(@"%@",jsonObject);
+    if (error==nil) {
+       
+        for (NSDictionary * model in jsonObject) {
+            if([[model objectForKey:@"brushLines"] isEqualToString:@""])
+                continue;
+            DMBrushModel * bm = [[DMBrushModel alloc] init];
+            bm.brushWidth = [[model objectForKey:@"brushWidth"] floatValue];
+            NSArray* color = [[model objectForKey:@"brushColor"] componentsSeparatedByString:@","];
+            bm.brushColor = [UIColor colorWithRed:[[color objectAtIndex:0] floatValue] green:[[color objectAtIndex:1] floatValue] blue:[[color objectAtIndex:2] floatValue] alpha:1.0];
+            bm.brushType = [[model objectForKey:@"brushType"] integerValue];
+            NSArray * lines = [[model objectForKey:@"brushLines"] componentsSeparatedByString:@"="];
+            
+            if(bm.brushType ==1 )
+            {
+                bm.brushPath = [UIBezierPath bezierPath];
+                
+                for (NSString * line in lines) {
+                    NSArray *points = [line componentsSeparatedByString:@";"] ;
+                    int i = 0;
+                    for (NSString *point in points) {
+                        NSArray *pointXY = [point componentsSeparatedByString:@","];
+                        if(i == 0)
+                        {
+                            [bm.brushPath moveToPoint:CGPointMake([[pointXY objectAtIndex:0] floatValue], [[pointXY objectAtIndex:1] floatValue])];
+                            
+                        }
+                        else
+                        {
+                            [bm.brushPath addLineToPoint:CGPointMake([[pointXY objectAtIndex:0] floatValue], [[pointXY objectAtIndex:1] floatValue])];
+                        }
+                        ++i;
+                    }
+                }
+            }
+            else if(bm.brushType ==0)
+            {
+                NSArray *points = [[lines objectAtIndex:0] componentsSeparatedByString:@";"] ;
+                NSArray *point = [[points objectAtIndex:0] componentsSeparatedByString:@","];
+                bm.brushPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake([point[0] floatValue],[point[1] floatValue], bm.brushWidth*2, bm.brushWidth*2) cornerRadius:bm.brushWidth];
+            }
+            [self.allBrushs addObject:bm];
+            if([model isEqual: jsonObject.lastObject])
+            {
+                [self.delegate updateBrushWidth:bm.brushWidth BrushColor:bm.brushColor];
+            }
+        }
+        [self setNeedsDisplay];
+        return YES;
+    }
+    else
+        return NO;
+    
+    
+
+    return YES;
+
+    
+    
 }
 
 

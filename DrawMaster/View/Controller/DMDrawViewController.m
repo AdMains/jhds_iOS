@@ -444,7 +444,19 @@
     NSNumber* e = info[@"AVSystemController_AudioVolumeNotificationParameter"];
     
    
-    [ self changeBrushWidthWithUP:self.lastVolumeValue <e.floatValue];
+    if(self.lastVolumeValue ==1 && e.floatValue==1.0)
+    {
+        [ self changeBrushWidthWithUP:YES];
+    }
+    else
+    if(self.lastVolumeValue ==0.0 && e.floatValue==0.0)
+    {
+        [ self changeBrushWidthWithUP:NO];
+    }
+    else
+    {
+        [ self changeBrushWidthWithUP:self.lastVolumeValue <e.floatValue];
+    }
 //    if(self.lastVolumeValue >e.floatValue)
 //    {
 //        NSLog(@"画笔变细");
