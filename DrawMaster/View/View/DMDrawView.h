@@ -26,4 +26,5 @@
 - (void)backToFront;
 
 - (BOOL)shouldDirectBack;
+- (BOOL)loadFromSave;
 @end

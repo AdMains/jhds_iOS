@@ -341,6 +341,19 @@
                         @(0x87C35B),@(0xCADC57),@(0xFFEB5F),@(0xFFBF3E),@(0xFF512F),
                         @(0x73554B),@(0x9E9E00),@(0x5F7D8A),@(0xeeeeee),@(0xcccccc),
                         @(0x888888),@(0x555555),@(0x333333),@(0x111111),@(0x000000),nil];
+    if(self.loadLastDraw)
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if([self.drawView loadFromSave])
+        {
+            
+        }
+        else
+        {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self showLoadAlertView:@"您还没有动手画过，快画点啥吧" imageName:nil autoHide:YES];
+            });
+        }
+    });
     
 }
 
@@ -975,6 +988,7 @@
 
 - (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor*)bc
 {
+    [self.brushView updateRadius:22.5 BrushWidth:bw BrushColor:bc];
     
     [[NSUserDefaults standardUserDefaults] setObject:@(bw).stringValue forKey:@"DMBrushWidth"];
     NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:bc];

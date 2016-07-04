@@ -11,4 +11,5 @@
 @interface DMDrawViewController : UIViewController
 @property (nonatomic,readwrite,strong) IBOutlet UIView * captureBoxView;
 @property (weak, nonatomic) IBOutlet DMBrushView *brushView;
+@property (nonatomic,readwrite,assign) BOOL loadLastDraw;
 @end

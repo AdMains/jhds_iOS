@@ -15,7 +15,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="flp-xO-Pld">
-                        <rect key="frame" x="53" y="8" width="131" height="27"/>
+                        <rect key="frame" x="44" y="8" width="131" height="27"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="131" id="2Hj-0G-N6i"/>
                             <constraint firstAttribute="height" constant="27" id="5XZ-ya-tSM"/>
@@ -24,11 +24,11 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GoV-6b-4U1">
-                        <rect key="frame" x="8" y="7" width="30" height="30"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GoV-6b-4U1">
+                        <rect key="frame" x="8" y="12" width="21" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="30" id="Dr0-mb-NQk"/>
-                            <constraint firstAttribute="width" constant="30" id="hbI-j1-RPe"/>
+                            <constraint firstAttribute="height" constant="21" id="Dr0-mb-NQk"/>
+                            <constraint firstAttribute="width" constant="21" id="hbI-j1-RPe"/>
                         </constraints>
                     </imageView>
                 </subviews>
