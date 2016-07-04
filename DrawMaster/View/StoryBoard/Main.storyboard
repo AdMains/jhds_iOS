@@ -97,9 +97,98 @@
             <point key="canvasLocation" x="1173" y="881"/>
         </scene>
         <!--涂鸦版-->
+        <scene sceneID="mFq-py-xYb">
+            <objects>
+                <viewController storyboardIdentifier="DMDrawViewController" id="Uv8-H8-Wde" userLabel="涂鸦版" customClass="DMDrawViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="K0u-qG-5wq"/>
+                        <viewControllerLayoutGuide type="bottom" id="qeB-UJ-V1T"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4jL-8F-mwJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LN3-jA-piB">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aCo-rT-Gmp" customClass="DMDrawView">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="aCo-rT-Gmp" secondAttribute="trailing" id="0Tx-a9-w9i"/>
+                                    <constraint firstItem="aCo-rT-Gmp" firstAttribute="leading" secondItem="LN3-jA-piB" secondAttribute="leading" id="Wzf-CC-iIx"/>
+                                    <constraint firstAttribute="bottom" secondItem="aCo-rT-Gmp" secondAttribute="bottom" id="bkh-4m-jXi"/>
+                                    <constraint firstItem="aCo-rT-Gmp" firstAttribute="top" secondItem="LN3-jA-piB" secondAttribute="top" id="uhw-xI-yx1"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T7a-MX-8Ok">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y0p-lH-LMr">
+                                <rect key="frame" x="16" y="36" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Lin-Wo-VwC"/>
+                                    <constraint firstAttribute="width" constant="45" id="dKr-dH-TAC"/>
+                                </constraints>
+                                <state key="normal" image="back"/>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9HZ-dX-T7l" customClass="DMBrushView">
+                                <rect key="frame" x="539" y="36" width="45" height="45"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="9Fr-WZ-mcJ"/>
+                                    <constraint firstAttribute="height" constant="45" id="NTR-Cd-ef2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="LN3-jA-piB" secondAttribute="trailing" id="0Uh-Zy-HCe"/>
+                            <constraint firstItem="9HZ-dX-T7l" firstAttribute="top" secondItem="K0u-qG-5wq" secondAttribute="bottom" constant="16" id="0jC-lW-5dt"/>
+                            <constraint firstItem="LN3-jA-piB" firstAttribute="leading" secondItem="4jL-8F-mwJ" secondAttribute="leading" id="2Wx-4n-5ya"/>
+                            <constraint firstItem="Y0p-lH-LMr" firstAttribute="leading" secondItem="4jL-8F-mwJ" secondAttribute="leading" constant="16" id="EGR-X4-9m2"/>
+                            <constraint firstItem="Y0p-lH-LMr" firstAttribute="top" secondItem="K0u-qG-5wq" secondAttribute="bottom" constant="16" id="Elt-rM-tEc"/>
+                            <constraint firstItem="qeB-UJ-V1T" firstAttribute="top" secondItem="T7a-MX-8Ok" secondAttribute="bottom" id="M3O-L9-bqd"/>
+                            <constraint firstItem="T7a-MX-8Ok" firstAttribute="top" secondItem="4jL-8F-mwJ" secondAttribute="top" id="N9H-kH-pby"/>
+                            <constraint firstItem="qeB-UJ-V1T" firstAttribute="top" secondItem="LN3-jA-piB" secondAttribute="bottom" id="NSx-Ov-AHl"/>
+                            <constraint firstItem="LN3-jA-piB" firstAttribute="top" secondItem="4jL-8F-mwJ" secondAttribute="top" id="Q31-mg-gvI"/>
+                            <constraint firstItem="T7a-MX-8Ok" firstAttribute="top" secondItem="K0u-qG-5wq" secondAttribute="bottom" id="Rt4-Bp-NY6"/>
+                            <constraint firstAttribute="bottom" secondItem="LN3-jA-piB" secondAttribute="bottom" id="Xms-jY-YTd"/>
+                            <constraint firstItem="LN3-jA-piB" firstAttribute="top" secondItem="K0u-qG-5wq" secondAttribute="bottom" id="aXW-YR-NhI"/>
+                            <constraint firstAttribute="trailing" secondItem="T7a-MX-8Ok" secondAttribute="trailing" id="bcc-ib-vnR"/>
+                            <constraint firstAttribute="bottom" secondItem="T7a-MX-8Ok" secondAttribute="bottom" id="bd2-E9-y1t"/>
+                            <constraint firstItem="T7a-MX-8Ok" firstAttribute="leading" secondItem="4jL-8F-mwJ" secondAttribute="leading" id="kRn-oM-WuX"/>
+                            <constraint firstAttribute="trailing" secondItem="9HZ-dX-T7l" secondAttribute="trailing" constant="16" id="oEL-7m-wcT"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Rt4-Bp-NY6"/>
+                                <exclude reference="aXW-YR-NhI"/>
+                                <exclude reference="NSx-Ov-AHl"/>
+                                <exclude reference="M3O-L9-bqd"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="backBtn" destination="Y0p-lH-LMr" id="hpJ-UO-pW0"/>
+                        <outlet property="brushView" destination="9HZ-dX-T7l" id="jhr-gz-kv5"/>
+                        <outlet property="captureBoxView" destination="LN3-jA-piB" id="Avm-eT-hIa"/>
+                        <outlet property="drawView" destination="aCo-rT-Gmp" id="kJX-aR-3Q8"/>
+                        <outlet property="selectBrushBackGroundView" destination="T7a-MX-8Ok" id="UfE-T4-sbS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mzD-Cx-Puv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2019" y="1543"/>
+        </scene>
+        <!--临摹详情-->
         <scene sceneID="btI-cX-VcB">
             <objects>
-                <viewController storyboardIdentifier="DMDrawViewController" id="agX-HZ-UA8" userLabel="涂鸦版" customClass="DMDrawViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DMCopyDetailViewController" id="agX-HZ-UA8" userLabel="临摹详情" customClass="DMCopyDetailViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ryk-OD-V2j"/>
                         <viewControllerLayoutGuide type="bottom" id="Hgo-SC-fRb"/>
@@ -115,11 +204,21 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N90-e0-lXS" customClass="DMBigImgBoxView">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="600" id="meR-8e-SPw"/>
+                                            <constraint firstAttribute="height" constant="600" id="nuJ-g0-r4r"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="oE7-Zm-vTN" firstAttribute="top" secondItem="IiQ-lU-aiR" secondAttribute="top" id="9lC-X2-ILy"/>
                                     <constraint firstAttribute="trailing" secondItem="oE7-Zm-vTN" secondAttribute="trailing" id="GkN-Of-dk6"/>
+                                    <constraint firstItem="N90-e0-lXS" firstAttribute="leading" secondItem="IiQ-lU-aiR" secondAttribute="leading" id="HJA-9t-78c"/>
+                                    <constraint firstItem="N90-e0-lXS" firstAttribute="top" secondItem="IiQ-lU-aiR" secondAttribute="top" id="MnB-Dl-c0u"/>
                                     <constraint firstAttribute="bottom" secondItem="oE7-Zm-vTN" secondAttribute="bottom" id="Owm-ln-B1U"/>
                                     <constraint firstItem="oE7-Zm-vTN" firstAttribute="leading" secondItem="IiQ-lU-aiR" secondAttribute="leading" id="s19-sP-gHy"/>
                                 </constraints>
@@ -129,7 +228,7 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPa-LZ-qZR">
-                                <rect key="frame" x="16" y="36" width="45" height="45"/>
+                                <rect key="frame" x="8" y="22" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="WMb-p0-V2L"/>
                                     <constraint firstAttribute="width" constant="45" id="uOn-7B-YGO"/>
@@ -137,7 +236,7 @@
                                 <state key="normal" image="back"/>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tH7-RV-yT1" customClass="DMBrushView">
-                                <rect key="frame" x="539" y="36" width="45" height="45"/>
+                                <rect key="frame" x="547" y="22" width="45" height="45"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="cT2-O2-aQG"/>
@@ -148,16 +247,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="EsR-zv-BNV" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" id="4KH-GP-U1g"/>
-                            <constraint firstAttribute="trailing" secondItem="tH7-RV-yT1" secondAttribute="trailing" constant="16" id="7Gh-38-xcF"/>
+                            <constraint firstAttribute="trailing" secondItem="tH7-RV-yT1" secondAttribute="trailing" constant="8" id="7Gh-38-xcF"/>
                             <constraint firstAttribute="bottom" secondItem="IiQ-lU-aiR" secondAttribute="bottom" id="7zx-oG-7lD"/>
                             <constraint firstItem="IiQ-lU-aiR" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" id="9u9-pU-8eT"/>
                             <constraint firstAttribute="trailing" secondItem="IiQ-lU-aiR" secondAttribute="trailing" id="FSe-yx-gnT"/>
                             <constraint firstItem="EsR-zv-BNV" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" id="I0q-M0-Z24"/>
                             <constraint firstItem="EsR-zv-BNV" firstAttribute="top" secondItem="N3C-YC-SyQ" secondAttribute="top" id="J1r-2c-erc"/>
-                            <constraint firstItem="TPa-LZ-qZR" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" constant="16" id="JMv-ao-xhG"/>
-                            <constraint firstItem="tH7-RV-yT1" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" constant="16" id="KEo-Qn-Rj2"/>
+                            <constraint firstItem="TPa-LZ-qZR" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" constant="8" id="JMv-ao-xhG"/>
+                            <constraint firstItem="tH7-RV-yT1" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" constant="2" id="KEo-Qn-Rj2"/>
                             <constraint firstItem="Hgo-SC-fRb" firstAttribute="top" secondItem="IiQ-lU-aiR" secondAttribute="bottom" id="Yvx-36-W4W"/>
-                            <constraint firstItem="TPa-LZ-qZR" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" constant="16" id="abe-MC-lGd"/>
+                            <constraint firstItem="TPa-LZ-qZR" firstAttribute="top" secondItem="ryk-OD-V2j" secondAttribute="bottom" constant="2" id="abe-MC-lGd"/>
                             <constraint firstItem="Hgo-SC-fRb" firstAttribute="top" secondItem="EsR-zv-BNV" secondAttribute="bottom" id="ddJ-eS-uhE"/>
                             <constraint firstAttribute="bottom" secondItem="EsR-zv-BNV" secondAttribute="bottom" id="e09-Hb-BYg"/>
                             <constraint firstItem="IiQ-lU-aiR" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" id="qTS-cy-LM9"/>
@@ -178,12 +277,15 @@
                         <outlet property="brushView" destination="tH7-RV-yT1" id="qLQ-Q8-KAl"/>
                         <outlet property="captureBoxView" destination="IiQ-lU-aiR" id="4ys-Yc-MwH"/>
                         <outlet property="drawView" destination="oE7-Zm-vTN" id="EaA-X0-rRu"/>
+                        <outlet property="imgInfoBoxHeight" destination="nuJ-g0-r4r" id="dFo-se-4YF"/>
+                        <outlet property="imgInfoBoxView" destination="N90-e0-lXS" id="f0D-AV-0t2"/>
+                        <outlet property="imgInfoBoxWidth" destination="meR-8e-SPw" id="AlE-W5-64K"/>
                         <outlet property="selectBrushBackGroundView" destination="EsR-zv-BNV" id="a3Q-d5-qPA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FUc-zR-Tmw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1834" y="1234"/>
+            <point key="canvasLocation" x="2006" y="870"/>
         </scene>
         <!--临摹-->
         <scene sceneID="ug5-GU-qgu">

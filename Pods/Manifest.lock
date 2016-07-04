@@ -24,6 +24,7 @@ PODS:
     - Fabric (~> 1.6.3)
   - Fabric (1.6.7)
   - FXBlurView (1.6.4)
+  - KYAnimatedPageControl (1.0.5)
   - Mantle (1.5.8):
     - Mantle/extobjc (= 1.5.8)
   - Mantle/extobjc (1.5.8)
@@ -51,6 +52,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - FXBlurView
+  - KYAnimatedPageControl (~> 1.0.5)
   - Mantle (~> 1.5)
   - Masonry
   - MBProgressHUD
@@ -87,6 +89,7 @@ SPEC CHECKSUMS:
   Crashlytics: 3cdd4c9655be68032a0cf0379e0fb5ef6af22cad
   Fabric: caf7580c725e64db144f610ac65cd60956911dc7
   FXBlurView: db786c2561cb49a09ae98407f52460096ab8a44f
+  KYAnimatedPageControl: 4b6360b6ed2cad47b757aa11e8903827d2cd2385
   Mantle: f03b2b606c3f0cabd80214ad8a2fed6b464a7359
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
@@ -100,6 +103,6 @@ SPEC CHECKSUMS:
   UALogger: ccc041e5982dbd274ab5805f914076fef9bf29cf
   UMengAnalytics-NO-IDFA: 965a219b05475ff2a4c09a164139a27bbaa0e25b
 
-PODFILE CHECKSUM: 81cea6bd0afd37450b50d856259092af2b6e7c5f
+PODFILE CHECKSUM: 5dbdb066d8485d490a91568aa4a5804e9557468f
 
 COCOAPODS: 1.0.1

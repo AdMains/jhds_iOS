@@ -22,9 +22,9 @@
         [self setMultipleTouchEnabled:NO];
         [self setBackgroundColor:[UIColor whiteColor]];
         self.allBrushs = [NSMutableArray array];
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [self loadFromSave];
-        });
+//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//            [self loadFromSave];
+//        });
        
     }
     return self;
@@ -278,7 +278,7 @@
         
         return NO;
     }
-    NSString * lineStr = [NSString stringWithContentsOfFile:jsonSavePath encoding:NSUTF8StringEncoding error:nil];
+//    NSString * lineStr = [NSString stringWithContentsOfFile:jsonSavePath encoding:NSUTF8StringEncoding error:nil];
     
     NSData * lineData = [NSData dataWithContentsOfFile:jsonSavePath];
   
@@ -342,6 +342,15 @@
 
     
     
+}
+
+- (BOOL)shouldDirectBack
+{
+    if(self.allBrushs.count ==0)
+        return YES;
+    if(self.allBrushs.count == 1 && ((DMBrushModel*)self.allBrushs[0]).brushLines.count == 0)
+        return YES;
+    return NO;
 }
 
 

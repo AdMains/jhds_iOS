@@ -8,7 +8,7 @@
 
 #import "DMCopySubViewController.h"
 #import "DMCopyCollectionViewCell.h"
-
+#import "DMCopyDetailViewController.h"
 @interface DMCopySubViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 @end
@@ -132,7 +132,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    
+    UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    DMCopyDetailViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMCopyDetailViewController"];
+    modal.imgUrls = @[[self.viewModel urlCopyWithIndex:indexPath.row]];
+    [self.navigationController pushViewController:modal animated:NO];
     
 }
 @end

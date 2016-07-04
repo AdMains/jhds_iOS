@@ -9,17 +9,18 @@
 #import "DMDrawViewController.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "DMDrawView.h"
-#import "DMBrushView.h"
+
 #import "ISColorWheel.h"
 #import <AVFoundation/AVAudioSession.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 @interface DMDrawViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,ISColorWheelDelegate,HJCActionSheetDelegate,DMDrawViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *backBtn;
 @property (weak, nonatomic) IBOutlet DMDrawView *drawView;
 @property (nonatomic,readwrite,strong) MPVolumeView *volumeView;
 @property (nonatomic,readwrite,assign) CGFloat lastVolumeValue;
 @property (nonatomic,readwrite,assign) BOOL resetVolumeTag;
-@property (weak, nonatomic) IBOutlet DMBrushView *brushView;
+
 
 @property (weak, nonatomic) IBOutlet UIView *selectBrushBackGroundView;
 @property (readwrite, nonatomic,strong) UIView *selectBrushBoxView;
@@ -49,8 +50,14 @@
     @weakify(self)
     self.backBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         @strongify(self)
-        HJCActionSheet *sheet = [[HJCActionSheet alloc] initWithDelegate:self CancelTitle:@"取消" OtherTitles:@"分享",@"保存",@"撤销",@"返回", nil];
-        [sheet show];
+        
+        if([self.drawView shouldDirectBack])
+            [self.navigationController popViewControllerAnimated:YES];
+        else
+        {
+            HJCActionSheet *sheet = [[HJCActionSheet alloc] initWithDelegate:self CancelTitle:@"取消" OtherTitles:@"分享",@"保存",@"撤销",@"返回", nil];
+            [sheet show];
+        }
         return [RACSignal empty];
     }];
     
@@ -780,8 +787,73 @@
    
 }
 
+
 - (void)save
 {
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    // app名称
+    NSString *app_Name = [infoDictionary objectForKey:@"CFBundleName"];
+    // app版本
+    //NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    // app build版本
+   // NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
+    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
+    NSMutableArray *groups=[[NSMutableArray alloc]init];
+    ALAssetsLibraryGroupsEnumerationResultsBlock listGroupBlock = ^(ALAssetsGroup *group, BOOL *stop)
+    {
+        if (group)
+        {
+            [groups addObject:group];
+        }
+        else
+        {
+            BOOL haveHDRGroup = NO;
+            for (ALAssetsGroup *gp in groups)
+            {
+                NSString *name =[gp valueForProperty:ALAssetsGroupPropertyName];
+                if ([name isEqualToString:app_Name])
+                {
+                    haveHDRGroup = YES;
+                }
+            }
+            if (!haveHDRGroup)
+            {
+                //do add a group named "XXXX"
+                [assetsLibrary addAssetsGroupAlbumWithName:app_Name
+                                               resultBlock:^(ALAssetsGroup *group)
+                 {
+                     [groups addObject:group];
+                 }
+                                              failureBlock:nil];
+                haveHDRGroup = YES;
+            }
+        }
+    };
+    //创建相簿
+    [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:listGroupBlock failureBlock:nil];
+    [self saveToAlbumWithMetadata:nil imageData:UIImagePNGRepresentation([ UIImage grabImageWithView:self.captureBoxView scale:2]) customAlbumName:app_Name completionBlock:^
+     {
+         //这里可以创建添加成功的方法
+         dispatch_async(dispatch_get_main_queue(), ^{
+             [self showLoadAlertView:@"保存成功" imageName:nil autoHide:YES];
+             });
+         
+             
+     }
+                     failureBlock:^(NSError *error)
+     {
+         //处理添加失败的方法显示alert让它回到主线程执行，不然那个框框死活不肯弹出来
+         dispatch_async(dispatch_get_main_queue(), ^{
+             //添加失败一般是由用户不允许应用访问相册造成的，这边可以取出这种情况加以判断一下
+             if([error.localizedDescription rangeOfString:@"User denied access"].location != NSNotFound ||[error.localizedDescription rangeOfString:@"用户拒绝访问"].location!=NSNotFound){
+                 
+                 [self showLoadAlertView:error.localizedFailureReason imageName:nil autoHide:YES];
+                 
+             }
+         });
+     }];
+
+    /*
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString * FolderName = [NSString stringWithFormat:@"%@/jhdsSaveImg",kDocuments];
     NSError *error;
@@ -802,7 +874,63 @@
         [self showLoadAlertView:@"保存失败" imageName:nil autoHide:YES];
     
     NSArray *childerFiles=[fileManager subpathsAtPath:FolderName];
-    NSLog(@"这里保存图片有%@",childerFiles);
+    NSLog(@"这里保存图片有%@",childerFiles);*/
+}
+
+- (void)saveToAlbumWithMetadata:(NSDictionary *)metadata
+                      imageData:(NSData *)imageData
+                customAlbumName:(NSString *)customAlbumName
+                completionBlock:(void (^)(void))completionBlock
+                   failureBlock:(void (^)(NSError *error))failureBlock
+{
+    ALAssetsLibrary *assetsLibrary = [[ALAssetsLibrary alloc] init];
+    __weak ALAssetsLibrary *weakSelf = assetsLibrary;
+    void (^AddAsset)(ALAssetsLibrary *, NSURL *) = ^(ALAssetsLibrary *assetsLibrary, NSURL *assetURL) {
+        [assetsLibrary assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+            [assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+                if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:customAlbumName]) {
+                    [group addAsset:asset];
+                    if (completionBlock) {
+                        completionBlock();
+                    }
+                }
+            } failureBlock:^(NSError *error) {
+                if (failureBlock) {
+                    failureBlock(error);
+                }
+            }];
+        } failureBlock:^(NSError *error) {
+            if (failureBlock) {
+                failureBlock(error);
+            }
+        }];
+    };
+    [assetsLibrary writeImageDataToSavedPhotosAlbum:imageData metadata:metadata completionBlock:^(NSURL *assetURL, NSError *error) {
+        if (customAlbumName) {
+            [assetsLibrary addAssetsGroupAlbumWithName:customAlbumName resultBlock:^(ALAssetsGroup *group) {
+                if (group) {
+                    [weakSelf assetForURL:assetURL resultBlock:^(ALAsset *asset) {
+                        [group addAsset:asset];
+                        if (completionBlock) {
+                            completionBlock();
+                        }
+                    } failureBlock:^(NSError *error) {
+                        if (failureBlock) {
+                            failureBlock(error);
+                        }
+                    }];
+                } else {
+                    AddAsset(weakSelf, assetURL);
+                }
+            } failureBlock:^(NSError *error) {
+                AddAsset(weakSelf, assetURL);
+            }];
+        } else {
+            if (completionBlock) {
+                completionBlock();
+            }
+        }
+    }];
 }
 
 - (void)share

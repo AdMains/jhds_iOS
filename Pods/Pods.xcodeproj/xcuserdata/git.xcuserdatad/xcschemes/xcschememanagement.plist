@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>KYAnimatedPageControl.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,7 +82,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>1267BB2CA2CF323C15809B44DF7B162D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>17392667E38E4938ACA525E988BB433B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>184A3029317278ABDD98A0DCD5C447CD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,47 +112,42 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>55F3AEB036081BA363CE3B2BBDC44E0B</key>
+		<key>9D85AC195EB2D66E8EEB2A8D16A64559</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>999704094741CB1EEB26BC36D43DC498</key>
+		<key>A58D0BD9873DA04FE1604BBF9E3644A1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9E7ABCDBF738665FD89DF780EA54AC5A</key>
+		<key>C167A55431E02EC1FD3023B1302C421D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A718C884769AB06D57CE6DFEFB8F6BA3</key>
+		<key>C1D73BFF61C37B15E63D348BEC64C398</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A9278E4DF558E216FB7389543354D32A</key>
+		<key>D5AD80DF1BAF707394C8EA45B8F537D2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B286F55E2A59B3908DFA5E823BC25F1C</key>
+		<key>E53CCFCC818373F99C4E5A6242371B11</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C34A48B39CF1371E958F09340AE35742</key>
+		<key>E699CF1A5A6B10CBE835E2944296BDF4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D8CB33A7BFA15936D391BAF81BD1E4FF</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F7A80A2D31892557B0378233CE129612</key>
+		<key>F9C86A2A96DB9D657E56EEA016F8A697</key>
 		<dict>
 			<key>primary</key>
 			<true/>

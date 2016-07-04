@@ -8,6 +8,7 @@
 
 #import "DMLearnSubViewController.h"
 #import "DMLearnCollectionViewCell.h"
+#import "DMCopyDetailViewController.h"
 @interface DMLearnSubViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 @end
@@ -151,7 +152,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-    
+    UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    DMCopyDetailViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMCopyDetailViewController"];
+    modal.imgUrls = [self.viewModel detailLearnWithIndex:indexPath.row];
+    [self.navigationController pushViewController:modal animated:NO];
     
 }
 @end

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '9E7ABCDBF738665FD89DF780EA54AC5A'
+               BlueprintIdentifier = '1267BB2CA2CF323C15809B44DF7B162D'
                BlueprintName = 'QGCollectionMenu'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libQGCollectionMenu.a'>

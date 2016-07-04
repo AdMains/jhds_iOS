@@ -73,13 +73,14 @@
 - (NSString *)urlLearnWithIndex:(NSInteger)index
 {
     DMLearnModel * m =self.learnsAry[index];
-    NSString* url = [NSString stringWithFormat:@"%@/images/jhds/learn/%@.jpg",kAPIBaseURI,m.url];
-    return  url;
+    
+    return  m.url;
 }
 
 - (NSArray *)detailLearnWithIndex:(NSInteger)index
 {
     DMLearnModel * m =self.learnsAry[index];
+    
     return m.detail;
 }
 

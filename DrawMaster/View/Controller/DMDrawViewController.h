@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "DMBrushView.h"
 @interface DMDrawViewController : UIViewController
 @property (nonatomic,readwrite,strong) IBOutlet UIView * captureBoxView;
-
+@property (weak, nonatomic) IBOutlet DMBrushView *brushView;
 @end

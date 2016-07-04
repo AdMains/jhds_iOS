@@ -24,4 +24,6 @@
 - (void)shakeToClear;
 - (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor *)bc;
 - (void)backToFront;
+
+- (BOOL)shouldDirectBack;
 @end
