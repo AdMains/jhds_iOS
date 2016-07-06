@@ -155,6 +155,7 @@
     UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DMCopyDetailViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMCopyDetailViewController"];
     modal.imgUrls = [self.viewModel detailLearnWithIndex:indexPath.row];
+    [[NSUserDefaults standardUserDefaults] setObject:[self.viewModel detailLearnWithIndex:indexPath.row] forKey:@"DMLastDrawInfo"];
     [self.navigationController pushViewController:modal animated:NO];
     
 }

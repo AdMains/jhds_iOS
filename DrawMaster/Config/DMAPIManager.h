@@ -29,4 +29,11 @@ typedef NS_ENUM(NSInteger, DMAPIReturnType)
 - (RACSignal *)fetchLearnNumWithType:(NSString*)type;
 - (RACSignal *)fetchLearnListWithType:(NSString*)type PageIndex:(NSString*)page;
 
+- (RACSignal *)fetchProtectBabyList;
+- (RACSignal *)fetchNewsList;
+
+- (RACSignal *)fetchShopNumWithType:(NSString*)type;
+- (RACSignal *)fetchShopListWithType:(NSString*)type PageIndex:(NSString*)page;
+
+- (RACSignal *)fetchSplashData;
 @end

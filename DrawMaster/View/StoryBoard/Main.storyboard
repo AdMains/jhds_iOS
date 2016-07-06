@@ -166,10 +166,10 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="Rt4-Bp-NY6"/>
                                 <exclude reference="aXW-YR-NhI"/>
-                                <exclude reference="NSx-Ov-AHl"/>
+                                <exclude reference="Rt4-Bp-NY6"/>
                                 <exclude reference="M3O-L9-bqd"/>
+                                <exclude reference="NSx-Ov-AHl"/>
                             </mask>
                         </variation>
                     </view>

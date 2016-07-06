@@ -30,6 +30,11 @@ PODS:
   - Mantle/extobjc (1.5.8)
   - Masonry (1.0.1)
   - MBProgressHUD (0.9.2)
+  - NJKWebViewProgress (0.2.3):
+    - NJKWebViewProgress/Core (= 0.2.3)
+    - NJKWebViewProgress/ProgressView (= 0.2.3)
+  - NJKWebViewProgress/Core (0.2.3)
+  - NJKWebViewProgress/ProgressView (0.2.3)
   - pop (1.0.9)
   - QGCollectionMenu (0.1.1)
   - QGOCCategory (0.1.1)
@@ -56,6 +61,7 @@ DEPENDENCIES:
   - Mantle (~> 1.5)
   - Masonry
   - MBProgressHUD
+  - NJKWebViewProgress
   - pop
   - QGCollectionMenu (from `https://github.com/QuanGe/QGCollectionMenu.git`)
   - QGOCCategory (from `https://github.com/QuanGe/QGOCCategory`)
@@ -93,6 +99,7 @@ SPEC CHECKSUMS:
   Mantle: f03b2b606c3f0cabd80214ad8a2fed6b464a7359
   Masonry: a1a931a0d08870ed8ae415a2ea5ea68ebcac77df
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  NJKWebViewProgress: f481fd424cb5ecc27eacae11b5397db92fba9a4d
   pop: f667631a5108a2e60d9e8797c9b32ddaf2080bce
   QGCollectionMenu: 8ccb647043e1bd253a5d9362e6eb8a7da6f05d4a
   QGOCCategory: 437e1845b71e1c33b987a82b722ef0056c7747ac
@@ -103,6 +110,6 @@ SPEC CHECKSUMS:
   UALogger: ccc041e5982dbd274ab5805f914076fef9bf29cf
   UMengAnalytics-NO-IDFA: 965a219b05475ff2a4c09a164139a27bbaa0e25b
 
-PODFILE CHECKSUM: 5dbdb066d8485d490a91568aa4a5804e9557468f
+PODFILE CHECKSUM: 6523d337aaaccc008d90c5a533a78213de1ab6f4
 
 COCOAPODS: 1.0.1

@@ -122,20 +122,20 @@
 
 /*---------------------------------第三方登录-------------------------------------*/
 
-#define kSinaKey @"2017338637"
+#define kSinaKey @"3129504298"
 #define kREDIRECT_URL @"http://www.csdn.net"
 #define KSECRET @"d46e7112516d4fa1ae504abaf7b24868"
 #define kWeboTypeLogin @"CSDNInteractionWeboLoginType"
 
 #define kWeixin_Parther @"1261353101"
-#define kWeixinAppKey @"wxb97b7e013681fe86"
-#define kWeixinAppSecret @"353e276a9853ad61b4acd9334459a5a7"
+#define kWeixinAppKey @"wxd9d724f78ea966a8"
+#define kWeixinAppSecret @"f7d57a7ef45aa1a6399f64c8dfce34b6"
 #define kWeixinCode @"weixinCode"
 #define kWeixinTypeLogin @"CSDNInteractionWeixinLoginType"
 
-#define kTencentAppId @"1104658735"
+#define kTencentAppId @"1105413313"
 //#define kTencentAppId @"100270989"
-#define kTencentKey @"aCkWgSdJ04js1r5s"
+#define kTencentKey @"NkkJ9gXOebppQEgd"
 #define kQQTypeLogin @"CSDNInteractionQQLoginType"
 
 #define kCSDNLogin @"csdnlogin"

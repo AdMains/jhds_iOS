@@ -8,7 +8,10 @@
 
 #import "AppDelegate.h"
 #import "DMSplashViewController.h"
-@interface AppDelegate ()
+#import "WeiboSDK.h"
+#import "WXApi.h"
+#import <TencentOpenAPI/TencentOAuth.h>
+@interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,TencentSessionDelegate>
 
 @end
 
@@ -17,7 +20,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
+    [WeiboSDK enableDebugMode:YES];
+    [WeiboSDK registerApp:kSinaKey];
+    [WXApi registerApp:kWeixinAppKey withDescription:@"简画大师"];
     //底部选项卡设置
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kTabColor,NSForegroundColorAttributeName,nil]forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kTabSelectColor,NSForegroundColorAttributeName,nil] forState:UIControlStateSelected];
@@ -36,6 +41,16 @@
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    return [WeiboSDK handleOpenURL:url delegate:self]||
+    [WXApi handleOpenURL:url delegate:self]||[TencentOAuth HandleOpenURL:url];
+}
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url
+{
+    return [WeiboSDK handleOpenURL:url delegate:self] ||
+    [WXApi handleOpenURL:url delegate:self]||[TencentOAuth HandleOpenURL:url];
+}
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
@@ -46,6 +61,23 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)didReceiveWeiboResponse:(WBBaseResponse *)response
+{
+    if(response.statusCode == WeiboSDKResponseStatusCodeUserCancel)
+    {
+        UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
+        UIViewController *vc = [navigationControll childViewControllers].lastObject;
+        [vc showLoadAlertView:@"您已经取消分享" imageName:nil autoHide:YES];
+    }
+    else if(response.statusCode == WeiboSDKResponseStatusCodeSuccess)
+    {
+        UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
+        UIViewController *vc = [navigationControll childViewControllers].lastObject;
+        [vc showLoadAlertView:@"您已经成功分享" imageName:nil autoHide:YES];
+    }
+    
 }
 
 @end

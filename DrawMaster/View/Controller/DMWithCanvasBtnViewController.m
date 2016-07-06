@@ -42,6 +42,7 @@
 {
     UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMDrawViewController"];
+    [[NSUserDefaults standardUserDefaults] setObject:@[] forKey:@"DMLastDrawInfo"];
     [self.navigationController pushViewController:modal animated:NO];
 }
 

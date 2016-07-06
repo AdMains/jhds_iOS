@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>NJKWebViewProgress.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-DrawMaster.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -82,7 +87,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1267BB2CA2CF323C15809B44DF7B162D</key>
+		<key>09A6F4D9430BCF43DF45166623508A1C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>12B87C8DC9AC4E6AD984E153A2F0DDB9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,7 +102,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>184A3029317278ABDD98A0DCD5C447CD</key>
+		<key>2B60B8F933841B98F20F35A5FDD5CA0B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2EE46AC70D12100E07915DEE9DA6715B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>40A0F957DA73F83C0856112402947310</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,37 +132,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9D85AC195EB2D66E8EEB2A8D16A64559</key>
+		<key>5F312EB75DB3623E4BA91ABFCE23B718</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A58D0BD9873DA04FE1604BBF9E3644A1</key>
+		<key>71D76C8E738E55FBC1CC27AA0E7F5125</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C167A55431E02EC1FD3023B1302C421D</key>
+		<key>B4A3E08D49931371F7247521A50EAF79</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C1D73BFF61C37B15E63D348BEC64C398</key>
+		<key>EE9210F8595065D69E769A67483D5217</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D5AD80DF1BAF707394C8EA45B8F537D2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E53CCFCC818373F99C4E5A6242371B11</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E699CF1A5A6B10CBE835E2944296BDF4</key>
+		<key>F56C11E1E714BA7D1124B4DFF27B3072</key>
 		<dict>
 			<key>primary</key>
 			<true/>

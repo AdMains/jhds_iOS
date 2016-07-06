@@ -53,7 +53,7 @@
     }
     
     return [[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
-        self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"application/json",@"application/vnd.apple.mpegurl",@"application/octet-stream",@"text/vnd.trolltech.linguist",@"audio/x-mpegurl",nil];
+        self.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"text/plain",@"application/json",@"application/vnd.apple.mpegurl",@"application/octet-stream",@"image/jpeg",@"text/vnd.trolltech.linguist",@"audio/x-mpegurl",nil];
         AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             if (type == DMAPIManagerReturnTypePlain||type == DMAPIManagerReturnTypeM3u8) {
@@ -234,6 +234,109 @@
         
         return [MTLJSONAdapter modelsOfClass:objc_getClass("DMLearnModel") fromJSONArray:value error:nil];
     }];
+}
+
+- (RACSignal *)fetchShopNumWithType:(NSString*)type
+{
+    NSString * str = [NSString stringWithFormat:@"images/jhds/shop_%@.txt",type];
+    return [[self fetchDataWithURLString:mUrlString(str)
+                                  params:nil
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypePlain httpMethod:@"get"] map:^id(id value) {
+        
+        return value;
+    }];
+    
+    
+}
+
+- (RACSignal *)fetchShopListWithType:(NSString*)type PageIndex:(NSString*)page
+{
+    NSString * str = [NSString stringWithFormat:@"images/jhds/shop_%@_%@.txt",type,page];
+    return [[self fetchDataWithURLString:mUrlString(str)
+                                  params:nil
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
+        
+        return [MTLJSONAdapter modelsOfClass:objc_getClass("DMShopModel") fromJSONArray:value error:nil];
+    }];
+}
+
+
+- (RACSignal *)fetchNewsList
+{
+    NSString * str = [NSString stringWithFormat:@"images/jhds/message.txt"];
+    return [[self fetchDataWithURLString:mUrlString(str)
+                                  params:nil
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
+        
+        return [MTLJSONAdapter modelsOfClass:objc_getClass("DMNewsModel") fromJSONArray:value error:nil];
+    }];
+}
+
+- (RACSignal *)fetchProtectBabyList
+{
+    NSString * str = [NSString stringWithFormat:@"images/jhds/protectBaby.txt"];
+    return [[self fetchDataWithURLString:mUrlString(str)
+                                  params:nil
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
+        
+        return [MTLJSONAdapter modelsOfClass:objc_getClass("DMNewsModel") fromJSONArray:value error:nil];
+    }];
+}
+
+- (RACSignal *)fetchSplashData
+{
+    NSString * str = [NSString stringWithFormat:@"images/jhds/splash.txt"];
+    return [[self fetchDataWithURLString:mUrlString(str)
+                                  params:nil
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeDic httpMethod:@"get"] map:^id(NSDictionary* value) {
+        
+        NSString *imgUrl = [value objectForKey:@"img"] ;
+        NSString * localImg = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMSplashImgUrl"];
+        if(localImg == nil)
+        {
+            [self saveSplashInfoAndImageWithDic:value];
+        }
+        else if(![imgUrl isEqualToString:localImg])
+        {
+            [self saveSplashInfoAndImageWithDic:value];
+        }
+        return value;
+        
+    }];
+}
+
+- (void)saveSplashInfoAndImageWithDic:(NSDictionary *)dic
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"img"] forKey:@"DMSplashImgUrl"];
+    [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"detail"] forKey:@"DMSplashClickUrl"];
+    [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"type"] forKey:@"DMSplashClickUrl"];
+    
+    [[self fetchDataWithURLString:[dic objectForKey:@"img"] params:nil headers:nil returnType:DMAPIManagerReturnTypeData httpMethod:@"get"] subscribeNext:^(NSData *imgData) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString * FolderName = [NSString stringWithFormat:@"%@/jhdsSplashImg",kDocuments];
+        NSError *error;
+        if (![fileManager fileExistsAtPath:FolderName]) {
+            
+            [fileManager createDirectoryAtPath:FolderName withIntermediateDirectories:NO attributes:nil error:&error];
+        }
+        NSString * imageSavePath = [NSString stringWithFormat:@"%@/jhdsSplashImg/%@",kDocuments,[[dic objectForKey:@"img"] qgocc_stringFromMD5]];
+        
+        //UIImageWriteToSavedPhotosAlbum([ UIImage grabImageWithView:self.captureBoxView scale:2], self, @selector(imageSavedToPhotosAlbum: didFinishSavingWithError: contextInfo:), nil);
+        
+        if([imgData writeToFile:imageSavePath atomically:YES])
+            NSLog(@"闪屏页图片保存成功") ;
+        else
+            NSLog(@"闪屏页图片保存失败") ;
+        
+    } error:^(NSError *error) {
+        NSLog(@"闪屏页图片获取失败") ;
+    }];
+
 }
 
 

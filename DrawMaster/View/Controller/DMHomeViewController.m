@@ -7,7 +7,7 @@
 //
 
 #import "DMHomeViewController.h"
-
+#import "DMAPIManager.h"
 @interface DMHomeViewController ()<UINavigationControllerDelegate>
 
 @end
@@ -19,6 +19,13 @@
     // Do any additional setup after loading the view.
     self.navigationController.delegate = self;
     
+    [[[DMAPIManager sharedManager] fetchSplashData] subscribeNext:^(id x) {
+        NSLog(@"闪屏页数据偷偷加载完成");
+    }];
+    
+    NSString* firstInstall = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMFirstInstall"];
+    if(firstInstall==nil)
+        [[NSUserDefaults standardUserDefaults]  setObject:@"YES" forKey:@"DMFirstInstall"];
 }
 
 - (void)didReceiveMemoryWarning {

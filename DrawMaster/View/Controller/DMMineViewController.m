@@ -10,6 +10,10 @@
 #import "DMMineTableViewCell.h"
 #import "DMDrawViewController.h"
 #import "DMCopyDetailViewController.h"
+#import "DMMineSaveViewController.h"
+#import "DMMineShopViewController.h"
+#import "DMMineNewsViewController.h"
+#import "DMMineProtectBabyViewController.h"
 @interface DMMineViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (nonatomic,readwrite,strong) NSArray *data;
@@ -171,10 +175,43 @@
     }
     else if(indexPath.section == 0 &&indexPath.row == 2)
     {
-        UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        DMDrawViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMDrawViewController"];
-        modal.loadLastDraw = YES;
-        [self.navigationController pushViewController:modal animated:NO];
+        NSMutableArray *lastDrawInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMLastDrawInfo"];
+        if(lastDrawInfo == nil || lastDrawInfo.count==0)
+        {
+            UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            DMDrawViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMDrawViewController"];
+            modal.loadLastDraw = YES;
+            [self.navigationController pushViewController:modal animated:YES];
+        }
+        else
+        {
+            UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            DMCopyDetailViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMCopyDetailViewController"];
+            modal.loadLastDraw = YES;
+            modal.imgUrls = lastDrawInfo;
+            [self.navigationController pushViewController:modal animated:YES];
+            
+        }
+    }
+    else if(indexPath.section == 0 &&indexPath.row == 1)
+    {
+        DMMineSaveViewController *modal =  [[DMMineSaveViewController alloc] init];
+        [self.navigationController pushViewController:modal animated:YES];
+    }
+    else if(indexPath.section == 1 &&indexPath.row == 0)
+    {
+        DMMineShopViewController *modal =  [[DMMineShopViewController alloc] init];
+        [self.navigationController pushViewController:modal animated:YES];
+    }
+    else if(indexPath.section == 1 &&indexPath.row == 1)
+    {
+        DMMineNewsViewController *modal =  [[DMMineNewsViewController alloc] init];
+        [self.navigationController pushViewController:modal animated:YES];
+    }
+    else if(indexPath.section == 2 &&indexPath.row == 0)
+    {
+        DMMineProtectBabyViewController *modal =  [[DMMineProtectBabyViewController alloc] init];
+        [self.navigationController pushViewController:modal animated:YES];
     }
     
 }
