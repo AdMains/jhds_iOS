@@ -343,7 +343,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Gty-cp-m53">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="OO2-TL-8HX" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="OO2-TL-8HX" customClass="DMNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZBQ-f9-HPs">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

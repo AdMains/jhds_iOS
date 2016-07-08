@@ -12,7 +12,7 @@
 #import "WXApi.h"
 #import <TencentOpenAPI/TencentOAuth.h>
 @interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,TencentSessionDelegate>
-
+@property (strong, nonatomic) TencentOAuth *tencentOAuth;
 @end
 
 @implementation AppDelegate
@@ -27,6 +27,8 @@
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kTabColor,NSForegroundColorAttributeName,nil]forState:UIControlStateNormal];
     [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:kTabSelectColor,NSForegroundColorAttributeName,nil] forState:UIControlStateSelected];
     [[UITabBar appearance] setItemWidth:200];
+    [[UITabBar appearance] setBackgroundColor:[UIColor whiteColor]];
+    self.tencentOAuth = [[TencentOAuth alloc] initWithAppId:kTencentAppId andDelegate:self];
 
     return YES;
 }
@@ -78,6 +80,23 @@
         [vc showLoadAlertView:@"您已经成功分享" imageName:nil autoHide:YES];
     }
     
+}
+
+#pragma mark - 微信
+-(void)onResp:(BaseReq *)resp
+{
+    /*
+     ErrCode ERR_OK = 0(用户同意)
+     ERR_AUTH_DENIED = -4（用户拒绝授权）
+     ERR_USER_CANCEL = -2（用户取消）
+     code    用户换取access_token的code，仅在ErrCode为0时有效
+     state   第三方程序发送时用来标识其请求的唯一性的标志，由第三方程序调用sendReq时传入，由微信终端回传，state字符串长度不能超过1K
+     lang    微信客户端当前语言
+     country 微信用户当前国家信息
+     */
+    if ([resp isKindOfClass:[SendMessageToWXResp class]]) {
+        return;
+    }
 }
 
 @end

@@ -116,6 +116,7 @@
     style.alignment = NSTextAlignmentJustified;
     style.lineBreakMode = NSLineBreakByCharWrapping;
     style.lineSpacing = 12;
+    //cell.infoLabel.backgroundColor = [UIColor redColor];
     cell.infoLabel.attributedText = [[NSMutableAttributedString alloc] initWithString:[self.viewModel infoLearnWithIndex:indexPath.row] attributes:@{NSFontAttributeName: kLessonTitleFont,NSForegroundColorAttributeName:kContentColor,NSParagraphStyleAttributeName:style}];
     
      NSArray * size = [[self.viewModel sizeOfLearnWithIndex:indexPath.row] componentsSeparatedByString:@","];
@@ -125,7 +126,15 @@
     CGFloat w = mIsPad?(mScreenWidth-32-15)/2:(mScreenWidth-16-10);
    
     
+    //cell.contentImgHeight.constant = w*([size[1] floatValue]/[size[0] floatValue]);
+    
+    CGFloat textHeight = [[self.viewModel infoLearnWithIndex:indexPath.row] boundingRectWithSize:CGSizeMake(w, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
+                                                                 attributes:@{NSFontAttributeName: kLessonTitleFont,NSForegroundColorAttributeName:kContentColor,NSParagraphStyleAttributeName:style}
+                                                                    context:nil].size.height;
+    
+    cell.contentHeight.constant = textHeight+30;
     cell.contentImgHeight.constant = w*([size[1] floatValue]/[size[0] floatValue]);
+    
     return cell;
 }
 
@@ -141,7 +150,7 @@
     
     CGFloat h = w*([size[1] floatValue]/[size[0] floatValue])+ [[self.viewModel infoLearnWithIndex:indexPath.row] boundingRectWithSize:CGSizeMake(w, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading)
                                                                                                                             attributes:@{NSFontAttributeName: kLessonTitleFont,NSForegroundColorAttributeName:kContentColor,NSParagraphStyleAttributeName:style}
-                                                                                                                               context:nil].size.height+20;
+                                                                                                                               context:nil].size.height+35;
     return CGSizeMake(w, h);
 }
 

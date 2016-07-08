@@ -41,6 +41,8 @@
     
     [self.tableview registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
     [self.tableview registerNib:[UINib nibWithNibName:NSStringFromClass([DMMineTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([DMMineTableViewCell class])];
+    [self.tableview setBackgroundColor:mRGBToColor(0xeeeeee)];
+    [self.tableview setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
 }
 
@@ -92,6 +94,7 @@
             NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
             
             NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+            NSString * newAppVersion =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMAppVersion"];
             // app build版本
             // NSString *app_build = [infoDictionary objectForKey:@"CFBundleVersion"];
             UILabel *tipLabel = [[UILabel alloc] init];
@@ -108,6 +111,23 @@
                 }];
             }
             
+            if([app_Version floatValue]<[newAppVersion floatValue])
+            {
+                tipLabel.userInteractionEnabled = YES;
+                tipLabel.text = [NSString stringWithFormat:@"当前版本为:%@点击更新到最新版本:%@",app_Version,newAppVersion];
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] init];
+                [tipLabel addGestureRecognizer:tap];
+                [tap.rac_gestureSignal subscribeNext:^(UITapGestureRecognizer * x) {
+                    if(x.state == UIGestureRecognizerStateEnded)
+                    {
+                        NSString *str = [NSString stringWithFormat:
+                                         @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",
+                                         @"1126665175" ];
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+                    }
+                }];
+            }
+            
         }
         return cell;
 
@@ -118,9 +138,93 @@
     NSString * iconName = [[[self.data objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"icon"];
     UIImage *icon = [UIImage imageNamed:iconName];
     cell.leftIconImg.image = icon;
-
+    cell.line.backgroundColor =mRGBToColor(0xcccccc);
+    cell.lineHeight.constant = 0.5;
+    if((indexPath.section == 1 && indexPath.row==0) || (indexPath.section == 0 && indexPath.row==1))
+    {
+        cell.line.hidden = NO;
+    }
+    else
+        cell.line.hidden = YES;
     cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"list_arrow"]];
 
+    if(indexPath.section !=1 && indexPath.section !=2)
+    {
+        cell.redPoint.hidden = YES;
+    }
+    else
+    {
+        cell.redPoint.layer.cornerRadius = 4.0;
+        cell.redPoint.clipsToBounds = YES;
+        
+        //
+        NSString * DMOldShopTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMOldShopTag"];
+        NSString * DMShopTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMShopTag"];
+        if(indexPath.section ==1 &&indexPath.row==0)
+        {
+            if(DMOldShopTag == nil )
+            {
+                cell.redPoint.hidden = NO;
+            }
+            else
+            {
+                if([DMOldShopTag isEqualToString:DMShopTag])
+                {
+                    cell.redPoint.hidden = YES;
+                }
+                else
+                {
+                    cell.redPoint.hidden = NO;
+                }
+            }
+        }
+        
+        //
+        NSString * oldMessageTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMOldMessageTag"];
+        NSString * newMessageTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMMessageTag"];
+        if(indexPath.section ==1 &&indexPath.row==1)
+        {
+            if(oldMessageTag == nil )
+            {
+                cell.redPoint.hidden = NO;
+            }
+            else
+            {
+                if([oldMessageTag isEqualToString:newMessageTag])
+                {
+                    cell.redPoint.hidden = YES;
+                }
+                else
+                {
+                    cell.redPoint.hidden = NO;
+                }
+            }
+        }
+        
+        //
+        NSString * DMOldProtectBabyTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMOldProtectBabyTag"];
+        NSString * DMProtectBabyTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMProtectBabyTag"];
+        if(indexPath.section ==2 &&indexPath.row==0)
+        {
+            if(oldMessageTag == nil )
+            {
+                cell.redPoint.hidden = NO;
+            }
+            else
+            {
+                if([DMOldProtectBabyTag isEqualToString:DMProtectBabyTag])
+                {
+                    cell.redPoint.hidden = YES;
+                }
+                else
+                {
+                    cell.redPoint.hidden = NO;
+                }
+            }
+        }
+
+        
+    }
     return cell;
     
     
@@ -202,16 +306,30 @@
     {
         DMMineShopViewController *modal =  [[DMMineShopViewController alloc] init];
         [self.navigationController pushViewController:modal animated:YES];
+       
+        NSString * DMShopTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMShopTag"];
+        [[NSUserDefaults standardUserDefaults] setObject:DMShopTag forKey:@"DMOldShopTag"];
+        [self.tableview reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateRedTip" object:nil];
     }
     else if(indexPath.section == 1 &&indexPath.row == 1)
     {
         DMMineNewsViewController *modal =  [[DMMineNewsViewController alloc] init];
         [self.navigationController pushViewController:modal animated:YES];
+        NSString * newMessageTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMMessageTag"];
+        [[NSUserDefaults standardUserDefaults] setObject:newMessageTag forKey:@"DMOldMessageTag"];
+        [self.tableview reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateRedTip" object:nil];
     }
     else if(indexPath.section == 2 &&indexPath.row == 0)
     {
         DMMineProtectBabyViewController *modal =  [[DMMineProtectBabyViewController alloc] init];
         [self.navigationController pushViewController:modal animated:YES];
+        
+        NSString * DMProtectBabyTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMProtectBabyTag"];
+        [[NSUserDefaults standardUserDefaults] setObject:DMProtectBabyTag forKey:@"DMOldProtectBabyTag"];
+        [self.tableview reloadData];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateRedTip" object:nil];
     }
     
 }

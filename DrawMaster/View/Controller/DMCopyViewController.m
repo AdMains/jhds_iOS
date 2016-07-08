@@ -34,6 +34,7 @@
         
         self.sub.delegate =self;
         self.sub.dataSource = self;
+        
         [self.sub reload];
         
     }

@@ -24,24 +24,47 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GoV-6b-4U1">
-                        <rect key="frame" x="8" y="12" width="21" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GoV-6b-4U1">
+                        <rect key="frame" x="8" y="11" width="21" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="Dr0-mb-NQk"/>
                             <constraint firstAttribute="width" constant="21" id="hbI-j1-RPe"/>
                         </constraints>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xyq-3d-3K5">
+                        <rect key="frame" x="5" y="41" width="335" height="1"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="6Ws-n6-OtJ"/>
+                        </constraints>
+                    </view>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8i-7h-7pq">
+                        <rect key="frame" x="0.0" y="0.0" width="8" height="8"/>
+                        <color key="backgroundColor" red="1" green="0.18947022299999999" blue="0.1505434712" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="8" id="Urj-VR-faS"/>
+                            <constraint firstAttribute="width" constant="8" id="lU9-xu-8Sy"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Xyq-3d-3K5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="4Jt-tj-Ven"/>
                     <constraint firstItem="GoV-6b-4U1" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="4QT-sH-aru"/>
+                    <constraint firstAttribute="trailing" secondItem="Xyq-3d-3K5" secondAttribute="trailing" constant="-20" id="BSc-Vt-qEh"/>
+                    <constraint firstItem="H8i-7h-7pq" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="WUg-fH-4Ox"/>
+                    <constraint firstItem="H8i-7h-7pq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="YYs-rJ-yfz"/>
                     <constraint firstItem="flp-xO-Pld" firstAttribute="leading" secondItem="GoV-6b-4U1" secondAttribute="trailing" constant="15" id="def-GA-gly"/>
                     <constraint firstItem="flp-xO-Pld" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="hFu-8c-odQ"/>
                     <constraint firstItem="GoV-6b-4U1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="mih-hf-bZG"/>
+                    <constraint firstAttribute="bottom" secondItem="Xyq-3d-3K5" secondAttribute="bottom" constant="1" id="vES-fj-aof"/>
                 </constraints>
             </tableViewCellContentView>
             <inset key="separatorInset" minX="8" minY="0.0" maxX="0.0" maxY="0.0"/>
             <connections>
                 <outlet property="leftIconImg" destination="GoV-6b-4U1" id="l0W-iW-kXX"/>
+                <outlet property="line" destination="Xyq-3d-3K5" id="Ucj-Ci-gZB"/>
+                <outlet property="lineHeight" destination="6Ws-n6-OtJ" id="Yub-Uq-vd6"/>
+                <outlet property="redPoint" destination="H8i-7h-7pq" id="qN7-qx-pjJ"/>
                 <outlet property="titleLable" destination="flp-xO-Pld" id="bgh-Zl-TuF"/>
             </connections>
         </tableViewCell>

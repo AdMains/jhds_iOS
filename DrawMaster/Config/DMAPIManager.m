@@ -310,11 +310,31 @@
     }];
 }
 
+- (RACSignal *)fetchMessageTag
+{
+    NSString * str = [NSString stringWithFormat:@"images/jhds/messageTag.txt"];
+    return [[self fetchDataWithURLString:mUrlString(str)
+                                  params:nil
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeDic httpMethod:@"get"] map:^id(NSDictionary* value) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"appiOSVersion"] forKey:@"DMAppVersion"];
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"shopTag"] forKey:@"DMShopTag"];
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"messageTag"] forKey:@"DMMessageTag"];
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"protectBabyTag"] forKey:@"DMProtectBabyTag"];
+        
+        return value;
+        
+    }];
+
+    
+}
+
 - (void)saveSplashInfoAndImageWithDic:(NSDictionary *)dic
 {
     [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"img"] forKey:@"DMSplashImgUrl"];
     [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"detail"] forKey:@"DMSplashClickUrl"];
-    [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"type"] forKey:@"DMSplashClickUrl"];
+    [[NSUserDefaults standardUserDefaults] setObject:[dic objectForKey:@"type"] forKey:@"DMSplashType"];
     
     [[self fetchDataWithURLString:[dic objectForKey:@"img"] params:nil headers:nil returnType:DMAPIManagerReturnTypeData httpMethod:@"get"] subscribeNext:^(NSData *imgData) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -340,5 +360,14 @@
 }
 
 
-
++ (ALAssetsLibrary *)defaultAssetsLibrary
+{
+    static dispatch_once_t pred = 0;
+    static ALAssetsLibrary *library = nil;
+    dispatch_once(&pred,
+                  ^{
+                      library = [[ALAssetsLibrary alloc] init];
+                  });
+    return library;
+}
 @end

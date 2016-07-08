@@ -9,6 +9,7 @@
 #import "DMSplashViewController.h"
 #import "DMGuideCollectionViewCell.h"
 #import "KYAnimatedPageControl.h"
+#import "DMWebViewController.h"
 #define degressToRadius(ang) (M_PI*(ang)/180.0f)
 #define kskipBtnRadius 18
 @interface DMSplashViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
@@ -25,6 +26,7 @@
 {
     [super loadView];
     self.view.backgroundColor = [UIColor whiteColor];//
+    @weakify(self)
     NSString* firstInstall = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMFirstInstall"];
     if(firstInstall != nil)
     {
@@ -42,6 +44,74 @@
                 make.top.mas_equalTo(0);
                 make.bottom.mas_equalTo(-100);
             }];
+            
+            NSNumber * splashType = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMSplashType"];
+            if(splashType != nil)
+            {
+                image.userInteractionEnabled = YES;
+                NSString * clickurl = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMSplashClickUrl"];
+                
+                switch ([splashType integerValue]) {
+                    case -1:
+                        
+                        break;
+                    case 0:
+                    {
+                        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] init];
+                        [image addGestureRecognizer:tap];
+                        [tap.rac_gestureSignal subscribeNext:^(UITapGestureRecognizer *x) {
+                            @strongify(self)
+                            if(x.state == UIGestureRecognizerStateEnded)
+                            {
+                                self.view.tag =11;
+                                self.skipBtn.tag = 1;
+                                [self goToHome];
+                            }
+                        }];
+                        
+                        
+                    }
+                        break;
+                    case 1:
+                    {
+                        UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] init];
+                        [image addGestureRecognizer:tap];
+                        [tap.rac_gestureSignal subscribeNext:^(UITapGestureRecognizer *x) {
+                           
+                            if(x.state == UIGestureRecognizerStateEnded)
+                            {
+                                [UIAlertView qgocc_showWithTitle:@"温馨提示"
+                                                         message:@"将要打开淘宝APP，请与店主报告暗号：简画大师"
+                                               cancelButtonTitle:@"取消"
+                                               otherButtonTitles:@[@"简便宜"]
+                                                        tapBlock:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                                                            if (buttonIndex == [alertView cancelButtonIndex]) {
+                                                                [alertView dismissWithClickedButtonIndex:0 animated:YES];
+                                                            } else if (buttonIndex == 1) {
+                                                                
+                                                                NSString *url = [@"taobao://" stringByAppendingString:[clickurl substringFromIndex:8]];
+                                                                if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:url]]) {
+                                                                    // 如果已经安装淘宝客户端，就使用客户端打开链接
+                                                                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+                                                                } else {
+                                                                    // 否则使用 Mobile Safari 或者内嵌 WebView 来显示
+                                                                    
+                                                                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:clickurl]];
+                                                                }
+                                                                
+                                                            }
+                                                        }];
+
+                            }
+                        }];
+                    }
+                        break;
+                    
+                    default:
+                        break;
+                }
+            }
+            
         }
         
         self.skipBtn = [[UIButton alloc] init];
@@ -197,6 +267,8 @@
     }
 
 }
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

@@ -11,4 +11,5 @@
 @interface DMWebViewController : DMMineBaseViewController
 @property (nonatomic,readwrite,strong) NSString*detailUrl;
 @property (nonatomic,readwrite,strong) NSString*detailTitle;
+@property (nonatomic,readwrite,assign) BOOL canShare;
 @end

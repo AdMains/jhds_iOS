@@ -12,5 +12,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *contentImg;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentImgHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *contentHeight;
 
 @end

@@ -7,7 +7,7 @@
 //
 
 #import <AFNetworking/AFNetworking.h>
-
+#import <AssetsLibrary/AssetsLibrary.h>
 typedef NS_ENUM(NSInteger, DMAPIReturnType)
 {
     DMAPIManagerReturnTypeDic,
@@ -36,4 +36,6 @@ typedef NS_ENUM(NSInteger, DMAPIReturnType)
 - (RACSignal *)fetchShopListWithType:(NSString*)type PageIndex:(NSString*)page;
 
 - (RACSignal *)fetchSplashData;
+- (RACSignal *)fetchMessageTag;
++ (ALAssetsLibrary *)defaultAssetsLibrary;
 @end

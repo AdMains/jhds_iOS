@@ -11,6 +11,9 @@
 #import "CommonShareView.h"
 #import "WeiboSDK.h"
 #import "WXApi.h"
+#import <TencentOpenAPI/QQApi.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 @interface DMMineSaveDetailViewController ()<UICollectionViewDelegate,UICollectionViewDataSource,CommonShareViewDelegate>
 @property (nonatomic,readwrite,strong) UICollectionView *collecttionView;
 @property (nonatomic,readwrite,strong) UILabel * numLabel;
@@ -41,7 +44,7 @@
 - (void)buildUI
 {
     
-   
+    self.view.backgroundColor = [UIColor whiteColor];
     UICollectionViewFlowLayout *copyLayout=[[UICollectionViewFlowLayout alloc] init];
     {
         copyLayout.minimumLineSpacing = 10;
@@ -111,11 +114,11 @@
     
     UIButton * shareBtn = [[UIButton alloc] init];
     {
-      
+        @weakify(self);
         [self.view addSubview:shareBtn];
         [shareBtn setImage:[UIImage imageNamed:@"new_share"] forState:UIControlStateNormal];
         shareBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-           
+           @strongify(self);
             [[CommonShareView sharedView] show];
             [CommonShareView sharedView].delegate = self;
             return [RACSignal empty];
@@ -130,8 +133,12 @@
         
     }
 
+    self.collecttionView.alpha = 0;
     [self.collecttionView reloadData];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.5 animations:^{
+            self.collecttionView.alpha = 1;
+        }];
         [self.collecttionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.curIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     });
     
@@ -148,7 +155,10 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DMCopyCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:NSStringFromClass([DMCopyCollectionViewCell class]) forIndexPath:indexPath];
-    cell.contentImg.image = [self.imgData objectAtIndex:indexPath.row];
+    cell.contentImg.contentMode =UIViewContentModeScaleAspectFit;
+    ALAsset * al = [self.imgData objectAtIndex:indexPath.row];
+    UIImage *img = [UIImage imageWithCGImage:[[al defaultRepresentation] fullScreenImage]];
+    cell.contentImg.image = img;
     
     return cell;
 }
@@ -181,13 +191,15 @@
 
 - (void)shareWithIndex:(NSInteger)index
 {
+    ALAsset * al = [self.imgData objectAtIndex:self.view.tag];
+    UIImage *theimg = [UIImage imageWithCGImage:[[al defaultRepresentation] fullScreenImage]];
     if(index == 0)
     {
         WBMessageObject *message = [WBMessageObject message];
         message.text = [[CommonShareView sharedView] shareMessageWithType:0];
         WBImageObject *image = [WBImageObject object];
-        UIImage *img = [self.imgData objectAtIndex:self.view.tag];
-        image.imageData = UIImageJPEGRepresentation(img,0.5);
+        
+        image.imageData = UIImageJPEGRepresentation(theimg,0.5);
         message.imageObject = image;
       
         WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message];
@@ -204,15 +216,15 @@
     else if(index == 1)
     {
         WXMediaMessage *message = [WXMediaMessage message];
-        message.title = @"简画大师好友推荐";
+        message.title = @"简画大师";
         message.description = [[CommonShareView sharedView] shareMessageWithType:0];
         
         
-        [message setThumbImage:[UIImage scaleImage:[self.imgData objectAtIndex:self.view.tag] toSize:CGSizeMake(mScreenWidth/3, mScreenHeight/3)] ];
+        [message setThumbImage:[UIImage scaleImage:theimg toSize:CGSizeMake(mScreenWidth/3, mScreenHeight/3)] ];
         
         WXImageObject *ext = [WXImageObject object];
-        UIImage *img = [self.imgData objectAtIndex:self.view.tag];
-        ext.imageData = UIImageJPEGRepresentation(img,0.5);
+        
+        ext.imageData = UIImageJPEGRepresentation(theimg,0.5);
         
         message.mediaObject = ext;
         
@@ -227,15 +239,15 @@
     else if(index == 2)
     {
         WXMediaMessage *message = [WXMediaMessage message];
-        message.title = @"简画大师好友推荐";
+        message.title = @"简画大师";
         message.description = [[CommonShareView sharedView] shareMessageWithType:0];
         
         
-        [message setThumbImage:[UIImage scaleImage:[self.imgData objectAtIndex:self.view.tag] toSize:CGSizeMake(mScreenWidth/3, mScreenHeight/3)] ];
+        [message setThumbImage:[UIImage scaleImage:theimg toSize:CGSizeMake(mScreenWidth/3, mScreenHeight/3)] ];
         
         WXImageObject *ext = [WXImageObject object];
-        UIImage *img = [self.imgData objectAtIndex:self.view.tag];
-        ext.imageData = UIImageJPEGRepresentation(img,0.5);
+     
+        ext.imageData = UIImageJPEGRepresentation(theimg,0.5);
         
         message.mediaObject = ext;
         
@@ -247,7 +259,81 @@
         
         [WXApi sendReq:req];
     }
+    else
+    {
+        [self shareButtonQQ];
+    }
 
+}
+
+#pragma mark -QQ分享
+- (void)shareButtonQQ
+{
+    ALAsset * al = [self.imgData objectAtIndex:self.view.tag];
+    UIImage *theimg = [UIImage imageWithCGImage:[[al defaultRepresentation] fullScreenImage]];
+    UIImage *preView  = [UIImage scaleImage:theimg toSize:CGSizeMake(mScreenWidth/3, mScreenHeight/3)];
+    QQApiImageObject *imgObj = [QQApiImageObject objectWithData:UIImageJPEGRepresentation(theimg,0.5)
+                                               previewImageData:UIImageJPEGRepresentation(preView,0.5)
+                                                          title:@"简画大师"
+                                                    description:[[CommonShareView sharedView] shareMessageWithType:0]];
+    SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:imgObj];
+    //将内容分享到qq
+    QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+    [self handleSendResult:sent];
+    
+}
+
+- (void)handleSendResult:(QQApiSendResultCode)sendResult
+{
+    switch (sendResult)
+    {
+        case EQQAPIAPPNOTREGISTED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"App未注册" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPIMESSAGECONTENTINVALID:
+        case EQQAPIMESSAGECONTENTNULL:
+        case EQQAPIMESSAGETYPEINVALID:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送参数错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTINSTALLED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"未安装手Q" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTSUPPORTAPI:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"API接口不支持" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPISENDFAILD:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送失败" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
 }
 
 @end

@@ -102,6 +102,7 @@
     DMWebViewController *modal =  [[DMWebViewController alloc] init];
     modal.detailUrl = [self.viewModel newsDetailWithRow:indexPath.row];
     modal.detailTitle = [self.viewModel newsTitleWithRow:indexPath.row];
+    modal.canShare = YES;
     [self.navigationController pushViewController:modal animated:YES];
 }
 

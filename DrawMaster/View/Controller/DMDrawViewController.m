@@ -14,7 +14,12 @@
 #import <AVFoundation/AVAudioSession.h>
 #import <MediaPlayer/MediaPlayer.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-@interface DMDrawViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,ISColorWheelDelegate,HJCActionSheetDelegate,DMDrawViewDelegate>
+#import "CommonShareView.h"
+#import "WeiboSDK.h"
+#import "WXApi.h"
+#import <TencentOpenAPI/QQApi.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+@interface DMDrawViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,ISColorWheelDelegate,HJCActionSheetDelegate,DMDrawViewDelegate,CommonShareViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *backBtn;
 @property (weak, nonatomic) IBOutlet DMDrawView *drawView;
 @property (nonatomic,readwrite,strong) MPVolumeView *volumeView;
@@ -200,12 +205,12 @@
             colorEditBtn.layer.borderWidth = 1.0;
             colorEditBtn.layer.cornerRadius = 3.0;
             colorEditBtn.layer.borderColor =mRGBToColor(0x333333).CGColor;
-            [colorEditBtn setTitle:@"自定义" forState:UIControlStateNormal];
+            [colorEditBtn setTitle:@"自定义颜色" forState:UIControlStateNormal];
             [colorEditBtn setTitleColor:mRGBToColor(0x333333) forState:UIControlStateNormal];
             colorEditBtn.titleLabel.font = [UIFont systemFontOfSize:12];
             [self.selectBrushBoxView addSubview:colorEditBtn];
             [colorEditBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.width.mas_equalTo(50);
+                make.width.mas_equalTo(80);
                 make.height.mas_equalTo(30);
                 make.bottom.mas_equalTo(-5);
                 make.centerX.mas_equalTo(0);
@@ -737,7 +742,18 @@
                 UILabel *title = (UILabel *)[header viewWithTag:100];
                 switch (indexPath.section) {
                     case 0:
-                        title.text = @"自定义";
+                    {
+                        NSMutableArray *customBrushColors = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMCustomBrushColors"];
+                        NSMutableAttributedString * str =[[NSMutableAttributedString alloc] initWithString:@"自定义" attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:16],NSForegroundColorAttributeName:kBlackColor}];
+                        NSMutableAttributedString * substr =[[NSMutableAttributedString alloc] initWithString:@"长按可以删除自定义颜色" attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:12],NSForegroundColorAttributeName:mRGBToColor(0x999999)}];
+                        if(customBrushColors.count == 0)
+                            title.attributedText =  str;
+                        else
+                        {
+                            [str appendAttributedString:substr];
+                            title.attributedText =  str;
+                        }
+                    }
                         break;
                     case 1:
                         title.text = @"标准色";
@@ -949,6 +965,9 @@
 - (void)share
 {
     NSLog(@"这里分享图片");
+    [[CommonShareView sharedView] show];
+    [CommonShareView sharedView].delegate = self;
+
 }
 - (void)actionSheet:(HJCActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -995,5 +1014,152 @@
     [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:@"DMBrushColor"];
     
     
+}
+
+- (void)shareWithIndex:(NSInteger)index
+{
+  
+    UIImage *theimg = [ UIImage grabImageWithView:self.captureBoxView scale:2];
+    if(index == 0)
+    {
+        WBMessageObject *message = [WBMessageObject message];
+        message.text = [[CommonShareView sharedView] shareMessageWithType:0];
+        WBImageObject *image = [WBImageObject object];
+        
+        image.imageData = UIImageJPEGRepresentation(theimg,0.5);
+        message.imageObject = image;
+        
+        WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message];
+        request.userInfo = @{@"ShareMessageFrom": @"分享Ask",
+                             @"Other_Info_1": [NSNumber numberWithInt:123],
+                             @"Other_Info_2": @[@"obj1", @"obj2"],
+                             @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
+        if ([WeiboSDK sendRequest:request])
+        {
+            UALog(@"呵呵，分享给新浪微博，产品");
+        }
+        
+    }
+    else if(index == 1)
+    {
+        WXMediaMessage *message = [WXMediaMessage message];
+        message.title = @"简画大师";
+        message.description = [[CommonShareView sharedView] shareMessageWithType:0];
+        
+        
+        [message setThumbImage:[UIImage scaleImage:theimg toSize:CGSizeMake(mScreenWidth/3, mScreenHeight/3)] ];
+        
+        WXImageObject *ext = [WXImageObject object];
+        
+        ext.imageData = UIImageJPEGRepresentation(theimg,0.5);
+        
+        message.mediaObject = ext;
+        
+        SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+        //req.text = @"我发现一个有意思东东，一起来看看吧";
+        req.bText = NO;
+        req.message = message;
+        req.scene = 0;
+        
+        [WXApi sendReq:req];
+    }
+    else if(index == 2)
+    {
+        WXMediaMessage *message = [WXMediaMessage message];
+        message.title = @"简画大师";
+        message.description = [[CommonShareView sharedView] shareMessageWithType:0];
+        
+        
+        [message setThumbImage:[UIImage scaleImage:theimg toSize:CGSizeMake(mScreenWidth/3, mScreenHeight/3)] ];
+        
+        WXImageObject *ext = [WXImageObject object];
+        
+        ext.imageData = UIImageJPEGRepresentation(theimg,0.5);
+        
+        message.mediaObject = ext;
+        
+        SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+        //req.text = @"我发现一个有意思东东，一起来看看吧";
+        req.bText = NO;
+        req.message = message;
+        req.scene = 1;
+        
+        [WXApi sendReq:req];
+    }
+    else
+    {
+        [self shareButtonQQ];
+    }
+    
+}
+
+#pragma mark -QQ分享
+- (void)shareButtonQQ
+{
+    
+    UIImage *theimg = [ UIImage grabImageWithView:self.captureBoxView scale:2];
+    UIImage *preView  = [UIImage scaleImage:theimg toSize:CGSizeMake(mScreenWidth/3, mScreenHeight/3)];
+    QQApiImageObject *imgObj = [QQApiImageObject objectWithData:UIImageJPEGRepresentation(theimg,0.5)
+                                               previewImageData:UIImageJPEGRepresentation(preView,0.5)
+                                                          title:@"简画大师"
+                                                    description:[[CommonShareView sharedView] shareMessageWithType:0]];
+    SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:imgObj];
+    //将内容分享到qq
+    QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+    [self handleSendResult:sent];
+    
+}
+
+- (void)handleSendResult:(QQApiSendResultCode)sendResult
+{
+    switch (sendResult)
+    {
+        case EQQAPIAPPNOTREGISTED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"App未注册" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPIMESSAGECONTENTINVALID:
+        case EQQAPIMESSAGECONTENTNULL:
+        case EQQAPIMESSAGETYPEINVALID:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送参数错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTINSTALLED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"未安装手Q" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTSUPPORTAPI:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"API接口不支持" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPISENDFAILD:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送失败" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
 }
 @end

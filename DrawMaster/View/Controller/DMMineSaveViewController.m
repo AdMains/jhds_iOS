@@ -10,14 +10,17 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "DMCopyCollectionViewCell.h"
 #import "DMMineSaveDetailViewController.h"
-
+#import "DMAPIManager.h"
 @interface DMMineSaveViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 @property (nonatomic,readwrite,strong) NSMutableArray *imgData;
 @property (nonatomic,readwrite,strong) UICollectionView * collecttionView;
+@property (nonatomic,readwrite,strong) UIView *loadingView;
 
 @end
 
 @implementation DMMineSaveViewController
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,49 +31,58 @@
     // app名称
     NSString *app_Name = [infoDictionary objectForKey:@"CFBundleName"];
     
-    ALAssetsLibrary *al = [[ALAssetsLibrary alloc] init];
-    [al enumerateGroupsWithTypes:ALAssetsGroupAll
-     
-                      usingBlock:^(ALAssetsGroup *group, BOOL *stop)
-     {
-         if (!group || *stop)
-         {
-             if(self.imgData.count == 0)
-                 [self.collecttionView showNoNataViewWithMessage:@"您还没有保存任何作品，赶快去试一下吧" imageName:@"icon_my_last"];
-             else
-                 [self.collecttionView  reloadData];
-         }
+    
+    
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        ALAssetsLibrary *al = [DMAPIManager defaultAssetsLibrary];
+        [al enumerateGroupsWithTypes:ALAssetsGroupAll
          
-         NSString *name =[group valueForProperty:ALAssetsGroupPropertyName];
-         if ([name isEqualToString:app_Name])
+                          usingBlock:^(ALAssetsGroup *group, BOOL *stop)
          {
+             if (!group || *stop)
+             {
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     self.loadingView.hidden = YES;
+                     if(self.imgData.count == 0)
+                         [self.collecttionView showNoNataViewWithMessage:@"您还没有保存任何作品，赶快去试一下吧" imageName:@"icon_my_last"];
+                     else
+                         [self.collecttionView  reloadData];
+                 });
+             }
              
-             [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop)
-              {
-                  if (asset)
+             NSString *name =[group valueForProperty:ALAssetsGroupPropertyName];
+             if ([name isEqualToString:app_Name])
+             {
+                 
+                 [group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop)
                   {
-                      if ([[asset valueForProperty:ALAssetPropertyType]isEqualToString:ALAssetTypePhoto])
+                      if (asset)
                       {
-                          UIImage *img = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullResolutionImage]];
-                          [self.imgData insertObject:img atIndex:0];
+                          if ([[asset valueForProperty:ALAssetPropertyType]isEqualToString:ALAssetTypePhoto])
+                          {
+                              //UIImage *img = [UIImage imageWithCGImage:[[asset defaultRepresentation] fullScreenImage]];
+                              //UIImage *img = [UIImage imageWithCGImage:[asset aspectRatioThumbnail]];
+                              [self.imgData insertObject:asset atIndex:0];
+                          }
+                          
+                          
                       }
-                      
-                      
                   }
-              }
-              ];
-
+                  ];
+                 
+             }
+             
+             
          }
          
-         
-     }
-     
-    failureBlock:^(NSError *error)
-     {
-         // User did not allow access to library
-       
-     }
-     ];
+                        failureBlock:^(NSError *error)
+         {
+             // User did not allow access to library
+             
+         }
+         ];
+    });
+   
     
    
     UICollectionViewFlowLayout *copyLayout=[[UICollectionViewFlowLayout alloc] init];
@@ -107,7 +119,24 @@
             [self.collecttionView  reloadData];
     });
     */
-    
+    self.loadingView = [[UIView alloc] init];
+    {
+        [self.view addSubview:self.loadingView];
+        [self.loadingView setBackgroundColor:mRGBToColor(0xffffff)];
+        [self.loadingView mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.mas_equalTo(0);
+            make.top.equalTo(self.topBar.mas_bottom);
+        }];
+        UIActivityIndicatorView *at = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        {
+            [at startAnimating];
+            [self.loadingView addSubview:at];
+            [at mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.center.mas_equalTo(0);
+                
+            }];
+        }
+    }
     
 }
 
@@ -144,7 +173,9 @@
     DMCopyCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:NSStringFromClass([DMCopyCollectionViewCell class]) forIndexPath:indexPath];
     cell.backgroundColor =mRGBToColor(0xffffff);
     cell.contentImg.contentMode =UIViewContentModeScaleAspectFit;
-    UIImage *img = [self.imgData objectAtIndex:indexPath.row];
+    ALAsset * al = [self.imgData objectAtIndex:indexPath.row];
+    UIImage *img = [UIImage imageWithCGImage:[al aspectRatioThumbnail] ];
+    //UIImage *img = [self.imgData objectAtIndex:indexPath.row];
     cell.contentImg.image = img;
     
     return cell;

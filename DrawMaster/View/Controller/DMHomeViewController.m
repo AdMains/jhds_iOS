@@ -8,6 +8,10 @@
 
 #import "DMHomeViewController.h"
 #import "DMAPIManager.h"
+#import "DMNavigationController.h"
+#import "DMSplashViewController.h"
+#import "DMWebViewController.h"
+#import "UITabBar+RedDot.h"
 @interface DMHomeViewController ()<UINavigationControllerDelegate>
 
 @end
@@ -20,12 +24,33 @@
     self.navigationController.delegate = self;
     
     [[[DMAPIManager sharedManager] fetchSplashData] subscribeNext:^(id x) {
-        NSLog(@"闪屏页数据偷偷加载完成");
+        //NSLog(@"闪屏页数据偷偷加载完成");
     }];
+    [[[DMAPIManager sharedManager] fetchMessageTag] subscribeNext:^(id x) {
+        //NSLog(@"闪屏页数据偷偷加载完成");
+    }];
+    
     
     NSString* firstInstall = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMFirstInstall"];
     if(firstInstall==nil)
+    {
         [[NSUserDefaults standardUserDefaults]  setObject:@"YES" forKey:@"DMFirstInstall"];
+        [self.tabBar setBadgeStyle:kCustomBadgeStyleRedDot value:1 atIndex:2];
+    }
+    else
+    {
+        NSString * oldMessageTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMOldMessageTag"];
+        if(oldMessageTag == nil)
+        {
+            [self.tabBar setBadgeStyle:kCustomBadgeStyleRedDot value:1 atIndex:2];
+        }
+        else
+        {
+            [self updateTip];
+        }
+    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -63,6 +88,9 @@
         }
     }
     
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateTip) name:@"updateRedTip" object:nil];
+    
 }
 /*
 #pragma mark - Navigation
@@ -74,4 +102,53 @@
 }
 */
 
+- (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    [(DMNavigationController*)self.navigationController resetDelegate];
+    DMSplashViewController* first = self.navigationController.childViewControllers[0];
+    if(first.view.tag==11)
+    {
+        NSString * clickurl = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMSplashClickUrl"];
+        DMWebViewController *modal =  [[DMWebViewController alloc] init];
+        modal.detailUrl = clickurl;
+        modal.detailTitle = @"守护宝贝,爱心接力 ";
+        modal.canShare = YES;
+        [self.navigationController pushViewController:modal animated:NO];
+    }
+    
+}
+
+- (void)updateTip
+{
+    NSString * oldMessageTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMOldMessageTag"];
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    
+    NSString *app_Version = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    
+    NSString * oldShopTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMOldShopTag"];
+    NSString * oldProtectBabyTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMOldProtectBabyTag"];
+    
+    NSString * newShopTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMShopTag"];
+    NSString * newProtectBabyTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMProtectBabyTag"];
+    NSString * newAppVersion =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMAppVersion"];
+    NSString * newMessageTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMMessageTag"];
+    
+    if([app_Version floatValue]<[newAppVersion floatValue] ||
+       ![oldMessageTag isEqualToString:newMessageTag] ||
+       ![oldShopTag isEqualToString:newShopTag] ||
+       ![oldProtectBabyTag isEqualToString:newProtectBabyTag]
+       
+       )
+    {
+        [self.tabBar setBadgeStyle:kCustomBadgeStyleRedDot value:1 atIndex:2];
+    }
+    else
+        [self.tabBar setBadgeStyle:kCustomBadgeStyleNone value:1 atIndex:2];
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 @end

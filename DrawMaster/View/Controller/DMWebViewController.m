@@ -7,8 +7,12 @@
 //
 
 #import "DMWebViewController.h"
-
-@interface DMWebViewController ()<UIWebViewDelegate>
+#import "CommonShareView.h"
+#import "WeiboSDK.h"
+#import "WXApi.h"
+#import <TencentOpenAPI/QQApi.h>
+#import <TencentOpenAPI/QQApiInterface.h>
+@interface DMWebViewController ()<UIWebViewDelegate,CommonShareViewDelegate>
 @property (nonatomic,readwrite,strong) UIWebView * webView;
 @property (nonatomic,assign) CGFloat progress; // 进度
 @property (nonatomic,strong) UIView * progressView;
@@ -35,24 +39,28 @@
        
         [self.webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.detailUrl]]];
     }
-    UIButton * shareBtn = [[UIButton alloc] init];
+    if(self.canShare)
     {
-        @weakify(self);
-        [self.view addSubview:shareBtn];
-        [shareBtn setImage:[UIImage imageNamed:@"new_share"] forState:UIControlStateNormal];
-        shareBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-            @strongify(self);
-            [self.navigationController popViewControllerAnimated:YES];
-            return [RACSignal empty];
-        }];
-        
-        [shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.right.mas_equalTo(-10);
-            make.top.mas_equalTo(30);
-            make.width.mas_equalTo(50);
-            make.height.mas_equalTo(30);
-        }];
-        
+        UIButton * shareBtn = [[UIButton alloc] init];
+        {
+            @weakify(self);
+            [self.view addSubview:shareBtn];
+            [shareBtn setImage:[UIImage imageNamed:@"new_share"] forState:UIControlStateNormal];
+            shareBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+                @strongify(self);
+                [[CommonShareView sharedView] show];
+                [CommonShareView sharedView].delegate = self;
+                return [RACSignal empty];
+            }];
+            
+            [shareBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.right.mas_equalTo(-10);
+                make.top.mas_equalTo(30);
+                make.width.mas_equalTo(50);
+                make.height.mas_equalTo(30);
+            }];
+            
+        }
     }
     
     
@@ -62,6 +70,8 @@
     [self.view bringSubviewToFront:self.progressView];
     
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -175,5 +185,144 @@
         [self completeProgress];
     }
 }
+
+#pragma mark 分享
+
+- (void)shareWithIndex:(NSInteger)index
+{
+    
+    
+    if(index == 0)
+    {
+        WBMessageObject *message = [WBMessageObject message];
+        message.text = [NSString stringWithFormat:@"%@ %@ #简画大师#",self.detailTitle,self.detailUrl] ;
+        WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message];
+        request.userInfo = @{@"ShareMessageFrom": @"分享Ask",
+                             @"Other_Info_1": [NSNumber numberWithInt:123],
+                             @"Other_Info_2": @[@"obj1", @"obj2"],
+                             @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
+        if ([WeiboSDK sendRequest:request])
+        {
+            UALog(@"呵呵，分享给新浪微博，产品");
+        }
+        
+    }
+    else if(index == 1)
+    {
+        WXMediaMessage *message = [WXMediaMessage message];
+        message.title = self.detailTitle;
+        message.description = self.detailTitle;
+        
+        
+        [message setThumbImage:mImageByName(@"icon")];
+        
+        WXWebpageObject *ext = [WXWebpageObject object];
+        ext.webpageUrl = self.detailUrl;
+        
+        message.mediaObject = ext;
+        
+        SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+        //req.text = @"我发现一个有意思东东，一起来看看吧";
+        req.bText = NO;
+        req.message = message;
+        req.scene = 0;
+        
+        [WXApi sendReq:req];
+
+    }
+    else if(index == 2)
+    {
+        WXMediaMessage *message = [WXMediaMessage message];
+        message.title = self.detailTitle;
+        message.description = self.detailTitle;
+        
+        
+        [message setThumbImage:mImageByName(@"icon")];
+        
+        WXWebpageObject *ext = [WXWebpageObject object];
+        ext.webpageUrl = self.detailUrl;
+        
+        message.mediaObject = ext;
+        
+        SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+        //req.text = @"我发现一个有意思东东，一起来看看吧";
+        req.bText = NO;
+        req.message = message;
+        req.scene = 1;
+        
+        [WXApi sendReq:req];
+
+    }
+    else
+    {
+        [self shareButtonQQ];
+    }
+    
+}
+
+#pragma mark -QQ分享
+- (void)shareButtonQQ
+{
+    QQApiTextObject *message = [[QQApiTextObject alloc] init];
+    message.text = [NSString stringWithFormat:@"%@ %@ #简画大师#",self.detailTitle,self.detailUrl] ;
+    SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:message];
+    QQApiSendResultCode sent = [QQApiInterface sendReq:req];
+    [self handleSendResult:sent];
+    
+}
+
+- (void)handleSendResult:(QQApiSendResultCode)sendResult
+{
+    switch (sendResult)
+    {
+        case EQQAPIAPPNOTREGISTED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"App未注册" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPIMESSAGECONTENTINVALID:
+        case EQQAPIMESSAGECONTENTNULL:
+        case EQQAPIMESSAGETYPEINVALID:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送参数错误" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTINSTALLED:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"未安装手Q" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPIQQNOTSUPPORTAPI:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"API接口不支持" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        case EQQAPISENDFAILD:
+        {
+            UIAlertView *msgbox = [[UIAlertView alloc] initWithTitle:@"Error" message:@"发送失败" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil];
+            [msgbox show];
+            //            [msgbox release];
+            
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+}
+
 
 @end
