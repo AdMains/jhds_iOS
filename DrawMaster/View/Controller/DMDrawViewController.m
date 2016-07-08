@@ -49,7 +49,7 @@
     
     self.drawView.delegate = self;
     //返回按钮相关
-    self.backBtn.layer.backgroundColor= mRGBToColor(0xeeeeee).CGColor;
+    self.backBtn.layer.backgroundColor= mRGBAToColor(0xeeeeee, 0.5).CGColor;
     self.backBtn.layer.cornerRadius = 22.5;
     self.backBtn.alpha = 0.8;
     @weakify(self)
@@ -100,7 +100,7 @@
     self.brushView.clipsToBounds = YES;
     self.brushView.alpha = 0.8;
     [self.brushView updateRadius:22.5 BrushWidth:[brushWidth floatValue] BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
-    [self.drawView updateBrushWidth:[brushWidth floatValue] BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
+    [self.drawView updateBrushWidth:[brushWidth floatValue]*2 BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
     [self.brushView addTarget:self action:@selector(openSelectBrush:) forControlEvents:UIControlEventTouchUpInside];
     
     
@@ -560,7 +560,7 @@
         [self.drawView shakeToClear];
         NSString* brushWidth =  [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushWidth"];
         NSData *brushColor = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushColor"];
-        [self.drawView updateBrushWidth:[brushWidth floatValue] BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
+        [self.drawView updateBrushWidth:[brushWidth floatValue]*2 BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
         
     }
     return;
@@ -576,7 +576,7 @@
     NSString* brushWidth =  [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushWidth"];
     if(up)
     {
-        if([brushWidth floatValue]< 8.0)
+        if([brushWidth floatValue]< 20.0)
             brushWidth = @([brushWidth floatValue]+0.5).stringValue;
     }
     else
@@ -587,7 +587,7 @@
     NSData *brushColor = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushColor"];
   
     [self.brushView updateRadius:22.5 BrushWidth:[brushWidth floatValue] BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
-    [self.drawView updateBrushWidth:[brushWidth floatValue] BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
+    [self.drawView updateBrushWidth:[brushWidth floatValue]*2 BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
     [[NSUserDefaults standardUserDefaults] setObject:brushWidth forKey:@"DMBrushWidth"];
     
 }
@@ -795,7 +795,7 @@
     
     NSString* brushWidth =  [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushWidth"];
     [self.brushView updateRadius:22.5 BrushWidth:[brushWidth floatValue] BrushColor:tempColor];
-    [self.drawView updateBrushWidth:[brushWidth floatValue] BrushColor:tempColor];
+    [self.drawView updateBrushWidth:[brushWidth floatValue]*2 BrushColor:tempColor];
     
 }
 

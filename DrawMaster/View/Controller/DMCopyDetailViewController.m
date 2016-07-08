@@ -25,7 +25,7 @@
     self.imgInfoBoxView.imgUrls = self.imgUrls;
     self.brushView.hidden = YES;
     self.imgInfoBoxView.delegate = self;
-    self.imgInfoBoxView.layer.borderColor = [UIColor grayColor].CGColor;
+    self.imgInfoBoxView.layer.borderColor = mRGBToColor(0xeeeeee).CGColor;
     self.imgInfoBoxView.layer.borderWidth = 1.0;
     @weakify(self)
     self.imgInfoBoxView.tryBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {

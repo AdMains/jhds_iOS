@@ -32,7 +32,8 @@
             self.collecttionView.dataSource = self;
             self.collecttionView.backgroundColor = mRGBToColor(0xdddddd);
             [self.collecttionView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.left.right.bottom.mas_equalTo(0);
+                make.left.right.mas_equalTo(0);
+                make.bottom.mas_equalTo(20);
                 make.top.mas_equalTo(14);
             }];
             
