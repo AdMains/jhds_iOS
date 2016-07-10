@@ -12,6 +12,5 @@
 @property (nonatomic,readwrite,strong) UIBezierPath *brushPath;
 @property (nonatomic,readwrite,strong) UIColor *brushColor;
 @property (nonatomic,readwrite,assign) CGFloat brushWidth;
-@property (nonatomic,readwrite,assign) NSInteger brushType;//1:line 0:point
 @property (nonatomic,readwrite,strong) NSMutableArray *brushLines;
 @end

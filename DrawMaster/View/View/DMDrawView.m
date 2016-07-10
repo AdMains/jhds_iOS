@@ -51,18 +51,11 @@
     //[path stroke];
     
     for (int i =0; i<self.allBrushs.count;++i) {
-        if([(DMBrushModel*)[self.allBrushs objectAtIndex:i] brushType] ==1)
-        {
-            [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushColor setStroke];
-            [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushPath setLineWidth:((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushWidth];
-            [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushPath stroke];
-        }
-        else
-        {
-            [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushColor setFill];
-            [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushPath fill];
-        }
         
+        [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushColor setStroke];
+        [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushPath setLineWidth:((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushWidth];
+        [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushPath stroke];
+    
     }
 }
 
@@ -99,40 +92,9 @@
     NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
     if(fabs(p.x -self.lastPoint.x)<8.0f &&fabs(p.y-self.lastPoint.y)<8.0f && lastPoints.count<3)
     {
-        
-        
-        //画点需要添加新的类型
-        
-        DMBrushModel * bm = [[DMBrushModel alloc] init];
-        bm.brushPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(p.x-((DMBrushModel*)[self.allBrushs lastObject]).brushWidth, p.y-((DMBrushModel*)[self.allBrushs lastObject]).brushWidth, ((DMBrushModel*)[self.allBrushs lastObject]).brushWidth*2, ((DMBrushModel*)[self.allBrushs lastObject]).brushWidth*2) cornerRadius:((DMBrushModel*)[self.allBrushs lastObject]).brushWidth];
-        bm.brushWidth = ((DMBrushModel*)[self.allBrushs lastObject]).brushWidth;
-        bm.brushColor = ((DMBrushModel*)[self.allBrushs lastObject]).brushColor;
-        bm.brushType = 0;
-        [bm.brushLines addObject:[NSMutableArray array]];
-        NSMutableArray *lastPointsNew = bm.brushLines.lastObject;
-        [lastPointsNew addObject:[NSString stringWithFormat:@"%@,%@",@(p.x-bm.brushWidth).stringValue,@(p.y-bm.brushWidth).stringValue]];
-        //因为这里要添加一个新的，所以之前的要删除
-        if((((DMBrushModel*)[self.allBrushs lastObject]).brushLines.count == 1 && lastPoints.count == 1)&&((DMBrushModel*)[self.allBrushs lastObject]).brushType==1)
-            [self.allBrushs removeObjectAtIndex:self.allBrushs.count -1];
-        if ((((DMBrushModel*)[self.allBrushs lastObject]).brushLines.count > 1 && lastPoints.count == 1)&&((DMBrushModel*)[self.allBrushs lastObject]).brushType==1){
-            [((DMBrushModel*)[self.allBrushs lastObject]).brushLines removeObject:((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject];
-        }
-        //
-        [self.allBrushs addObject:bm];
-        
-        
-
-      
-        //画点画完后需要切换回来
-        
-        DMBrushModel * bmline = [[DMBrushModel alloc] init];
-        bmline.brushPath = [UIBezierPath bezierPath];
-        bmline.brushWidth = ((DMBrushModel*)[self.allBrushs lastObject]).brushWidth;
-        bmline.brushColor = ((DMBrushModel*)[self.allBrushs lastObject]).brushColor;
-        bmline.brushType = 1;
-        [self.allBrushs addObject:bmline];
-        
-       
+        [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:self.lastPoint];
+        NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
+        [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(self.lastPoint.x).stringValue,@(self.lastPoint.y).stringValue]];
         
     }
     
@@ -164,7 +126,7 @@
 - (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor *)bc
 {
     NSMutableArray *lines = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines;
-    if(lines.count == 0 &&((DMBrushModel*)[self.allBrushs lastObject]).brushType ==1)
+    if(lines.count == 0  && lines != nil)
         [self.allBrushs removeObjectAtIndex:self.allBrushs.count -1];
 
     CGColorRef colorRef = bc.CGColor;
@@ -173,60 +135,55 @@
   
     DMBrushModel * bm = [[DMBrushModel alloc] init];
     bm.brushPath = [UIBezierPath bezierPath];
+    bm.brushPath.lineCapStyle = kCGLineCapRound;
     bm.brushWidth = bw;
     bm.brushColor = bc;
-    bm.brushType = 1;
+
     [self.allBrushs addObject:bm];
     
 }
 
 - (void)backToFront
 {
-    if(((DMBrushModel*)[self.allBrushs lastObject]).brushType == 1)
-    {
-        NSMutableArray *lines = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines;
-        
-        if(lines.count>0)
-            [lines removeObjectAtIndex:lines.count-1];
-        if(lines.count == 0)
-            [self.allBrushs removeObjectAtIndex:self.allBrushs.count -1];
-        else
-        {
-            [((DMBrushModel*)[self.allBrushs lastObject]).brushPath removeAllPoints];
-            for (NSMutableArray *points in lines) {
-                int i = 0;
-                for (NSString * point in points) {
-                    NSArray *pointxy = [point componentsSeparatedByString:@","];
-                    if(i == 0)
-                    {
-                        [((DMBrushModel*)[self.allBrushs lastObject]).brushPath moveToPoint:CGPointMake([pointxy[0] floatValue], [pointxy[1] floatValue])];
-                    }
-                    else
-                    {
-                        [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:CGPointMake([pointxy[0] floatValue], [pointxy[1] floatValue])];
-                    }
-                    ++i;
-                }
-            }
-        }
     
-    }
-    else
+    NSMutableArray *lines = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines;
+    
+    if(lines.count>0)
+        [lines removeObjectAtIndex:lines.count-1];
+    if(lines.count == 0)
     {
         [self.allBrushs removeObjectAtIndex:self.allBrushs.count -1];
+        
+        if(self.allBrushs.count>0)
+            [self.delegate updateBrushWidth:((DMBrushModel*)[self.allBrushs lastObject]).brushWidth BrushColor:((DMBrushModel*)[self.allBrushs lastObject]).brushColor];
+        else
+        {
+            [self updateBrushWidth:3.0 BrushColor:mRGBToColor(0xDF0526)];
+            [self.delegate updateBrushWidth:((DMBrushModel*)[self.allBrushs lastObject]).brushWidth BrushColor:((DMBrushModel*)[self.allBrushs lastObject]).brushColor];
+            
+        }
     }
-    
-    if(self.allBrushs.count>0)
-        [self.delegate updateBrushWidth:((DMBrushModel*)[self.allBrushs lastObject]).brushWidth BrushColor:((DMBrushModel*)[self.allBrushs lastObject]).brushColor];
     else
     {
-        [self updateBrushWidth:3.0 BrushColor:mRGBToColor(0xDF0526)];
-        [self.delegate updateBrushWidth:((DMBrushModel*)[self.allBrushs lastObject]).brushWidth BrushColor:((DMBrushModel*)[self.allBrushs lastObject]).brushColor];
-        
+        [((DMBrushModel*)[self.allBrushs lastObject]).brushPath removeAllPoints];
+        for (NSMutableArray *points in lines) {
+            int i = 0;
+            for (NSString * point in points) {
+                NSArray *pointxy = [point componentsSeparatedByString:@","];
+                if(i == 0)
+                {
+                    [((DMBrushModel*)[self.allBrushs lastObject]).brushPath moveToPoint:CGPointMake([pointxy[0] floatValue], [pointxy[1] floatValue])];
+                }
+                else
+                {
+                    [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:CGPointMake([pointxy[0] floatValue], [pointxy[1] floatValue])];
+                }
+                ++i;
+            }
+        }
     }
     
     [self setNeedsDisplay];
-    
     NSLog(@"撤销");
 }
 
@@ -253,7 +210,7 @@
         const CGFloat* colors = CGColorGetComponents( brush.brushColor.CGColor );
         jsonString = [jsonString stringByAppendingString:@"{"];
         NSString *colorStr = [NSString stringWithFormat:@"%@,%@,%@",@(colors[0]).stringValue,@(colors[1]).stringValue,@(colors[2]).stringValue];
-        jsonString = [jsonString stringByAppendingString:[NSString stringWithFormat:@"\"brushColor\":\"%@\",\"brushWidth\":\"%@\",\"brushType\":\"%@\",\"brushLines\":\"%@\"",colorStr,@(brush.brushWidth).stringValue,@(brush.brushType).stringValue,brushLinesStr]];
+        jsonString = [jsonString stringByAppendingString:[NSString stringWithFormat:@"\"brushColor\":\"%@\",\"brushWidth\":\"%@\",\"brushLines\":\"%@\"",colorStr,@(brush.brushWidth).stringValue,brushLinesStr]];
         jsonString = [jsonString stringByAppendingString:@"},"];
     }
     jsonString = [jsonString substringToIndex:jsonString.length-1];
@@ -280,7 +237,7 @@
 - (BOOL)loadFromSave
 {
     NSMutableArray *lines = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines;
-    if(lines.count == 0 &&((DMBrushModel*)[self.allBrushs lastObject]).brushType ==1)
+    if(lines.count == 0)
         [self.allBrushs removeObjectAtIndex:self.allBrushs.count -1];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString * FolderName = [NSString stringWithFormat:@"%@/jhdsLineData",kDocuments];
@@ -310,66 +267,38 @@
             bm.brushWidth = [[model objectForKey:@"brushWidth"] floatValue];
             NSArray* color = [[model objectForKey:@"brushColor"] componentsSeparatedByString:@","];
             bm.brushColor = [UIColor colorWithRed:[[color objectAtIndex:0] floatValue] green:[[color objectAtIndex:1] floatValue] blue:[[color objectAtIndex:2] floatValue] alpha:1.0];
-            bm.brushType = [[model objectForKey:@"brushType"] integerValue];
             NSArray * lines = [[model objectForKey:@"brushLines"] componentsSeparatedByString:@"="];
-            
-            if(bm.brushType ==1 )
-            {
-                bm.brushPath = [UIBezierPath bezierPath];
-                
-                for (NSString * line in lines) {
-                    NSArray *points = [line componentsSeparatedByString:@";"] ;
-                    int i = 0;
-                    for (NSString *point in points) {
-                        NSArray *pointXY = [point componentsSeparatedByString:@","];
-                        CGPoint p = CGPointMake([[pointXY objectAtIndex:0] floatValue], [[pointXY objectAtIndex:1] floatValue]);
-                        if(i == 0)
-                        {
-                            
-                            [bm.brushPath moveToPoint:p];
-                            [bm.brushLines addObject:[NSMutableArray array]];
-                            NSMutableArray *lastPoints = bm.brushLines.lastObject;
-                            [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
-                            
-                        }
-                        else
-                        {
-                            [bm.brushPath addLineToPoint:p];
-                            NSMutableArray *lastPoints = bm.brushLines.lastObject;
-                            [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
-                        }
-                        ++i;
+            bm.brushPath = [UIBezierPath bezierPath];
+            bm.brushPath.lineCapStyle = kCGLineCapRound;
+            for (NSString * line in lines) {
+                NSArray *points = [line componentsSeparatedByString:@";"] ;
+                int i = 0;
+                for (NSString *point in points) {
+                    NSArray *pointXY = [point componentsSeparatedByString:@","];
+                    CGPoint p = CGPointMake([[pointXY objectAtIndex:0] floatValue], [[pointXY objectAtIndex:1] floatValue]);
+                    if(i == 0)
+                    {
+                        
+                        [bm.brushPath moveToPoint:p];
+                        [bm.brushLines addObject:[NSMutableArray array]];
+                        NSMutableArray *lastPoints = bm.brushLines.lastObject;
+                        [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
+                        
                     }
+                    else
+                    {
+                        [bm.brushPath addLineToPoint:p];
+                        NSMutableArray *lastPoints = bm.brushLines.lastObject;
+                        [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
+                    }
+                    ++i;
                 }
             }
-            else if(bm.brushType ==0)
-            {
-                NSArray *points = [[lines objectAtIndex:0] componentsSeparatedByString:@";"] ;
-                NSArray *point = [[points objectAtIndex:0] componentsSeparatedByString:@","];
-                bm.brushPath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake([point[0] floatValue],[point[1] floatValue], bm.brushWidth*2, bm.brushWidth*2) cornerRadius:bm.brushWidth];
-                
-                [bm.brushLines addObject:[NSMutableArray array]];
-                NSMutableArray *lastPoints = bm.brushLines.lastObject;
-                [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",point[0],point[1]]];
-
-            }
+           
             [self.allBrushs addObject:bm];
             if([model isEqual: jsonObject.lastObject])
             {
                 [self.delegate updateBrushWidth:bm.brushWidth BrushColor:bm.brushColor];
-                
-                if(bm.brushType ==0)
-                {
-                    //画点画完后需要切换线
-                    
-                    DMBrushModel * bmline = [[DMBrushModel alloc] init];
-                    bmline.brushPath = [UIBezierPath bezierPath];
-                    bmline.brushWidth = ((DMBrushModel*)[self.allBrushs lastObject]).brushWidth;
-                    bmline.brushColor = ((DMBrushModel*)[self.allBrushs lastObject]).brushColor;
-                    bmline.brushType = 0;
-                    [self.allBrushs addObject:bmline];
-                    
-                }
             }
         }
         [self setNeedsDisplay];

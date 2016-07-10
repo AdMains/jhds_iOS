@@ -1007,9 +1007,10 @@
 
 - (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor*)bc
 {
-    [self.brushView updateRadius:22.5 BrushWidth:bw BrushColor:bc];
+    CGFloat tmpBw = bw/2;
+    [self.brushView updateRadius:22.5 BrushWidth:tmpBw BrushColor:bc];
     
-    [[NSUserDefaults standardUserDefaults] setObject:@(bw).stringValue forKey:@"DMBrushWidth"];
+    [[NSUserDefaults standardUserDefaults] setObject:@(tmpBw).stringValue forKey:@"DMBrushWidth"];
     NSData *colorData = [NSKeyedArchiver archivedDataWithRootObject:bc];
     [[NSUserDefaults standardUserDefaults] setObject:colorData forKey:@"DMBrushColor"];
     
