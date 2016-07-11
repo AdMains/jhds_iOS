@@ -10,7 +10,9 @@
 
 @interface DMBrushModel : NSObject
 @property (nonatomic,readwrite,strong) UIBezierPath *brushPath;
+@property (nonatomic,readwrite,strong) CAShapeLayer *shape;
 @property (nonatomic,readwrite,strong) UIColor *brushColor;
 @property (nonatomic,readwrite,assign) CGFloat brushWidth;
 @property (nonatomic,readwrite,strong) NSMutableArray *brushLines;
+- (instancetype)initWithBrushWidth:(CGFloat)bw BrushColor:(UIColor *)bc;
 @end

@@ -42,7 +42,7 @@
 
 - (instancetype)initWithDelegate:(id<HJCActionSheetDelegate>)delegate CancelTitle:(NSString *)cancelTitle OtherTitles:(NSString *)otherTitles, ...
 {
-    self.colorsArray = [NSArray arrayWithObjects:@(0x9E9E00),@(0x9D25A9),@(0xFF512F),@(0x119B39), nil];
+    self.colorsArray = [NSArray arrayWithObjects:@(0x9E9E00),@(0x9D25A9),@(0xFF512F),@(0x119B39),@(0x4052AE), nil];
     
     HJCActionSheet *actionSheet = [self init];
     self.actionSheet = actionSheet;

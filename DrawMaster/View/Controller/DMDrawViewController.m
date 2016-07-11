@@ -60,7 +60,7 @@
             [self.navigationController popViewControllerAnimated:YES];
         else
         {
-            HJCActionSheet *sheet = [[HJCActionSheet alloc] initWithDelegate:self CancelTitle:@"取消" OtherTitles:@"分享",@"保存",@"撤销",@"返回", nil];
+            HJCActionSheet *sheet = [[HJCActionSheet alloc] initWithDelegate:self CancelTitle:@"取消" OtherTitles:@"清空",@"分享",@"保存",@"撤销",@"返回", nil];
             [sheet show];
         }
         return [RACSignal empty];
@@ -344,8 +344,8 @@
     self.brushColors = [NSMutableArray arrayWithObjects:@(0xDF0526),@(0xEC0B5F),@(0x9D25A9),@(0x6438A0),@(0x4052AE),
                         @(0x5A78F4),@(0x00AAF0),@(0x00BED2),@(0x009687),@(0x119B39),
                         @(0x87C35B),@(0xCADC57),@(0xFFEB5F),@(0xFFBF3E),@(0xFF512F),
-                        @(0x73554B),@(0x9E9E00),@(0x5F7D8A),@(0xeeeeee),@(0xcccccc),
-                        @(0x888888),@(0x555555),@(0x333333),@(0x111111),@(0x000000),nil];
+                        @(0x73554B),@(0x9E9E00),@(0x5F7D8A),@(0xffffff),@(0xeeeeee),
+                        @(0xcccccc),@(0x888888),@(0x555555),@(0x333333),@(0x000000),nil];
     if(self.loadLastDraw)
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         if([self.drawView loadFromSave])
@@ -554,15 +554,20 @@
 // 摇一摇摇动结束
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
     if (event.subtype == UIEventSubtypeMotionShake) { // 判断是否是摇动结束
-        NSLog(@"摇动结束");
-        [self shakeshake];
-        [self.drawView shakeToClear];
-        NSString* brushWidth =  [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushWidth"];
-        NSData *brushColor = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushColor"];
-        [self.drawView updateBrushWidth:[brushWidth floatValue]*2 BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
+        [self shakeToClear];
         
     }
     return;
+}
+
+- (void)shakeToClear
+{
+    NSLog(@"摇动结束");
+    [self shakeshake];
+    [self.drawView shakeToClear];
+    NSString* brushWidth =  [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushWidth"];
+    NSData *brushColor = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushColor"];
+    [self.drawView updateBrushWidth:[brushWidth floatValue]*2 BrushColor:(UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:brushColor]];
 }
 
 //  摇动结束后执行震动
@@ -675,6 +680,8 @@
     else
         sub.layer.backgroundColor = ((UIColor*)[NSKeyedUnarchiver unarchiveObjectWithData:[customBrushColors objectAtIndex:indexPath.row]]).CGColor;
     sub.layer.cornerRadius = cv.frame.size.width/12;
+    sub.layer.borderWidth =1.5;
+    sub.layer.borderColor = mRGBToColor(0x777777).CGColor;
     return cell;
 }
 
@@ -971,7 +978,7 @@
 - (void)actionSheet:(HJCActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     switch (buttonIndex) {
-       case 5:
+       case 6:
             
             if(self.brushView.tag == 0)
             {
@@ -991,12 +998,15 @@
         
             break;
         case 2:
-            [self share];
+            [self shakeToClear];
             break;
         case 3:
-            [self save];
+            [self share];
             break;
         case 4:
+            [self save];
+            break;
+        case 5:
             [self.drawView backToFront];
             break;
         default:

@@ -47,16 +47,7 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    //[incrementalImage drawInRect:rect];
-    //[path stroke];
     
-    for (int i =0; i<self.allBrushs.count;++i) {
-        
-        [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushColor setStroke];
-        [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushPath setLineWidth:((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushWidth];
-        [((DMBrushModel*)[self.allBrushs objectAtIndex:i]).brushPath stroke];
-    
-    }
 }
 
 
@@ -78,9 +69,10 @@
     UITouch *touch = [touches anyObject];
     CGPoint p = [touch locationInView:self];
     [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:p];
+    ((DMBrushModel*)[self.allBrushs lastObject]).shape.path = ((DMBrushModel*)[self.allBrushs lastObject]).brushPath.CGPath;
     NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
     [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
-    [self setNeedsDisplay];
+    
     
 }
 
@@ -95,14 +87,14 @@
         [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:self.lastPoint];
         NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
         [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(self.lastPoint.x).stringValue,@(self.lastPoint.y).stringValue]];
-        
+        ((DMBrushModel*)[self.allBrushs lastObject]).shape.path = ((DMBrushModel*)[self.allBrushs lastObject]).brushPath.CGPath;
     }
     
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         [self save];
     });
     
-    [self setNeedsDisplay];
+    
   
     
     
@@ -118,9 +110,12 @@
 - (void)shakeToClear
 {
    
+    for (DMBrushModel * bm in self.allBrushs) {
+        [bm.shape removeFromSuperlayer];
+    }
     [self.allBrushs removeAllObjects];
     
-    [self setNeedsDisplay];
+    
 }
 
 - (void)updateBrushWidth:(CGFloat)bw BrushColor:(UIColor *)bc
@@ -133,12 +128,8 @@
     NSString *colorString = [CIColor colorWithCGColor:colorRef].stringRepresentation;
     NSLog(@"新的画笔颜色为%@",colorString);
   
-    DMBrushModel * bm = [[DMBrushModel alloc] init];
-    bm.brushPath = [UIBezierPath bezierPath];
-    bm.brushPath.lineCapStyle = kCGLineCapRound;
-    bm.brushWidth = bw;
-    bm.brushColor = bc;
-
+    DMBrushModel * bm = [[DMBrushModel alloc] initWithBrushWidth:bw BrushColor:bc];
+    [self.layer addSublayer:bm.shape];
     [self.allBrushs addObject:bm];
     
 }
@@ -152,7 +143,8 @@
         [lines removeObjectAtIndex:lines.count-1];
     if(lines.count == 0)
     {
-        [self.allBrushs removeObjectAtIndex:self.allBrushs.count -1];
+        [((DMBrushModel *)self.allBrushs.lastObject).shape removeFromSuperlayer];
+        [self.allBrushs removeObject:self.allBrushs.lastObject];
         
         if(self.allBrushs.count>0)
             [self.delegate updateBrushWidth:((DMBrushModel*)[self.allBrushs lastObject]).brushWidth BrushColor:((DMBrushModel*)[self.allBrushs lastObject]).brushColor];
@@ -181,6 +173,10 @@
                 ++i;
             }
         }
+        
+        ((DMBrushModel*)[self.allBrushs lastObject]).shape.path = ((DMBrushModel*)[self.allBrushs lastObject]).brushPath.CGPath;
+        
+        
     }
     
     [self setNeedsDisplay];
@@ -263,13 +259,13 @@
         for (NSDictionary * model in jsonObject) {
             if([[model objectForKey:@"brushLines"] isEqualToString:@""])
                 continue;
-            DMBrushModel * bm = [[DMBrushModel alloc] init];
-            bm.brushWidth = [[model objectForKey:@"brushWidth"] floatValue];
+            
+            CGFloat bw = [[model objectForKey:@"brushWidth"] floatValue];
             NSArray* color = [[model objectForKey:@"brushColor"] componentsSeparatedByString:@","];
-            bm.brushColor = [UIColor colorWithRed:[[color objectAtIndex:0] floatValue] green:[[color objectAtIndex:1] floatValue] blue:[[color objectAtIndex:2] floatValue] alpha:1.0];
+            UIColor *bc = [UIColor colorWithRed:[[color objectAtIndex:0] floatValue] green:[[color objectAtIndex:1] floatValue] blue:[[color objectAtIndex:2] floatValue] alpha:1.0];
             NSArray * lines = [[model objectForKey:@"brushLines"] componentsSeparatedByString:@"="];
-            bm.brushPath = [UIBezierPath bezierPath];
-            bm.brushPath.lineCapStyle = kCGLineCapRound;
+           
+            DMBrushModel * bm = [[DMBrushModel alloc] initWithBrushWidth:bw BrushColor:bc];
             for (NSString * line in lines) {
                 NSArray *points = [line componentsSeparatedByString:@";"] ;
                 int i = 0;
@@ -294,7 +290,8 @@
                     ++i;
                 }
             }
-           
+            bm.shape.path = bm.brushPath.CGPath;
+            [self.layer addSublayer:bm.shape];
             [self.allBrushs addObject:bm];
             if([model isEqual: jsonObject.lastObject])
             {

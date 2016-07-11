@@ -186,7 +186,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/copy_%@.txt",type];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypePlain httpMethod:@"get"] map:^id(id value) {
         
@@ -200,7 +200,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/copy_%@_%@.txt",type,page];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
         
@@ -214,7 +214,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/learn_%@.txt",type];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypePlain httpMethod:@"get"] map:^id(id value) {
         
@@ -228,7 +228,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/learn_%@_%@.txt",type,page];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
         
@@ -240,7 +240,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/shop_%@.txt",type];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypePlain httpMethod:@"get"] map:^id(id value) {
         
@@ -254,7 +254,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/shop_%@_%@.txt",type,page];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
         
@@ -267,7 +267,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/message.txt"];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
         
@@ -279,7 +279,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/protectBaby.txt"];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
         
@@ -291,7 +291,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/splash.txt"];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypeDic httpMethod:@"get"] map:^id(NSDictionary* value) {
         
@@ -314,7 +314,7 @@
 {
     NSString * str = [NSString stringWithFormat:@"images/jhds/messageTag.txt"];
     return [[self fetchDataWithURLString:mUrlString(str)
-                                  params:nil
+                                  params:@{@"errorReturnCache":@(YES)}
                                  headers:nil
                               returnType:DMAPIManagerReturnTypeDic httpMethod:@"get"] map:^id(NSDictionary* value) {
         

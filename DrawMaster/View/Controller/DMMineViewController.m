@@ -81,7 +81,7 @@
         {
             UIImageView * icon = [[UIImageView alloc] init];
             {
-                [cell addSubview:icon];
+                [cell.contentView addSubview:icon];
                 icon.layer.cornerRadius = 35;
                 icon.clipsToBounds = YES;
                 icon.image = [UIImage imageNamed:@"icon"];
@@ -100,7 +100,7 @@
             UILabel *tipLabel = [[UILabel alloc] init];
             {
                 tipLabel.textAlignment = NSTextAlignmentCenter;
-                [cell addSubview:tipLabel];
+                [cell.contentView addSubview:tipLabel];
                 tipLabel.font = [UIFont systemFontOfSize:15];
                 tipLabel.textColor = mRGBToColor(0x222222);
                 tipLabel.text = [NSString stringWithFormat:@"当前版本为:%@",app_Version];
@@ -206,7 +206,7 @@
         NSString * DMProtectBabyTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMProtectBabyTag"];
         if(indexPath.section ==2 &&indexPath.row==0)
         {
-            if(oldMessageTag == nil )
+            if(DMOldProtectBabyTag == nil )
             {
                 cell.redPoint.hidden = NO;
             }
