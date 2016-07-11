@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "DMSplashViewController.h"
+#import "DMDrawViewController.h"
 #import "WeiboSDK.h"
 #import "WXApi.h"
 #import <TencentOpenAPI/TencentOAuth.h>
@@ -41,6 +42,8 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
@@ -59,6 +62,12 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
+    UIViewController *vc = [navigationControll childViewControllers].lastObject;
+    if([vc isKindOfClass:[DMDrawViewController class]])
+    {
+        [(DMDrawViewController*)vc BecomeActive];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -258,7 +258,7 @@
             }];
             
             shareBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
-                
+                [self share];
                 return [RACSignal empty];
             }];
         }
@@ -430,9 +430,8 @@
     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient withOptions:AVAudioSessionCategoryOptionMixWithOthers error:nil];
     [[AVAudioSession sharedInstance] setActive:YES error:nil];
     
-    
-    if (!self.volumeView) {
-        // put it somewhere outside the bounds of parent view
+    if(!self.volumeView)
+    {
         self.volumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(-100, -100, 10, 0)];
         [self.volumeView sizeToFit];
     }
@@ -1161,6 +1160,24 @@
         {
             break;
         }
+    }
+}
+
+- (void)BecomeActive
+{
+    if(self.volumeView.superview)
+    {
+        [self.volumeView removeFromSuperview];
+        self.volumeView = nil;
+    }
+    if(!self.volumeView)
+    {
+        self.volumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(-100, -100, 10, 0)];
+        [self.volumeView sizeToFit];
+    }
+    
+    if (!self.volumeView.superview) {
+        [self.view addSubview:self.volumeView];
     }
 }
 @end
