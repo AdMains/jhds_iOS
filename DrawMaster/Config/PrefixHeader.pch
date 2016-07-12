@@ -30,6 +30,7 @@
     #import "CategoryUtils.h"
     #import "HJCActionSheet.h"
     #import "UMMobClick/MobClick.h"
+    #import "SDWebImage/UIImageView+WebCache.h"
 #endif
 
 #endif

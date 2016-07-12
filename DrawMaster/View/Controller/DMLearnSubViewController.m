@@ -122,7 +122,9 @@
     
      NSArray * size = [[self.viewModel sizeOfLearnWithIndex:indexPath.row] componentsSeparatedByString:@","];
     
-    [cell.contentImg setImageWithURL:[NSURL URLWithString:[self.viewModel urlLearnWithIndex:indexPath.row]] placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xbbbbbb) size:CGSizeMake(2, 2*([size[1] floatValue]/[size[0] floatValue]))]];
+    //[cell.contentImg setImageWithURL:[NSURL URLWithString:[self.viewModel urlLearnWithIndex:indexPath.row]] placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xbbbbbb) size:CGSizeMake(2, 2*([size[1] floatValue]/[size[0] floatValue]))]];
+    [cell.contentImg sd_setImageWithURL:[NSURL URLWithString:[self.viewModel urlLearnWithIndex:indexPath.row]]
+                       placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xbbbbbb) size:CGSizeMake(2, 3)]];
     
     CGFloat w = mIsPad?(mScreenWidth-32-15)/2:(mScreenWidth-16-10);
    

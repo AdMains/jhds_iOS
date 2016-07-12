@@ -148,7 +148,7 @@
     [cell.loadAI startAnimating];
     cell.loadingTip.text = @"卖力加载中...";
     
-    [cell.contentImg setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self.imgUrls objectAtIndex:indexPath.row]]] placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xffffff) size:CGSizeMake(cv.frame.size.width, cv.frame.size.height)] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
+    /*[cell.contentImg setImageWithURLRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self.imgUrls objectAtIndex:indexPath.row]]] placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xffffff) size:CGSizeMake(cv.frame.size.width, cv.frame.size.height)] success:^(NSURLRequest * _Nonnull request, NSHTTPURLResponse * _Nullable response, UIImage * _Nonnull image) {
         cell.contentImg.image = image;
         cell.loadingBoxView.hidden = YES;
         [cell.loadAI startAnimating];
@@ -156,8 +156,25 @@
         cell.loadingBoxView.hidden = NO;
         cell.loadingTip.text = @"图片加载失败，点击屏幕重试";
         
-    }];
+    }];*/
     
+    [cell.contentImg sd_setImageWithURL:[NSURL URLWithString:[self.imgUrls objectAtIndex:indexPath.row]]
+                      placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xffffff) size:CGSizeMake(cv.frame.size.width, cv.frame.size.height)]
+                             completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                 if(error == nil)
+                                 {
+                                     cell.contentImg.image = image;
+                                     cell.loadingBoxView.hidden = YES;
+                                     [cell.loadAI startAnimating];
+                                 }
+                                 else
+                                 {
+                                     
+                                     cell.loadingBoxView.hidden = NO;
+                                     cell.loadingTip.text = @"图片加载失败，点击屏幕重试";
+                                 }
+                                 
+                             }];
     
     return cell;
 }

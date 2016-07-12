@@ -14,6 +14,7 @@ def pods
 	pod 'Mantle', '~> 1.5'
 	pod 'pop'
 	pod 'Shimmer'
+    pod 'SDWebImage', '~>3.8'
 	pod 'FXBlurView'
 	pod 'Fabric'
 	pod 'Crashlytics'

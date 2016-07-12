@@ -9,6 +9,7 @@
 #import "DMCopySubViewController.h"
 #import "DMCopyCollectionViewCell.h"
 #import "DMCopyDetailViewController.h"
+
 @interface DMCopySubViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 
 @end
@@ -113,7 +114,9 @@
     DMCopyCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:NSStringFromClass([DMCopyCollectionViewCell class]) forIndexPath:indexPath];
     cell.backgroundColor =mRGBToColor(0xffffff);
     cell.contentImg.contentMode =UIViewContentModeScaleAspectFit;
-    [cell.contentImg setImageWithURL:[NSURL URLWithString:[self.viewModel urlCopyWithIndex:indexPath.row]] placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xbbbbbb) size:CGSizeMake(2, 3)]];
+    [cell.contentImg sd_setImageWithURL:[NSURL URLWithString:[self.viewModel urlCopyWithIndex:indexPath.row]]
+                      placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xbbbbbb) size:CGSizeMake(2, 3)]];
+    //[cell.contentImg setImageWithURL:[NSURL URLWithString:[self.viewModel urlCopyWithIndex:indexPath.row]] placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xbbbbbb) size:CGSizeMake(2, 3)]];
     
     return cell;
 }
