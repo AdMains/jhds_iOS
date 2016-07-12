@@ -61,6 +61,20 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>0.3</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>78964a23b995f5a8a9f29f00fa6dfa34a4993fa5</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>weixin</string>

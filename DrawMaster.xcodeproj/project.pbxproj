@@ -517,6 +517,7 @@
 				4B61F92F1D197C0000AFF155 /* Resources */,
 				7739680B6F2E2A54C9030765 /* [CP] Embed Pods Frameworks */,
 				09DF2A03BCD18057643A19DE /* [CP] Copy Pods Resources */,
+				4B8450D31D34E3C70087AD33 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -600,6 +601,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DrawMaster/Pods-DrawMaster-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		4B8450D31D34E3C70087AD33 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 78964a23b995f5a8a9f29f00fa6dfa34a4993fa5 06ea1806a59ed4db2b40ea47a898963d79b284096eec2714a1edf23db5581c35";
 		};
 		6C961E8BFBB26AF8848B7DC9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -781,6 +795,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: ruquan zhang (M4Z2375ZX6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -811,6 +826,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer: ruquan zhang (M4Z2375ZX6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

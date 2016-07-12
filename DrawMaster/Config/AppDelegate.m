@@ -15,6 +15,9 @@
 #import "UMessage.h"
 #import "DMWebViewController.h"
 #import "DMCopyDetailViewController.h"
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 @interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,TencentSessionDelegate>
 @property (strong, nonatomic) TencentOAuth *tencentOAuth;
 @end
@@ -24,6 +27,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [Fabric with:@[[Crashlytics class]]];
+
+    
     UMConfigInstance.appKey = kUMengKey;
     UMConfigInstance.channelId = @"App Store";
     UMConfigInstance.eSType = BATCH;
