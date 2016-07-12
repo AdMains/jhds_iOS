@@ -11,7 +11,7 @@
 
 @protocol DMBigImgBoxViewDelegate <NSObject>
 
-- (void)clickImg:(BOOL)fullScree;
+- (void)clickImg:(BOOL)fullScree row:(NSInteger )r;
 
 @end
 
@@ -22,4 +22,6 @@
 @property (nonatomic,readwrite,strong) KYAnimatedPageControl *pageControl;
 @property (nonatomic,readwrite,strong) UICollectionView *collecttionView;
 @property (nonatomic,readwrite,strong) NSNumber * fullScreen;
+
+- (void)gotoIndexWithRow:(NSInteger)row;
 @end

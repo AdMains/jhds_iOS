@@ -188,6 +188,19 @@
             
         }
         
+        UIView * topline = [[UIView alloc] init];
+        {
+            topline.backgroundColor = mRGBToColor(0xcccccc);
+            [self.selectBrushBoxView addSubview:topline];
+            [topline mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.mas_equalTo(0);
+                make.top.mas_equalTo(40);
+                make.height.mas_equalTo(0.5);
+                
+            }];
+        }
+
+        
         UIView * line = [[UIView alloc] init];
         {
             line.backgroundColor = mRGBToColor(0xcccccc);

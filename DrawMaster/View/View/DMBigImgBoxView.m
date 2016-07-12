@@ -188,7 +188,7 @@
 {
     
     NSLog(@"＝＝＝＝＝＝＝＝＝＝＝点击 该干点啥呢＝＝＝＝＝＝");
-    [self.delegate clickImg:[self.fullScreen boolValue]];
+    [self.delegate clickImg:[self.fullScreen boolValue] row:indexPath.row];
 }
 
 #pragma mark -- UIScrollViewDelegate
@@ -221,5 +221,10 @@
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView{
     self.pageControl.indicator.lastContentOffset = scrollView.contentOffset.x;
+}
+
+- (void)gotoIndexWithRow:(NSInteger)row
+{
+    [self.collecttionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
 }
 @end

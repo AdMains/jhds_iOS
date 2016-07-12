@@ -53,12 +53,16 @@
     }];
 }
 
-- (void)clickImg:(BOOL)fullScree
+- (void)clickImg:(BOOL)fullScree row:(NSInteger )r
 {
     if(fullScree)
         return;
     self.imgInfoBoxView.tag =0;
     [self scaleImgInfoBoxView:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.11 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.imgInfoBoxView gotoIndexWithRow:r];
+    });
+    
 }
 
 - (void)didReceiveMemoryWarning {

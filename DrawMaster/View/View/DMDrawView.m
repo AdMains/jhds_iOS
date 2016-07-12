@@ -15,6 +15,10 @@
 
 @implementation DMDrawView
 
+{
+    CGPoint pts[5];
+    uint ctr;
+}
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     if (self = [super initWithCoder:aDecoder])
@@ -56,20 +60,38 @@
  
     UITouch *touch = [touches anyObject];
     self.lastPoint = [touch locationInView:self];
-    [((DMBrushModel*)[self.allBrushs lastObject]).brushPath moveToPoint:self.lastPoint];
+    //[((DMBrushModel*)[self.allBrushs lastObject]).brushPath moveToPoint:self.lastPoint];
     [((DMBrushModel*)[self.allBrushs lastObject]).brushLines addObject:[NSMutableArray array]];
    
     NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
     [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(self.lastPoint.x).stringValue,@(self.lastPoint.y).stringValue]];
     
+    ctr = 0;
+    pts[0] = self.lastPoint;
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches anyObject];
     CGPoint p = [touch locationInView:self];
-    [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:p];
-    ((DMBrushModel*)[self.allBrushs lastObject]).shape.path = ((DMBrushModel*)[self.allBrushs lastObject]).brushPath.CGPath;
+    ctr++;
+    pts[ctr] = p;
+    if (ctr == 4)
+    {
+        pts[3] = CGPointMake((pts[2].x + pts[4].x)/2.0, (pts[2].y + pts[4].y)/2.0); // move the endpoint to the middle of the line joining the second control point of the first Bezier segment and the first control point of the second Bezier segment
+       
+        [((DMBrushModel*)[self.allBrushs lastObject]).brushPath moveToPoint:pts[0]];
+        [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addCurveToPoint:pts[3] controlPoint1:pts[1] controlPoint2:pts[2]]; // add a cubic Bezier from pt[0] to pt[3], with control points pt[1] and pt[2]
+        
+        ((DMBrushModel*)[self.allBrushs lastObject]).shape.path = ((DMBrushModel*)[self.allBrushs lastObject]).brushPath.CGPath;
+        // replace points and get ready to handle the next segment
+        pts[0] = pts[3];
+        pts[1] = pts[4];
+        ctr = 1;
+    }
+    
+    //[((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:p];
+    //((DMBrushModel*)[self.allBrushs lastObject]).shape.path = ((DMBrushModel*)[self.allBrushs lastObject]).brushPath.CGPath;
     NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
     [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
     
@@ -84,6 +106,7 @@
     NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
     if(fabs(p.x -self.lastPoint.x)<8.0f &&fabs(p.y-self.lastPoint.y)<8.0f && lastPoints.count<3)
     {
+        [((DMBrushModel*)[self.allBrushs lastObject]).brushPath moveToPoint:self.lastPoint];
         [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:self.lastPoint];
         NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
         [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(self.lastPoint.x).stringValue,@(self.lastPoint.y).stringValue]];
@@ -94,7 +117,7 @@
         [self save];
     });
     
-    
+    ctr = 0;
   
     
     
@@ -160,17 +183,53 @@
         [((DMBrushModel*)[self.allBrushs lastObject]).brushPath removeAllPoints];
         for (NSMutableArray *points in lines) {
             int i = 0;
-            for (NSString * point in points) {
-                NSArray *pointxy = [point componentsSeparatedByString:@","];
-                if(i == 0)
-                {
-                    [((DMBrushModel*)[self.allBrushs lastObject]).brushPath moveToPoint:CGPointMake([pointxy[0] floatValue], [pointxy[1] floatValue])];
+            if(points.count == 2)
+            {
+                for (NSString * point in points) {
+                    NSArray *pointxy = [point componentsSeparatedByString:@","];
+                    if(i == 0)
+                    {
+                        [((DMBrushModel*)[self.allBrushs lastObject]).brushPath moveToPoint:CGPointMake([pointxy[0] floatValue], [pointxy[1] floatValue])];
+                    }
+                    else
+                    {
+                        [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:CGPointMake([pointxy[0] floatValue], [pointxy[1] floatValue])];
+                    }
+                    ++i;
                 }
-                else
-                {
-                    [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addLineToPoint:CGPointMake([pointxy[0] floatValue], [pointxy[1] floatValue])];
+            }
+            else
+            {
+                ctr=0;
+                for (NSString * point in points) {
+                    NSArray *pointxy = [point componentsSeparatedByString:@","];
+                    CGPoint p = CGPointMake([pointxy[0] floatValue], [pointxy[1] floatValue]);
+                    if(i == 0)
+                    {
+                        pts[0] = p;
+                    }
+                    else
+                    {
+
+                        ctr++;
+                       
+                        pts[ctr] = p;
+                        if (ctr == 4)
+                        {
+                            pts[3] = CGPointMake((pts[2].x + pts[4].x)/2.0, (pts[2].y + pts[4].y)/2.0);
+                            [((DMBrushModel*)[self.allBrushs lastObject]).brushPath moveToPoint:pts[0]];
+                            [((DMBrushModel*)[self.allBrushs lastObject]).brushPath addCurveToPoint:pts[3] controlPoint1:pts[1] controlPoint2:pts[2]]; // add a cubic Bezier from pt[0] to pt[3], with control points pt[1] and pt[2]
+                            
+                            ((DMBrushModel*)[self.allBrushs lastObject]).shape.path = ((DMBrushModel*)[self.allBrushs lastObject]).brushPath.CGPath;
+                            // replace points and get ready to handle the next segment
+                            pts[0] = pts[3];
+                            pts[1] = pts[4];
+                            ctr = 1;
+                        }
+                    }
+
+                    ++i;
                 }
-                ++i;
             }
         }
         
@@ -179,7 +238,7 @@
         
     }
     
-    [self setNeedsDisplay];
+    ctr=0;
     NSLog(@"撤销");
 }
 
@@ -269,36 +328,84 @@
             for (NSString * line in lines) {
                 NSArray *points = [line componentsSeparatedByString:@";"] ;
                 int i = 0;
-                for (NSString *point in points) {
-                    NSArray *pointXY = [point componentsSeparatedByString:@","];
-                    CGPoint p = CGPointMake([[pointXY objectAtIndex:0] floatValue], [[pointXY objectAtIndex:1] floatValue]);
-                    if(i == 0)
-                    {
+                if(points.count == 2)
+                {
+                    for (NSString *point in points) {
+                        NSArray *pointXY = [point componentsSeparatedByString:@","];
+                        CGPoint p = CGPointMake([[pointXY objectAtIndex:0] floatValue], [[pointXY objectAtIndex:1] floatValue]);
                         
-                        [bm.brushPath moveToPoint:p];
-                        [bm.brushLines addObject:[NSMutableArray array]];
-                        NSMutableArray *lastPoints = bm.brushLines.lastObject;
-                        [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
-                        
+                        if(i == 0)
+                        {
+                            
+                            [bm.brushPath moveToPoint:p];
+                            [bm.brushLines addObject:[NSMutableArray array]];
+                            NSMutableArray *lastPoints = bm.brushLines.lastObject;
+                            [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
+                            
+                        }
+                        else
+                        {
+                            [bm.brushPath addLineToPoint:p];
+                            NSMutableArray *lastPoints = bm.brushLines.lastObject;
+                            [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
+                        }
+                        ++i;
                     }
-                    else
-                    {
-                        [bm.brushPath addLineToPoint:p];
-                        NSMutableArray *lastPoints = bm.brushLines.lastObject;
-                        [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
+                }
+                else
+                {
+                    ctr=0;
+                    for (NSString*point in points) {
+                        NSArray *pointXY = [point componentsSeparatedByString:@","];
+                        CGPoint p = CGPointMake([[pointXY objectAtIndex:0] floatValue], [[pointXY objectAtIndex:1] floatValue]);
+                        if(i == 0)
+                        {
+                            
+                            //[bm.brushPath moveToPoint:p];
+                            pts[0] = p;
+                            [bm.brushLines addObject:[NSMutableArray array]];
+                            NSMutableArray *lastPoints = bm.brushLines.lastObject;
+                            [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
+                            
+                        }
+                        else
+                        {
+                            //[bm.brushPath addLineToPoint:p];
+                            ctr++;
+                            pts[ctr] = p;
+                            if (ctr == 4)
+                            {
+                                pts[3] = CGPointMake((pts[2].x + pts[4].x)/2.0, (pts[2].y + pts[4].y)/2.0); // move the endpoint to the middle of the line joining the second control point of the first Bezier segment and the first control point of the second Bezier segment
+                                
+                                [bm.brushPath moveToPoint:pts[0]];
+                                [bm.brushPath addCurveToPoint:pts[3] controlPoint1:pts[1] controlPoint2:pts[2]]; // add a cubic Bezier from pt[0] to pt[3], with control points pt[1] and pt[2]
+                                
+                                bm.shape.path = bm.brushPath.CGPath;
+                                // replace points and get ready to handle the next segment
+                                pts[0] = pts[3];
+                                pts[1] = pts[4];
+                                ctr = 1;
+                            }
+                            
+                            NSMutableArray *lastPoints = bm.brushLines.lastObject;
+                            [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
+                        }
+                        ++i;
+
                     }
-                    ++i;
                 }
             }
             bm.shape.path = bm.brushPath.CGPath;
             [self.layer addSublayer:bm.shape];
+            
             [self.allBrushs addObject:bm];
             if([model isEqual: jsonObject.lastObject])
             {
                 [self.delegate updateBrushWidth:bm.brushWidth BrushColor:bm.brushColor];
             }
         }
-        [self setNeedsDisplay];
+        ctr=0;
+       
         return YES;
     }
     else
