@@ -57,6 +57,12 @@
         AFHTTPRequestOperation *operation = [self HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject) {
             
             if (type == DMAPIManagerReturnTypePlain||type == DMAPIManagerReturnTypeM3u8) {
+                
+                NSDictionary *result = @{@"data":operation.responseString};
+                
+                NSData * data = [NSKeyedArchiver archivedDataWithRootObject:result];
+                [data writeToFile:savePath atomically:YES];
+                
                 [subscriber sendNext:operation.responseString];
                 [subscriber sendCompleted];
             }
