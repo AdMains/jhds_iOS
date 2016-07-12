@@ -31,6 +31,12 @@
 
 - (RACSignal*)fetchDataWithMore:(BOOL)more
 {
+    NSString * event = @"";
+    if(more)
+        event = [NSString stringWithFormat:@"copy_%@_more",self.type];
+    else
+        event = [NSString stringWithFormat:@"copy_%@_refresh",self.type];
+    [MobClick event:event];
       return [[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
           
           [[[DMAPIManager sharedManager] fetchCopyNumWithType:self.type] subscribeNext:^(NSString* value){

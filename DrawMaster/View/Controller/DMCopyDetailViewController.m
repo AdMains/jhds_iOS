@@ -27,11 +27,20 @@
     self.imgInfoBoxView.delegate = self;
     self.imgInfoBoxView.layer.borderColor = mRGBToColor(0xeeeeee).CGColor;
     self.imgInfoBoxView.layer.borderWidth = 1.0;
+    if(self.imgUrls.count==1)
+        [MobClick event:@"copy_detail"];
+    else
+        [MobClick event:@"learn_detail"];
+    
     @weakify(self)
     self.imgInfoBoxView.tryBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         @strongify(self)
         [self scaleImgInfoBoxView:self.imgInfoBoxView.tag == 1];
         self.imgInfoBoxView.tag = self.imgInfoBoxView.tag == 0?1:0;
+        if(self.imgUrls.count==1)
+            [MobClick event:@"copy_action"];
+        else
+            [MobClick event:@"learn_action"];
         return [RACSignal empty];
     }];
     

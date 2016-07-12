@@ -12,6 +12,9 @@
 #import "WeiboSDK.h"
 #import "WXApi.h"
 #import <TencentOpenAPI/TencentOAuth.h>
+#import "UMessage.h"
+#import "DMWebViewController.h"
+#import "DMCopyDetailViewController.h"
 @interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,TencentSessionDelegate>
 @property (strong, nonatomic) TencentOAuth *tencentOAuth;
 @end
@@ -21,6 +24,21 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    UMConfigInstance.appKey = kUMengKey;
+    UMConfigInstance.channelId = @"App Store";
+    UMConfigInstance.eSType = BATCH;
+    
+    [MobClick startWithConfigure:UMConfigInstance];//配置以上参数后调用此方法初始化SDK！
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    
+    //设置 AppKey 及 LaunchOptions
+    [UMessage startWithAppkey:kUMengKey launchOptions:launchOptions];
+    
+    //1.3.0版本开始简化初始化过程。如不需要交互式的通知，下面用下面一句话注册通知即可。
+    [UMessage registerForRemoteNotifications];
+
+    
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:kSinaKey];
     [WXApi registerApp:kWeixinAppKey withDescription:@"简画大师"];
@@ -30,6 +48,19 @@
     [[UITabBar appearance] setItemWidth:200];
     [[UITabBar appearance] setBackgroundColor:[UIColor whiteColor]];
     self.tencentOAuth = [[TencentOAuth alloc] initWithAppId:kTencentAppId andDelegate:self];
+    NSDictionary * userInfo=[launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo!=nil) {
+        
+        self.userInfoOfNotifation=userInfo;
+        //获取应用程序消息通知标记数（即小红圈中的数字）
+        NSInteger badge = [UIApplication sharedApplication].applicationIconBadgeNumber;
+        if (badge>0) {
+            //如果应用程序消息通知标记数（即小红圈中的数字）大于0，清除标记。
+            badge = 0;
+            //清除标记。清除小红圈中数字，小红圈中数字为0，小红圈才会消除。
+            [UIApplication sharedApplication].applicationIconBadgeNumber = badge;
+        }
+    }
 
     return YES;
 }
@@ -45,6 +76,45 @@
     
     
 }
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    //[UMessage didReceiveRemoteNotification:userInfo];
+    self.userInfoOfNotifation=userInfo;
+    //在此处理接收到的消息。
+    NSLog(@"Receive remote notification : %@",userInfo);
+    if(application.applicationState==UIApplicationStateActive){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"简画大师推送"
+                                                        message:userInfo[@"aps"][@"alert"]
+                                                       delegate:nil
+                                              cancelButtonTitle:@"忽略"
+                                              otherButtonTitles:@"查看", nil];
+        @weakify(self);
+        [alert.rac_buttonClickedSignal subscribeNext:^(NSNumber* x) {
+            @strongify(self);
+            if (x.integerValue == 0) {
+                
+            } else if (x.integerValue == 1) {
+                [self performPushReadDetailController:userInfo];
+            }
+        }];
+        [alert show];
+        
+    }
+    else{
+        [self performPushReadDetailController:userInfo];
+    }
+
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *token = [NSString stringWithFormat:@"%@", deviceToken];
+    //获取终端设备标识，这个标识需要通过接口发送到服务器端，服务器端推送消息到APNS时需要知道终端的标识，APNS通过注册的终端标识找到终端设备。
+    token = [token stringByReplacingOccurrencesOfString:@" " withString:@""];
+    NSLog(@"My token is:%@", token);
+}
+
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
@@ -107,5 +177,35 @@
         return;
     }
 }
+
+-(void)performPushReadDetailController:(NSDictionary *)userInfo{
+    UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
+    UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    if(userInfo[@"pushType"])
+    {
+        if([userInfo[@"pushType"] isEqualToString:@"1"])
+        {
+            DMWebViewController *modal =  [[DMWebViewController alloc] init];
+            modal.detailUrl = userInfo[@"pushDetail"];
+            modal.detailTitle = @"守护宝贝,爱心接力 ";
+            modal.canShare = YES;
+            [navigationControll pushViewController:modal animated:NO];
+        }
+        else if([userInfo[@"pushType"] isEqualToString:@"2"])
+        {
+            DMCopyDetailViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMCopyDetailViewController"];
+            NSArray * tempArray  = [userInfo[@"pushDetail"] componentsSeparatedByString:@","];
+            NSMutableArray * tmp = [NSMutableArray array];
+            for (NSString *url in tempArray) {
+                [tmp  addObject:[NSString stringWithFormat:@"%@/images/jhds/learn/%@.jpg",kAPIBaseURI,url]];
+            }
+            modal.imgUrls = tmp;
+            [[NSUserDefaults standardUserDefaults] setObject:tmp forKey:@"DMLastDrawInfo"];
+            [navigationControll pushViewController:modal animated:NO];
+        }
+    }
+    self.userInfoOfNotifation=nil;
+}
+
 
 @end

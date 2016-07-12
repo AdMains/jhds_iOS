@@ -6,7 +6,7 @@
 #define kAPIBaseURI @"http://quangelab.com"
 #define kBaiduAPIKey @"02296dd93f1940a39913d9a406332486"
 #define kBaiduSecretKey @"c790af68cc294b82b52fc87cc1b79264"
-#define kUMengKey       @"55597d3f67e58e3a8e000aac"
+#define kUMengKey       @"5784568e67e58ee8f800110c"
 #define kShareSDKKey    @""
 #define kQZoneId        @""
 #define kQZoneKey       @""

@@ -10,7 +10,7 @@
 
 
 //----------方法简写-------
-#define kAppDelegate        ((EDUAppDelegate *)[[UIApplication sharedApplication] delegate])
+#define kAppDelegate        ((AppDelegate *)[[UIApplication sharedApplication] delegate])
 #define mWindow             [[[UIApplication sharedApplication] windows] lastObject]
 #define mKeyWindow          [[UIApplication sharedApplication] keyWindow]
 #define mUserDefaults       [NSUserDefaults standardUserDefaults]

@@ -29,6 +29,7 @@
     #import "QGOCCategory.h"
     #import "CategoryUtils.h"
     #import "HJCActionSheet.h"
+    #import "UMMobClick/MobClick.h"
 #endif
 
 #endif

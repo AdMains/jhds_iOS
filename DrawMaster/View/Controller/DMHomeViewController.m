@@ -105,14 +105,24 @@
 - (void)navigationController:(UINavigationController *)navigationController didShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
     [(DMNavigationController*)self.navigationController resetDelegate];
     DMSplashViewController* first = self.navigationController.childViewControllers[0];
-    if(first.view.tag==11)
+    if(kAppDelegate.userInfoOfNotifation.count==1 &&[kAppDelegate.userInfoOfNotifation.allKeys[0] isEqualToString:@"1"])
     {
-        NSString * clickurl = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMSplashClickUrl"];
-        DMWebViewController *modal =  [[DMWebViewController alloc] init];
-        modal.detailUrl = clickurl;
-        modal.detailTitle = @"守护宝贝,爱心接力 ";
-        modal.canShare = YES;
-        [self.navigationController pushViewController:modal animated:NO];
+
+        if(first.view.tag==11)
+        {
+            NSString * clickurl = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMSplashClickUrl"];
+            DMWebViewController *modal =  [[DMWebViewController alloc] init];
+            modal.detailUrl = clickurl;
+            modal.detailTitle = @"守护宝贝,爱心接力 ";
+            modal.canShare = YES;
+            [self.navigationController pushViewController:modal animated:NO];
+        }
+    }
+    else
+    {
+        
+        [kAppDelegate performPushReadDetailController:kAppDelegate.userInfoOfNotifation];
+        
     }
     
 }

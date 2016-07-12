@@ -37,6 +37,7 @@
         
     }
     self.title = @"教程";
+    [MobClick event:@"learn"];
 }
 
 - (void)didReceiveMemoryWarning {

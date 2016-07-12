@@ -43,7 +43,7 @@
     [self.tableview registerNib:[UINib nibWithNibName:NSStringFromClass([DMMineTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([DMMineTableViewCell class])];
     [self.tableview setBackgroundColor:mRGBToColor(0xeeeeee)];
     [self.tableview setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
+    [MobClick event:@"mine"];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -276,9 +276,13 @@
                          @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",
                          @"1126665175" ];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+        
+        [MobClick event:@"mine_add_start"];
+        
     }
     else if(indexPath.section == 0 &&indexPath.row == 2)
     {
+        [MobClick event:@"mine_last"];
         NSMutableArray *lastDrawInfo = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMLastDrawInfo"];
         if(lastDrawInfo == nil || lastDrawInfo.count==0)
         {
@@ -299,11 +303,13 @@
     }
     else if(indexPath.section == 0 &&indexPath.row == 1)
     {
+        [MobClick event:@"mine_save"];
         DMMineSaveViewController *modal =  [[DMMineSaveViewController alloc] init];
         [self.navigationController pushViewController:modal animated:YES];
     }
     else if(indexPath.section == 1 &&indexPath.row == 0)
     {
+        [MobClick event:@"mine_shop"];
         DMMineShopViewController *modal =  [[DMMineShopViewController alloc] init];
         [self.navigationController pushViewController:modal animated:YES];
        
@@ -314,6 +320,7 @@
     }
     else if(indexPath.section == 1 &&indexPath.row == 1)
     {
+        [MobClick event:@"mine_message"];
         DMMineNewsViewController *modal =  [[DMMineNewsViewController alloc] init];
         [self.navigationController pushViewController:modal animated:YES];
         NSString * newMessageTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMMessageTag"];
@@ -323,6 +330,7 @@
     }
     else if(indexPath.section == 2 &&indexPath.row == 0)
     {
+        [MobClick event:@"mine_ProtectBaby"];
         DMMineProtectBabyViewController *modal =  [[DMMineProtectBabyViewController alloc] init];
         [self.navigationController pushViewController:modal animated:YES];
         

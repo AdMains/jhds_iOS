@@ -31,6 +31,10 @@
 
 - (RACSignal*)fetchDataWithMore:(BOOL)more
 {
+    if(more)
+        [MobClick event:[NSString stringWithFormat:@"learn_%@_more",self.type]];
+    else
+        [MobClick event:[NSString stringWithFormat:@"learn_%@_refresh",self.type]];
     return [[RACSignal createSignal:^RACDisposable *(id<RACSubscriber> subscriber) {
         
         [[[DMAPIManager sharedManager] fetchLearnNumWithType:self.type] subscribeNext:^(NSString* value){

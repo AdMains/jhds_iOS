@@ -48,6 +48,7 @@
 		4B97F0EC1D1A2492004F4686 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97F0DE1D1A2492004F4686 /* main.m */; };
 		4B97F0ED1D1A2492004F4686 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0E11D1A2492004F4686 /* Assets.xcassets */; };
 		4B97F0EF1D1A2492004F4686 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0E71D1A2492004F4686 /* Main.storyboard */; };
+		4BA18D0F1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA18D0D1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a */; };
 		4BB103421D2B441E00CCD29F /* DMMineBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB103411D2B441E00CCD29F /* DMMineBaseViewController.m */; };
 		4BB103451D2B443B00CCD29F /* DMMineSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB103441D2B443B00CCD29F /* DMMineSaveViewController.m */; };
 		4BB103481D2B445200CCD29F /* DMMineShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB103471D2B445200CCD29F /* DMMineShopViewController.m */; };
@@ -156,6 +157,8 @@
 		4B97F0DE1D1A2492004F4686 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B97F0E11D1A2492004F4686 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B97F0E71D1A2492004F4686 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		4BA18D0D1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.3.0.a; sourceTree = "<group>"; };
+		4BA18D0E1D34C1C200B041B1 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		4BB103401D2B441E00CCD29F /* DMMineBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMMineBaseViewController.h; sourceTree = "<group>"; };
 		4BB103411D2B441E00CCD29F /* DMMineBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMMineBaseViewController.m; sourceTree = "<group>"; };
 		4BB103431D2B443B00CCD29F /* DMMineSaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMMineSaveViewController.h; sourceTree = "<group>"; };
@@ -211,6 +214,7 @@
 				4BFF48761D2D190200713E42 /* TencentOpenAPI.framework in Frameworks */,
 				4BFF48781D2D190200713E42 /* libWeChatSDK.a in Frameworks */,
 				4BFF48731D2D190200713E42 /* libWeiboSDK.a in Frameworks */,
+				4BA18D0F1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,6 +255,7 @@
 		4B7621881D2601D8006F252E /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				4BA18D0C1D34C1C200B041B1 /* UMessage_Sdk_1.3.0 */,
 				4BFF48671D2D190200713E42 /* libWeiboSDK */,
 				4BFF486B1D2D190200713E42 /* QQSDK */,
 				4BFF486F1D2D190200713E42 /* WeChatSDK_64 */,
@@ -441,6 +446,15 @@
 				4B78DF601D2BDEF600E4ABB6 /* DMShopViewModel.m */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		4BA18D0C1D34C1C200B041B1 /* UMessage_Sdk_1.3.0 */ = {
+			isa = PBXGroup;
+			children = (
+				4BA18D0D1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a */,
+				4BA18D0E1D34C1C200B041B1 /* UMessage.h */,
+			);
+			path = UMessage_Sdk_1.3.0;
 			sourceTree = "<group>";
 		};
 		4BFF48671D2D190200713E42 /* libWeiboSDK */ = {
@@ -781,6 +795,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Lib/libWeiboSDK",
 					"$(PROJECT_DIR)/Lib/WeChatSDK_64",
+					"$(PROJECT_DIR)/Lib/UMessage_Sdk_1.3.0",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.quange.DrawMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -810,6 +825,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Lib/libWeiboSDK",
 					"$(PROJECT_DIR)/Lib/WeChatSDK_64",
+					"$(PROJECT_DIR)/Lib/UMessage_Sdk_1.3.0",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.quange.DrawMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";

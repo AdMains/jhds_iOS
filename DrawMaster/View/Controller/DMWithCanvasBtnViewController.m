@@ -40,6 +40,7 @@
 
 - (void)gotoDraw
 {
+    [MobClick event:@"canvas"];
     UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     UIViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMDrawViewController"];
     [[NSUserDefaults standardUserDefaults] setObject:@[] forKey:@"DMLastDrawInfo"];

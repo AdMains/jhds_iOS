@@ -94,7 +94,7 @@
     //((DMBrushModel*)[self.allBrushs lastObject]).shape.path = ((DMBrushModel*)[self.allBrushs lastObject]).brushPath.CGPath;
     NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
     [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
-    
+    [MobClick event:@"canvas_draw"];
     
 }
 
@@ -159,7 +159,7 @@
 
 - (void)backToFront
 {
-    
+    [MobClick event:@"canvas_last"];
     NSMutableArray *lines = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines;
     
     if(lines.count>0)
@@ -245,6 +245,7 @@
 
 - (void)save
 {
+    
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString * FolderName = [NSString stringWithFormat:@"%@/jhdsLineData",kDocuments];
     NSError *error;

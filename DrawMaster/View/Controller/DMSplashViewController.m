@@ -25,6 +25,7 @@
 - (void)loadView
 {
     [super loadView];
+    [MobClick event:@"splash"];
     self.view.backgroundColor = [UIColor whiteColor];//
     @weakify(self)
     NSString* firstInstall = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMFirstInstall"];
@@ -66,6 +67,7 @@
                                 self.view.tag =11;
                                 self.skipBtn.tag = 1;
                                 [self goToHome];
+                                [MobClick event:@"splash_img_click"];
                             }
                         }];
                         

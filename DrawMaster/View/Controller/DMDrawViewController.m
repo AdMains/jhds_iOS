@@ -575,6 +575,7 @@
 
 - (void)shakeToClear
 {
+    [MobClick event:@"canvas_clear"];
     NSLog(@"摇动结束");
     [self shakeshake];
     [self.drawView shakeToClear];
@@ -593,11 +594,13 @@
     NSString* brushWidth =  [[NSUserDefaults standardUserDefaults] objectForKey:@"DMBrushWidth"];
     if(up)
     {
+        [MobClick event:@"canvas_brush_bold"];
         if([brushWidth floatValue]< 20.0)
             brushWidth = @([brushWidth floatValue]+0.5).stringValue;
     }
     else
     {
+        [MobClick event:@"canvas_brush_fine"];
         if([brushWidth floatValue]>=1.0)
             brushWidth = @([brushWidth floatValue]-0.5).stringValue;
     }
@@ -801,6 +804,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
+    [MobClick event:@"canvas_select_brush"];
     NSLog(@"选取颜色");
     NSMutableArray *customBrushColors = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMCustomBrushColors"];
     [self openSelectBrush:nil];
@@ -838,6 +842,8 @@
 
 - (void)save
 {
+    [MobClick event:@"canvas_save"];
+    
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     // app名称
     NSString *app_Name = [infoDictionary objectForKey:@"CFBundleName"];
@@ -1045,6 +1051,7 @@
     UIImage *theimg = [ UIImage grabImageWithView:self.captureBoxView scale:2];
     if(index == 0)
     {
+        [MobClick event:@"canvas_share_sina"];
         WBMessageObject *message = [WBMessageObject message];
         message.text = [[CommonShareView sharedView] shareMessageWithType:0];
         WBImageObject *image = [WBImageObject object];
@@ -1065,6 +1072,7 @@
     }
     else if(index == 1)
     {
+        [MobClick event:@"canvas_share_wx"];
         WXMediaMessage *message = [WXMediaMessage message];
         message.title = @"简画大师";
         message.description = [[CommonShareView sharedView] shareMessageWithType:0];
@@ -1088,6 +1096,7 @@
     }
     else if(index == 2)
     {
+        [MobClick event:@"canvas_share_pyq"];
         WXMediaMessage *message = [WXMediaMessage message];
         message.title = @"简画大师";
         message.description = [[CommonShareView sharedView] shareMessageWithType:0];
@@ -1111,6 +1120,7 @@
     }
     else
     {
+        [MobClick event:@"canvas_share_qq"];
         [self shareButtonQQ];
     }
     

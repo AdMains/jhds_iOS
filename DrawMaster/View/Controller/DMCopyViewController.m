@@ -40,7 +40,7 @@
     }
     self.title = @"临摹";
     
-    
+    [MobClick event:@"copy"];
     
     
     
