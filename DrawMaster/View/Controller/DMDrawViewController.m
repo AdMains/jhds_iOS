@@ -990,8 +990,15 @@
 - (void)share
 {
     NSLog(@"这里分享图片");
-    [[CommonShareView sharedView] show];
-    [CommonShareView sharedView].delegate = self;
+    if([WeiboSDK isWeiboAppInstalled] || [WXApi isWXAppInstalled] || [QQApi isQQInstalled])
+    {
+        [[CommonShareView sharedView] show];
+        [CommonShareView sharedView].delegate = self;
+    }
+    else
+    {
+        [self showLoadAlertView:@"不能分享,微博.微信.QQ都没有" imageName:nil autoHide:YES];
+    }
 
 }
 - (void)actionSheet:(HJCActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex

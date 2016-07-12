@@ -48,8 +48,15 @@
             [shareBtn setImage:[UIImage imageNamed:@"new_share"] forState:UIControlStateNormal];
             shareBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
                 @strongify(self);
-                [[CommonShareView sharedView] show];
-                [CommonShareView sharedView].delegate = self;
+                if([WeiboSDK isWeiboAppInstalled] || [WXApi isWXAppInstalled] || [QQApi isQQInstalled])
+                {
+                    [[CommonShareView sharedView] show];
+                    [CommonShareView sharedView].delegate = self;
+                }
+                else
+                {
+                    [self showLoadAlertView:@"不能分享,微博.微信.QQ都没有" imageName:nil autoHide:YES];
+                }
                 return [RACSignal empty];
             }];
             

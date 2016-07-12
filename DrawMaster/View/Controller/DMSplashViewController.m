@@ -56,7 +56,7 @@
                     case -1:
                         
                         break;
-                    case 0:
+                    case 2:
                     {
                         UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] init];
                         [image addGestureRecognizer:tap];

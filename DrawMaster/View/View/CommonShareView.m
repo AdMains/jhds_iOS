@@ -7,6 +7,10 @@
 //
 
 #import "CommonShareView.h"
+#import "WeiboSDK.h"
+#import "WXApi.h"
+#import <TencentOpenAPI/QQApi.h>
+#import <TencentOpenAPI/QQApiInterface.h>
 
 @interface CommonShareView ()
 @property(nonatomic,readwrite,strong) MASConstraint *bootomViewBottom;
@@ -94,12 +98,37 @@
         
     }
     
-    NSArray * icons = @[@"more_weibo",@"more_weixin",@"more_circlefriends",@"qq"];
-     NSArray * name = @[@"微博",@"微信",@"朋友圈",@"QQ"];
+    NSMutableArray * icons =  [NSMutableArray array];
+    NSMutableArray * name = [NSMutableArray array];
+    if ([WeiboSDK isWeiboAppInstalled]) {
+        [icons addObject:@"more_weibo"];
+        [name addObject:@"微博"];
+    }
+    
+    if ([WXApi isWXAppInstalled]) {
+        [icons addObject:@"more_weixin"];
+        [name addObject:@"微信"];
+        [icons addObject:@"more_circlefriends"];
+        [name addObject:@"朋友圈"];
+    }
+    
+    if ([QQApi isQQInstalled]) {
+        [icons addObject:@"qq"];
+        [name addObject:@"QQ"];
+    }
+    
     for (int i = 0; i<icons.count; ++i) {
         UIButton *btn = [[UIButton alloc] init];
         {
-            btn.tag = i;
+            if([name[i] isEqualToString:@"微博"])
+                btn.tag = 0;
+            else if([name[i] isEqualToString:@"微信"])
+                btn.tag = 1;
+            else if([name[i] isEqualToString:@"朋友圈"])
+                btn.tag = 2;
+            else if([name[i] isEqualToString:@"QQ"])
+                btn.tag = 3;
+                
             [bottom addSubview:btn];
             CGFloat btnWidth = 60;
             CGFloat mm = (mScreenWidth-btnWidth*icons.count)/(icons.count+1);
