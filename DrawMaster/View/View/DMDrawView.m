@@ -102,7 +102,7 @@
 {
     UITouch *touch = [touches anyObject];
     CGPoint p = [touch locationInView:self];
-    NSLog(@"差距为x:%f     y:%f",(p.x -self.lastPoint.x),(p.y-self.lastPoint.y));
+    //NSLog(@"差距为x:%f     y:%f",(p.x -self.lastPoint.x),(p.y-self.lastPoint.y));
     NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
     if(fabs(p.x -self.lastPoint.x)<8.0f &&fabs(p.y-self.lastPoint.y)<8.0f && lastPoints.count<3)
     {
@@ -149,7 +149,7 @@
 
     CGColorRef colorRef = bc.CGColor;
     NSString *colorString = [CIColor colorWithCGColor:colorRef].stringRepresentation;
-    NSLog(@"新的画笔颜色为%@",colorString);
+    //NSLog(@"新的画笔颜色为%@",colorString);
   
     DMBrushModel * bm = [[DMBrushModel alloc] initWithBrushWidth:bw BrushColor:bc];
     [self.layer addSublayer:bm.shape];
@@ -239,7 +239,7 @@
     }
     
     ctr=0;
-    NSLog(@"撤销");
+    //NSLog(@"撤销");
 }
 
 
@@ -271,7 +271,7 @@
     }
     jsonString = [jsonString substringToIndex:jsonString.length-1];
     jsonString = [jsonString stringByAppendingString:@"]"];
-    NSLog(@"json数据为:%@",jsonString);
+    //NSLog(@"json数据为:%@",jsonString);
     NSString * jsonSavePath = [NSString stringWithFormat:@"%@/jhdsLineData/%@",kDocuments,@"lineData.json"];
     
     
@@ -313,7 +313,7 @@
     NSData * lineData = [NSData dataWithContentsOfFile:jsonSavePath];
   
     NSArray* jsonObject = [NSJSONSerialization JSONObjectWithData:lineData options:NSJSONReadingAllowFragments error:&error];
-    NSLog(@"%@",jsonObject);
+    //NSLog(@"%@",jsonObject);
     if (error==nil) {
        
         for (NSDictionary * model in jsonObject) {

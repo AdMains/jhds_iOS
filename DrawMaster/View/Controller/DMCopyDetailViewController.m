@@ -35,18 +35,17 @@
     @weakify(self)
     self.imgInfoBoxView.tryBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
         @strongify(self)
-        [self scaleImgInfoBoxView:self.imgInfoBoxView.tag == 1];
-        self.imgInfoBoxView.tag = self.imgInfoBoxView.tag == 0?1:0;
-        if(self.imgUrls.count==1)
-            [MobClick event:@"copy_action"];
-        else
-            [MobClick event:@"learn_action"];
+        [self tryClick:input];
         return [RACSignal empty];
     }];
     
     
     self.imgInfoBoxWidth.constant = mScreenWidth;
     self.imgInfoBoxHeight.constant = mScreenHeight;
+    if(self.loadLastDraw)
+    {
+        [self tryClick:self.imgInfoBoxView.tryBtn];
+    }
 }
 
 - (void)scaleImgInfoBoxView:(BOOL)scale
@@ -89,7 +88,15 @@
 }
 */
 
-
+-(void)tryClick:(UIButton*)btn
+{
+    [self scaleImgInfoBoxView:self.imgInfoBoxView.tag == 1];
+    self.imgInfoBoxView.tag = self.imgInfoBoxView.tag == 0?1:0;
+    if(self.imgUrls.count==1)
+        [MobClick event:@"copy_action"];
+    else
+        [MobClick event:@"learn_action"];
+}
 
 
 @end
