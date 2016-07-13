@@ -269,8 +269,9 @@
                 make.bottom.mas_equalTo(-5);
                 make.right.mas_equalTo(-5);
             }];
-            
+            @weakify(self)
             shareBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+                @strongify(self)
                 [self share];
                 return [RACSignal empty];
             }];

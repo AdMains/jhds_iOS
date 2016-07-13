@@ -355,9 +355,13 @@
         //UIImageWriteToSavedPhotosAlbum([ UIImage grabImageWithView:self.captureBoxView scale:2], self, @selector(imageSavedToPhotosAlbum: didFinishSavingWithError: contextInfo:), nil);
         
         if([imgData writeToFile:imageSavePath atomically:YES])
-            NSLog(@"闪屏页图片保存成功") ;
+        {
+            //NSLog(@"闪屏页图片保存成功") ;
+        }
         else
-            NSLog(@"闪屏页图片保存失败") ;
+        {
+            //NSLog(@"闪屏页图片保存失败") ;
+        }
         
     } error:^(NSError *error) {
         NSLog(@"闪屏页图片获取失败") ;
