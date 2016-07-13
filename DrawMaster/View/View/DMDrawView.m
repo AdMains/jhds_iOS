@@ -94,12 +94,13 @@
     //((DMBrushModel*)[self.allBrushs lastObject]).shape.path = ((DMBrushModel*)[self.allBrushs lastObject]).brushPath.CGPath;
     NSMutableArray *lastPoints = ((DMBrushModel*)[self.allBrushs lastObject]).brushLines.lastObject;
     [lastPoints addObject:[NSString stringWithFormat:@"%@,%@",@(p.x).stringValue,@(p.y).stringValue]];
-    [MobClick event:@"canvas_draw"];
+    
     
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [MobClick event:@"canvas_draw"];
     UITouch *touch = [touches anyObject];
     CGPoint p = [touch locationInView:self];
     //NSLog(@"差距为x:%f     y:%f",(p.x -self.lastPoint.x),(p.y-self.lastPoint.y));
