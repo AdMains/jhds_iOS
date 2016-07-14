@@ -1064,7 +1064,7 @@
         message.text = [[CommonShareView sharedView] shareMessageWithType:0];
         WBImageObject *image = [WBImageObject object];
         
-        image.imageData = UIImageJPEGRepresentation(theimg,0.5);
+        image.imageData = UIImagePNGRepresentation(theimg);
         message.imageObject = image;
         
         WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message];
@@ -1090,7 +1090,7 @@
         
         WXImageObject *ext = [WXImageObject object];
         
-        ext.imageData = UIImageJPEGRepresentation(theimg,0.5);
+        ext.imageData = UIImagePNGRepresentation(theimg);
         
         message.mediaObject = ext;
         
@@ -1114,7 +1114,7 @@
         
         WXImageObject *ext = [WXImageObject object];
         
-        ext.imageData = UIImageJPEGRepresentation(theimg,0.5);
+        ext.imageData = UIImagePNGRepresentation(theimg);
         
         message.mediaObject = ext;
         
@@ -1140,8 +1140,8 @@
     
     UIImage *theimg = [ UIImage grabImageWithView:self.captureBoxView scale:2];
     UIImage *preView  = [UIImage scaleImage:theimg toSize:CGSizeMake(mScreenWidth/3, mScreenHeight/3)];
-    QQApiImageObject *imgObj = [QQApiImageObject objectWithData:UIImageJPEGRepresentation(theimg,0.5)
-                                               previewImageData:UIImageJPEGRepresentation(preView,0.5)
+    QQApiImageObject *imgObj = [QQApiImageObject objectWithData:UIImagePNGRepresentation(theimg)
+                                               previewImageData:UIImagePNGRepresentation(preView)
                                                           title:@"简画大师"
                                                     description:[[CommonShareView sharedView] shareMessageWithType:0]];
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:imgObj];
