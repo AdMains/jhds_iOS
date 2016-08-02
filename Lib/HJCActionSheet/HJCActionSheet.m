@@ -98,7 +98,7 @@
     
     UILabel * title = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, BtnHeight)];
     title.backgroundColor = [UIColor whiteColor];
-    title.text = @"音量键控制画笔粗细，摇一摇清空画布";
+    title.text = @"摇一摇可以清空画布";
     title.textColor = mRGBToColor(0xcccccc);
     title.font = [UIFont systemFontOfSize:12];
     title.textAlignment = NSTextAlignmentCenter;

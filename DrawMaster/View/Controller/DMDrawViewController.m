@@ -36,7 +36,9 @@
 @property (nonatomic,readwrite,strong) ISColorWheel* editBrushColorView;
 @property (nonatomic,readwrite,strong) NSMutableArray *brushColors;
 
+@property (weak, nonatomic) IBOutlet UIButton *brushBtnAdd;
 
+@property (weak, nonatomic) IBOutlet UIButton *brushBtnDe;
 
 @end
 
@@ -65,6 +67,32 @@
         }
         return [RACSignal empty];
     }];
+    
+    //
+    self.brushBtnAdd.layer.backgroundColor= mRGBAToColor(0xeeeeee, 0.5).CGColor;
+    self.brushBtnAdd.layer.cornerRadius = 22.5;
+    self.brushBtnAdd.alpha = 0.8;
+    
+    self.brushBtnAdd.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self)
+        
+        [ self changeBrushWidthWithUP:YES];
+        return [RACSignal empty];
+    }];
+    
+    //
+    self.brushBtnDe.layer.backgroundColor= mRGBAToColor(0xeeeeee, 0.5).CGColor;
+    self.brushBtnDe.layer.cornerRadius = 22.5;
+    self.brushBtnDe.alpha = 0.8;
+    
+    self.brushBtnDe.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self)
+        
+        [ self changeBrushWidthWithUP:NO];
+        return [RACSignal empty];
+    }];
+
+
     
     // 设置允许摇一摇功能
     [UIApplication sharedApplication].applicationSupportsShakeToEdit = YES;
@@ -525,7 +553,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self startTrackingVolume];
+    //[self startTrackingVolume];
 }
 
 -(void)viewWillDisappear:(BOOL)animated
@@ -1206,6 +1234,7 @@
 
 - (void)BecomeActive
 {
+    /*
     if(self.volumeView.superview)
     {
         [self.volumeView removeFromSuperview];
@@ -1219,6 +1248,6 @@
     
     if (!self.volumeView.superview) {
         [self.view addSubview:self.volumeView];
-    }
+    }*/
 }
 @end

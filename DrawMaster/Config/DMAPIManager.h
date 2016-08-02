@@ -37,5 +37,8 @@ typedef NS_ENUM(NSInteger, DMAPIReturnType)
 
 - (RACSignal *)fetchSplashData;
 - (RACSignal *)fetchMessageTag;
+
+- (RACSignal *)fetchShareNum;
+- (RACSignal *)fetchShareListWithPageIndex:(NSString*)page;
 + (ALAssetsLibrary *)defaultAssetsLibrary;
 @end

@@ -12,6 +12,7 @@
 #import "DMSplashViewController.h"
 #import "DMWebViewController.h"
 #import "UITabBar+RedDot.h"
+#define kMineIndex 3
 @interface DMHomeViewController ()<UINavigationControllerDelegate>
 
 @end
@@ -35,14 +36,14 @@
     if(firstInstall==nil)
     {
         [[NSUserDefaults standardUserDefaults]  setObject:@"YES" forKey:@"DMFirstInstall"];
-        [self.tabBar setBadgeStyle:kCustomBadgeStyleRedDot value:1 atIndex:2];
+        [self.tabBar setBadgeStyle:kCustomBadgeStyleRedDot value:1 atIndex:kMineIndex];
     }
     else
     {
         NSString * oldMessageTag =  [[NSUserDefaults standardUserDefaults]  objectForKey:@"DMOldMessageTag"];
         if(oldMessageTag == nil)
         {
-            [self.tabBar setBadgeStyle:kCustomBadgeStyleRedDot value:1 atIndex:2];
+            [self.tabBar setBadgeStyle:kCustomBadgeStyleRedDot value:1 atIndex:kMineIndex];
         }
         else
         {
@@ -50,6 +51,7 @@
         }
     }
     
+    self.selectedIndex = 2;
     
 }
 
@@ -78,6 +80,14 @@
             sub.tabBarItem.selectedImage = [mImageByName(@"home_learn_select") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 
             sub.title = @"教程";
+        }
+        else if([NSStringFromClass([sub class]) isEqualToString:@"DMShareViewController"])
+        {
+            sub.tabBarItem.image = [mImageByName(@"home_share") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            
+            sub.tabBarItem.selectedImage = [mImageByName(@"home_share_select") imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+            
+            sub.title = @"哇晒";
         }
         else
         {
@@ -149,10 +159,12 @@
        
        )
     {
-        [self.tabBar setBadgeStyle:kCustomBadgeStyleRedDot value:1 atIndex:2];
+        [self.tabBar setBadgeStyle:kCustomBadgeStyleRedDot value:1 atIndex:kMineIndex];
     }
     else
-        [self.tabBar setBadgeStyle:kCustomBadgeStyleNone value:1 atIndex:2];
+    {
+        [self.tabBar setBadgeStyle:kCustomBadgeStyleNone value:1 atIndex:kMineIndex];
+    }
 
 }
 

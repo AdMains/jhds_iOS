@@ -49,6 +49,12 @@
 		4B97F0ED1D1A2492004F4686 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0E11D1A2492004F4686 /* Assets.xcassets */; };
 		4B97F0EF1D1A2492004F4686 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0E71D1A2492004F4686 /* Main.storyboard */; };
 		4BA18D0F1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA18D0D1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a */; };
+		4BABBFA01D4EE72B0080579C /* DMShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BABBF9F1D4EE72B0080579C /* DMShareViewController.m */; };
+		4BABBFA31D4EFCB20080579C /* DMShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BABBFA21D4EFCB20080579C /* DMShareModel.m */; };
+		4BABBFA61D4EFDCC0080579C /* DMShareViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BABBFA51D4EFDCC0080579C /* DMShareViewModel.m */; };
+		4BABBFAD1D4F2F0F0080579C /* DMShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BABBFAB1D4F2F0F0080579C /* DMShareCollectionViewCell.m */; };
+		4BABBFAE1D4F2F0F0080579C /* DMShareCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BABBFAC1D4F2F0F0080579C /* DMShareCollectionViewCell.xib */; };
+		4BABC1971D4F43930080579C /* emoji in Resources */ = {isa = PBXBuildFile; fileRef = 4BABC1961D4F43930080579C /* emoji */; };
 		4BB103421D2B441E00CCD29F /* DMMineBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB103411D2B441E00CCD29F /* DMMineBaseViewController.m */; };
 		4BB103451D2B443B00CCD29F /* DMMineSaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB103441D2B443B00CCD29F /* DMMineSaveViewController.m */; };
 		4BB103481D2B445200CCD29F /* DMMineShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB103471D2B445200CCD29F /* DMMineShopViewController.m */; };
@@ -159,6 +165,16 @@
 		4B97F0E71D1A2492004F4686 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4BA18D0D1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.3.0.a; sourceTree = "<group>"; };
 		4BA18D0E1D34C1C200B041B1 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
+		4BABBF9E1D4EE72B0080579C /* DMShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareViewController.h; sourceTree = "<group>"; };
+		4BABBF9F1D4EE72B0080579C /* DMShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMShareViewController.m; sourceTree = "<group>"; };
+		4BABBFA11D4EFCB20080579C /* DMShareModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareModel.h; sourceTree = "<group>"; };
+		4BABBFA21D4EFCB20080579C /* DMShareModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMShareModel.m; sourceTree = "<group>"; };
+		4BABBFA41D4EFDCC0080579C /* DMShareViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareViewModel.h; sourceTree = "<group>"; };
+		4BABBFA51D4EFDCC0080579C /* DMShareViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMShareViewModel.m; sourceTree = "<group>"; };
+		4BABBFAA1D4F2F0F0080579C /* DMShareCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareCollectionViewCell.h; sourceTree = "<group>"; };
+		4BABBFAB1D4F2F0F0080579C /* DMShareCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMShareCollectionViewCell.m; sourceTree = "<group>"; };
+		4BABBFAC1D4F2F0F0080579C /* DMShareCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMShareCollectionViewCell.xib; sourceTree = "<group>"; };
+		4BABC1961D4F43930080579C /* emoji */ = {isa = PBXFileReference; lastKnownFileType = folder; path = emoji; sourceTree = "<group>"; };
 		4BB103401D2B441E00CCD29F /* DMMineBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMMineBaseViewController.h; sourceTree = "<group>"; };
 		4BB103411D2B441E00CCD29F /* DMMineBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMMineBaseViewController.m; sourceTree = "<group>"; };
 		4BB103431D2B443B00CCD29F /* DMMineSaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMMineSaveViewController.h; sourceTree = "<group>"; };
@@ -319,6 +335,8 @@
 				4BB103531D2B90F800CCD29F /* DMNewsModel.m */,
 				4BB103551D2B92AA00CCD29F /* DMShopModel.h */,
 				4BB103561D2B92AA00CCD29F /* DMShopModel.m */,
+				4BABBFA11D4EFCB20080579C /* DMShareModel.h */,
+				4BABBFA21D4EFCB20080579C /* DMShareModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -326,6 +344,7 @@
 		4B97F0E01D1A2492004F4686 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4BABC1961D4F43930080579C /* emoji */,
 				4BFF485B1D2CEF5D00713E42 /* splash0.jpg */,
 				4BFF485C1D2CEF5D00713E42 /* splash3.jpg */,
 				4BFF48541D2CE80500713E42 /* splash1.jpg */,
@@ -384,6 +403,8 @@
 				4B78DF581D2BC4D600E4ABB6 /* DMWebViewController.m */,
 				4BFC16D51D2F79DB00DB55AD /* DMNavigationController.h */,
 				4BFC16D61D2F79DB00DB55AD /* DMNavigationController.m */,
+				4BABBF9E1D4EE72B0080579C /* DMShareViewController.h */,
+				4BABBF9F1D4EE72B0080579C /* DMShareViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -427,6 +448,9 @@
 				4BFF48611D2CEFD400713E42 /* DMGuideCollectionViewCell.xib */,
 				4BFF48641D2D013500713E42 /* CommonShareView.h */,
 				4BFF48651D2D013500713E42 /* CommonShareView.m */,
+				4BABBFAA1D4F2F0F0080579C /* DMShareCollectionViewCell.h */,
+				4BABBFAB1D4F2F0F0080579C /* DMShareCollectionViewCell.m */,
+				4BABBFAC1D4F2F0F0080579C /* DMShareCollectionViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -444,6 +468,8 @@
 				4BB1035C1D2BA65200CCD29F /* DMProtectBabyViewModel.m */,
 				4B78DF5F1D2BDEF600E4ABB6 /* DMShopViewModel.h */,
 				4B78DF601D2BDEF600E4ABB6 /* DMShopViewModel.m */,
+				4BABBFA41D4EFDCC0080579C /* DMShareViewModel.h */,
+				4BABBFA51D4EFDCC0080579C /* DMShareViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -574,8 +600,10 @@
 				4B8744BE1D1CDFF200ABB590 /* DMCopyCollectionViewCell.xib in Resources */,
 				4B97F0EF1D1A2492004F4686 /* Main.storyboard in Resources */,
 				4BFF48631D2CEFD400713E42 /* DMGuideCollectionViewCell.xib in Resources */,
+				4BABC1971D4F43930080579C /* emoji in Resources */,
 				4B97F0ED1D1A2492004F4686 /* Assets.xcassets in Resources */,
 				4BFF485D1D2CEF5D00713E42 /* splash0.jpg in Resources */,
+				4BABBFAE1D4F2F0F0080579C /* DMShareCollectionViewCell.xib in Resources */,
 				4B852A391D2A035D00069418 /* DMCopyDetailCollectionViewCell.xib in Resources */,
 				4BFF48741D2D190200713E42 /* WeiboSDK.bundle in Resources */,
 				4B97F0EB1D1A2492004F4686 /* Info.plist in Resources */,
@@ -672,6 +700,8 @@
 				4B7621941D2602AE006F252E /* HJCActionSheet.m in Sources */,
 				4BB1034B1D2B447000CCD29F /* DMMineNewsViewController.m in Sources */,
 				4B8744B11D1CC47F00ABB590 /* DMLearnSubViewController.m in Sources */,
+				4BABBFAD1D4F2F0F0080579C /* DMShareCollectionViewCell.m in Sources */,
+				4BABBFA31D4EFCB20080579C /* DMShareModel.m in Sources */,
 				4B90265F1D22B87500BC1DAD /* DMDrawViewController.m in Sources */,
 				4BFC16DA1D2F812C00DB55AD /* UITabBar+RedDot.m in Sources */,
 				4BB103481D2B445200CCD29F /* DMMineShopViewController.m in Sources */,
@@ -689,6 +719,7 @@
 				4BFF48661D2D013500713E42 /* CommonShareView.m in Sources */,
 				4B7621971D26683C006F252E /* DMBrushModel.m in Sources */,
 				4BB103511D2B850500CCD29F /* DMMineSaveDetailViewController.m in Sources */,
+				4BABBFA01D4EE72B0080579C /* DMShareViewController.m in Sources */,
 				4BB1035D1D2BA65200CCD29F /* DMProtectBabyViewModel.m in Sources */,
 				4BB103421D2B441E00CCD29F /* DMMineBaseViewController.m in Sources */,
 				4B83F3BB1D1A889E00F065D2 /* DMSplashViewController.m in Sources */,
@@ -697,6 +728,7 @@
 				4B83F3C41D1A93DE00F065D2 /* DMLearnViewController.m in Sources */,
 				4B83F3C71D1A95ED00F065D2 /* DMMineViewController.m in Sources */,
 				4BB103451D2B443B00CCD29F /* DMMineSaveViewController.m in Sources */,
+				4BABBFA61D4EFDCC0080579C /* DMShareViewModel.m in Sources */,
 				4B83F3C11D1A93CB00F065D2 /* DMCopyViewController.m in Sources */,
 				4B8744C71D1D2BFE00ABB590 /* DMMineTableViewCell.m in Sources */,
 			);

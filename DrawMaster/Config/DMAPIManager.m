@@ -380,4 +380,31 @@
                   });
     return library;
 }
+
+
+- (RACSignal *)fetchShareNum
+{
+    
+    NSString * str = [NSString stringWithFormat:@"images/jhds/weibo/weibo_num.txt"];
+    return [[self fetchDataWithURLString:mUrlString(str)
+                                  params:@{@"errorReturnCache":@(YES)}
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypePlain httpMethod:@"get"] map:^id(id value) {
+        
+        return value;
+    }];
+    
+}
+
+- (RACSignal *)fetchShareListWithPageIndex:(NSString*)page
+{
+    NSString * str = [NSString stringWithFormat:@"images/jhds/weibo/weibo_%@.txt",page];
+    return [[self fetchDataWithURLString:mUrlString(str)
+                                  params:@{@"errorReturnCache":@(YES)}
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
+        
+        return [MTLJSONAdapter modelsOfClass:objc_getClass("DMShareModel") fromJSONArray:value error:nil];
+    }];
+}
 @end

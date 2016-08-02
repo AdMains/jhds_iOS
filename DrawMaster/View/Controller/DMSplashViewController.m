@@ -337,7 +337,7 @@
     cell.contentImg.image = [UIImage imageWithContentsOfFile:path];
     cell.contentImg.contentMode = UIViewContentModeScaleAspectFit;
     cell.contentImg.clipsToBounds = YES;
-    cell.shakeLabel.text = @"音量键可以控制画笔粗细";
+    cell.shakeLabel.text = @"更多内容等你来发现😄";
     [cell.tryBtn setTitle:@"试一试" forState:UIControlStateNormal];
     [cell.tryBtn setTitleColor:mRGBToColor(0xffffff) forState:UIControlStateNormal];
     cell.tryBtn.layer.backgroundColor = mRGBToColor(0xDF0526).CGColor;
