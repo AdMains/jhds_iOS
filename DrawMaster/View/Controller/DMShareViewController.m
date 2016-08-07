@@ -9,7 +9,7 @@
 #import "DMShareViewController.h"
 #import "DMShareViewModel.h"
 #import "DMShareCollectionViewCell.h"
-
+#import "DMMineSaveDetailViewController.h"
 @interface DMShareViewController ()<UICollectionViewDataSource,UICollectionViewDelegate>
 @property (nonatomic,readwrite,strong) UICollectionView * collecttionView;
 @property (nonatomic,readwrite,strong) DMShareViewModel * viewModel;
@@ -83,7 +83,7 @@
             [self.collecttionView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.mas_equalTo(0);
                 make.bottom.mas_equalTo(0);
-                make.top.mas_equalTo(66);
+                make.top.mas_equalTo(65);
             }];
             
             [self.collecttionView addPullToRefreshWithActionHandler:^{
@@ -165,9 +165,18 @@
     cell.imgCenterBox.hidden = !(smallpics.count>3) ;
     cell.imgBottomBox.hidden = !(smallpics.count>6) ;
     NSArray *subviews = @[cell.shareImgBtn0,cell.shareImgBtn1,cell.shareImgBtn2,cell.shareImgBtn3,cell.shareImgBtn4,cell.shareImgBtn5,cell.shareImgBtn6,cell.shareImgBtn7,cell.shareImgBtn8];
+    int i = 0;
     for (UIButton*btn in subviews) {
+        btn.tag = i;
         btn.hidden = YES;
         btn.contentMode = UIViewContentModeScaleAspectFit;
+        @weakify(self)
+        btn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(UIButton* input) {
+            @strongify(self)
+            [self gotoPicDetail:input.tag Pics:[self.viewModel bigPicsWithRow:indexPath.row]];
+            return [RACSignal empty];
+        }];
+        i++;
     }
     for (int i = 0; i<smallpics.count; ++i) {
         ((UIButton *)subviews[i]).hidden = NO;
@@ -177,6 +186,15 @@
     cell.shareTextHeight.constant = [self.viewModel contentHeightWithRow:indexPath.row];
     
     return cell;
+}
+
+- (void)gotoPicDetail:(NSInteger)index Pics:(NSArray*)pics
+{
+    DMMineSaveDetailViewController *modal =  [[DMMineSaveDetailViewController alloc] init];
+    modal.imgData = pics;
+    modal.curIndex = index;
+    modal.canShare = NO;
+    [self.navigationController pushViewController:modal animated:YES];
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

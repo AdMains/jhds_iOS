@@ -199,6 +199,7 @@
     DMMineSaveDetailViewController *modal =  [[DMMineSaveDetailViewController alloc] init];
     modal.imgData = self.imgData;
     modal.curIndex = indexPath.row;
+    modal.canShare = YES;
     [self.navigationController pushViewController:modal animated:YES];
     
 }

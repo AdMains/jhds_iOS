@@ -24,6 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
     [self buildUI];
 }
 
@@ -57,7 +58,7 @@
             self.collecttionView.dataSource = self;
             self.collecttionView.pagingEnabled = YES;
             [self.collecttionView setPullType:SVPullTypeVisibleLogo];
-            self.collecttionView.backgroundColor = mRGBToColor(0xeeeeee);
+            self.collecttionView.backgroundColor = mRGBToColor(0xffffff);
             [self.collecttionView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.bottom.mas_equalTo(0);
                 make.top.mas_equalTo(0);
@@ -138,6 +139,8 @@
             make.height.mas_equalTo(30);
         }];
         
+        shareBtn.hidden = !self.canShare;
+        
     }
 
     self.collecttionView.alpha = 0;
@@ -149,8 +152,15 @@
         [self.collecttionView scrollToItemAtIndexPath:[NSIndexPath indexPathForRow:self.curIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
     });
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(back)];
+    [self.view addGestureRecognizer:tap];
+    
 }
 
+- (void)back
+{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 #pragma mark --UICollectionView回调
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
@@ -163,9 +173,18 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DMCopyCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:NSStringFromClass([DMCopyCollectionViewCell class]) forIndexPath:indexPath];
     cell.contentImg.contentMode =UIViewContentModeScaleAspectFit;
-    ALAsset * al = [self.imgData objectAtIndex:indexPath.row];
-    UIImage *img = [UIImage imageWithCGImage:[[al defaultRepresentation] fullScreenImage]];
-    cell.contentImg.image = img;
+    if([[self.imgData objectAtIndex:0] isMemberOfClass:[ALAsset class]])
+    {
+        ALAsset * al = [self.imgData objectAtIndex:indexPath.row];
+        UIImage *img = [UIImage imageWithCGImage:[[al defaultRepresentation] fullScreenImage]];
+        cell.contentImg.image = img;
+    }
+    else
+    {
+        [cell.contentImg sd_setImageWithURL:[NSURL URLWithString:[self.imgData objectAtIndex:indexPath.row]] placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xcccccc) size:CGSizeMake(2, 3)] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            
+        }];
+    }
     
     return cell;
 }

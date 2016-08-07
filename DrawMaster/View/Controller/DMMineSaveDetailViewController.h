@@ -11,4 +11,5 @@
 @interface DMMineSaveDetailViewController : UIViewController
 @property (nonatomic,readwrite,strong) NSArray *imgData;
 @property (nonatomic,readwrite,assign) NSInteger curIndex;
+@property (nonatomic,readwrite,assign) Boolean canShare;
 @end

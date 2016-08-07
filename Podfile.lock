@@ -49,6 +49,7 @@ PODS:
   - SVPullToRefresh (0.4.1)
   - UALogger (0.3)
   - UMengAnalytics-NO-IDFA (4.0.5)
+  - WeiboSDK (3.1.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
@@ -68,6 +69,7 @@ DEPENDENCIES:
   - SVPullToRefresh (from `https://github.com/QuanGe/SVPullToRefresh`)
   - UALogger
   - UMengAnalytics-NO-IDFA
+  - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
 
 EXTERNAL SOURCES:
   QGCollectionMenu:
@@ -76,6 +78,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/QuanGe/QGOCCategory
   SVPullToRefresh:
     :git: https://github.com/QuanGe/SVPullToRefresh
+  WeiboSDK:
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
 
 CHECKOUT OPTIONS:
   QGCollectionMenu:
@@ -87,6 +91,9 @@ CHECKOUT OPTIONS:
   SVPullToRefresh:
     :commit: 40ea3942acb14fe851cd05f09341bc4101742ffa
     :git: https://github.com/QuanGe/SVPullToRefresh
+  WeiboSDK:
+    :commit: 6031a8da4ce17867ff5887b8dfc59ea45930274e
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
@@ -107,7 +114,8 @@ SPEC CHECKSUMS:
   SVPullToRefresh: ba2e718695a43253d8bea6852d2960097dc15d8c
   UALogger: ccc041e5982dbd274ab5805f914076fef9bf29cf
   UMengAnalytics-NO-IDFA: 965a219b05475ff2a4c09a164139a27bbaa0e25b
+  WeiboSDK: bceab625ec59b7039ba721cc4ba9f5868804f63e
 
-PODFILE CHECKSUM: 3c2239e278bb106886716e85549e6a20deeffe51
+PODFILE CHECKSUM: 2e42b7815f1fb0c19c68de4bc1df0c3e4eb81d7a
 
 COCOAPODS: 1.0.1
