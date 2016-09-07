@@ -8,26 +8,61 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DMCopyCollectionViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="457" height="450"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="457" height="450"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="uiD-99-5OT">
-                        <rect key="frame" x="0.0" y="5" width="50" height="45"/>
+                        <rect key="frame" x="0.0" y="0.0" width="457" height="450"/>
                     </imageView>
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s3M-MM-jjv">
+                        <rect key="frame" x="0.0" y="0.0" width="457" height="450"/>
+                        <subviews>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="y3Q-AO-nRq">
+                                <rect key="frame" x="219" y="215" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="98Q-Tx-DCD">
+                                <rect key="frame" x="4" y="243" width="449" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="FX4-WW-ahA"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="y3Q-AO-nRq" firstAttribute="centerX" secondItem="s3M-MM-jjv" secondAttribute="centerX" id="Oue-QF-IhI"/>
+                            <constraint firstItem="98Q-Tx-DCD" firstAttribute="top" secondItem="y3Q-AO-nRq" secondAttribute="bottom" constant="8" id="X7D-ny-8ew"/>
+                            <constraint firstItem="98Q-Tx-DCD" firstAttribute="leading" secondItem="s3M-MM-jjv" secondAttribute="leading" constant="4" id="ae4-qa-DeN"/>
+                            <constraint firstAttribute="trailing" secondItem="98Q-Tx-DCD" secondAttribute="trailing" constant="4" id="rRk-gy-BAD"/>
+                            <constraint firstItem="y3Q-AO-nRq" firstAttribute="centerY" secondItem="s3M-MM-jjv" secondAttribute="centerY" id="yPT-qa-xkW"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="uiD-99-5OT" secondAttribute="trailing" id="CGX-Pm-Wco"/>
-                <constraint firstItem="uiD-99-5OT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="b9U-dX-UDp"/>
-                <constraint firstItem="uiD-99-5OT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="goq-IM-drm"/>
-                <constraint firstAttribute="bottom" secondItem="uiD-99-5OT" secondAttribute="bottom" id="vzy-b4-fyP"/>
+                <constraint firstItem="uiD-99-5OT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="023-oe-jRB"/>
+                <constraint firstItem="s3M-MM-jjv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="0LP-Ka-b11"/>
+                <constraint firstAttribute="trailing" secondItem="uiD-99-5OT" secondAttribute="trailing" id="OqS-7f-cHj"/>
+                <constraint firstAttribute="trailing" secondItem="s3M-MM-jjv" secondAttribute="trailing" id="U7X-dz-lXW"/>
+                <constraint firstAttribute="bottom" secondItem="uiD-99-5OT" secondAttribute="bottom" id="UyU-vE-6CH"/>
+                <constraint firstAttribute="bottom" secondItem="s3M-MM-jjv" secondAttribute="bottom" id="VFn-Xd-MDL"/>
+                <constraint firstItem="s3M-MM-jjv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Ve6-Pm-iOd"/>
+                <constraint firstItem="uiD-99-5OT" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ols-pn-HuA"/>
             </constraints>
+            <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="8" right="0.0"/>
+            <size key="customSize" width="457" height="450"/>
             <connections>
                 <outlet property="contentImg" destination="uiD-99-5OT" id="TU8-qV-QRa"/>
+                <outlet property="loadingAI" destination="y3Q-AO-nRq" id="ID4-yp-IP1"/>
+                <outlet property="loadingView" destination="s3M-MM-jjv" id="uWa-Dv-HKS"/>
+                <outlet property="tipLable" destination="98Q-Tx-DCD" id="mtL-a5-46w"/>
             </connections>
+            <point key="canvasLocation" x="383.5" y="415"/>
         </collectionViewCell>
     </objects>
 </document>

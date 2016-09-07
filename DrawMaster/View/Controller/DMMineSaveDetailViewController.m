@@ -45,10 +45,11 @@
 - (void)buildUI
 {
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor blackColor];
     UICollectionViewFlowLayout *copyLayout=[[UICollectionViewFlowLayout alloc] init];
     {
-        copyLayout.minimumLineSpacing = 10;
+        copyLayout.minimumLineSpacing = 0;
+        copyLayout.minimumInteritemSpacing = 0;
         [copyLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
         
         self.collecttionView = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:copyLayout];
@@ -58,7 +59,7 @@
             self.collecttionView.dataSource = self;
             self.collecttionView.pagingEnabled = YES;
             [self.collecttionView setPullType:SVPullTypeVisibleLogo];
-            self.collecttionView.backgroundColor = mRGBToColor(0xffffff);
+            self.collecttionView.backgroundColor = [UIColor blackColor];
             [self.collecttionView mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.right.bottom.mas_equalTo(0);
                 make.top.mas_equalTo(0);
@@ -172,6 +173,7 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     DMCopyCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:NSStringFromClass([DMCopyCollectionViewCell class]) forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor blackColor];
     cell.contentImg.contentMode =UIViewContentModeScaleAspectFit;
     if([[self.imgData objectAtIndex:0] isMemberOfClass:[ALAsset class]])
     {
@@ -181,8 +183,18 @@
     }
     else
     {
-        [cell.contentImg sd_setImageWithURL:[NSURL URLWithString:[self.imgData objectAtIndex:indexPath.row]] placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xcccccc) size:CGSizeMake(2, 3)] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-            
+        cell.loadingView.hidden = NO;
+        //cell.loadingView.backgroundColor = [UIColor blueColor];
+        [cell.loadingAI startAnimating];
+        cell.tipLable.text = @"加载中...";
+        [cell.contentImg sd_setImageWithURL:[NSURL URLWithString:[self.imgData objectAtIndex:indexPath.row]] placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0x000000) size:CGSizeMake(mScreenWidth, mScreenHeight)] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+            if(image != nil)
+                cell.loadingView.hidden = YES;
+            else
+            {
+                [cell.loadingAI stopAnimating];
+                cell.tipLable.text = @"加载出错";
+            }
         }];
     }
     
@@ -190,7 +202,7 @@
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return CGSizeMake(collectionView.frame.size.width, collectionView.frame.size.height);
+    return CGSizeMake(mScreenWidth, mScreenHeight);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section

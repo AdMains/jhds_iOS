@@ -10,5 +10,8 @@
 
 @interface DMCopyCollectionViewCell : UICollectionViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *contentImg;
+@property (weak, nonatomic) IBOutlet UIView *loadingView;
+@property (weak, nonatomic) IBOutlet UILabel *tipLable;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingAI;
 
 @end
