@@ -20,6 +20,10 @@
 
 @interface AppDelegate ()<WeiboSDKDelegate,WXApiDelegate,TencentSessionDelegate>
 @property (strong, nonatomic) TencentOAuth *tencentOAuth;
+@property (strong, nonatomic) NSString *wbtoken;
+@property (strong, nonatomic) NSString *wbRefreshToken;
+@property (strong, nonatomic) NSString *wbCurrentUserID;
+@property (strong, nonatomic) NSDate *wbExpirationDate;
 @end
 
 @implementation AppDelegate
@@ -153,18 +157,43 @@
 
 - (void)didReceiveWeiboResponse:(WBBaseResponse *)response
 {
-    if(response.statusCode == WeiboSDKResponseStatusCodeUserCancel)
+    if([response isKindOfClass:WBShareMessageToContactResponse.class])
     {
-        UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
-        UIViewController *vc = [navigationControll childViewControllers].lastObject;
-        [vc showLoadAlertView:@"您已经取消分享" imageName:nil autoHide:YES];
-    }
-    else if(response.statusCode == WeiboSDKResponseStatusCodeSuccess)
+
+        if(response.statusCode == WeiboSDKResponseStatusCodeUserCancel)
+        {
+            UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
+            UIViewController *vc = [navigationControll childViewControllers].lastObject;
+            [vc showLoadAlertView:@"您已经取消分享" imageName:nil autoHide:YES];
+        }
+        else if(response.statusCode == WeiboSDKResponseStatusCodeSuccess)
+        {
+            UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
+            UIViewController *vc = [navigationControll childViewControllers].lastObject;
+            [vc showLoadAlertView:@"您已经成功分享" imageName:nil autoHide:YES];
+        }
+    } else if ([response isKindOfClass:WBAuthorizeResponse.class])
     {
-        UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
-        UIViewController *vc = [navigationControll childViewControllers].lastObject;
-        [vc showLoadAlertView:@"您已经成功分享" imageName:nil autoHide:YES];
+        NSString *title = NSLocalizedString(@"认证结果", nil);
+        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                                              otherButtonTitles:nil];
+        
+        self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
+        [[NSUserDefaults standardUserDefaults] setObject:self.wbtoken forKey:@"DMWeiboAccessToken"];
+        
+        self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
+        [[NSUserDefaults standardUserDefaults] setObject:self.wbCurrentUserID forKey:@"DMWeiboCurrentUserID"];
+        self.wbRefreshToken = [(WBAuthorizeResponse *)response refreshToken];
+        [[NSUserDefaults standardUserDefaults] setObject:self.wbRefreshToken forKey:@"DMWeiboRefreshToken"];
+        self.wbExpirationDate = [(WBAuthorizeResponse *)response expirationDate];
+        [[NSUserDefaults standardUserDefaults] setObject:self.wbExpirationDate forKey:@"DMWeiboExpirationDate"];
+        [alert show];
     }
+
     
 }
 

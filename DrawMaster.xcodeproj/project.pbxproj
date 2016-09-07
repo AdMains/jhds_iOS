@@ -23,6 +23,7 @@
 		4B83F3C41D1A93DE00F065D2 /* DMLearnViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C31D1A93DE00F065D2 /* DMLearnViewController.m */; };
 		4B83F3C71D1A95ED00F065D2 /* DMMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C61D1A95ED00F065D2 /* DMMineViewController.m */; };
 		4B83F3CA1D1B743A00F065D2 /* DMCopySubViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B83F3C91D1B743A00F065D2 /* DMCopySubViewController.m */; };
+		4B840F941D62A8A300EE1CF1 /* DMShareNumView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B840F931D62A8A300EE1CF1 /* DMShareNumView.m */; };
 		4B852A341D29FCA400069418 /* DMCopyDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B852A331D29FCA400069418 /* DMCopyDetailViewController.m */; };
 		4B852A381D2A035D00069418 /* DMCopyDetailCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B852A361D2A035D00069418 /* DMCopyDetailCollectionViewCell.m */; };
 		4B852A391D2A035D00069418 /* DMCopyDetailCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B852A371D2A035D00069418 /* DMCopyDetailCollectionViewCell.xib */; };
@@ -74,8 +75,6 @@
 		4BFF48621D2CEFD400713E42 /* DMGuideCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF48601D2CEFD400713E42 /* DMGuideCollectionViewCell.m */; };
 		4BFF48631D2CEFD400713E42 /* DMGuideCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4BFF48611D2CEFD400713E42 /* DMGuideCollectionViewCell.xib */; };
 		4BFF48661D2D013500713E42 /* CommonShareView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFF48651D2D013500713E42 /* CommonShareView.m */; };
-		4BFF48731D2D190200713E42 /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BFF48681D2D190200713E42 /* libWeiboSDK.a */; };
-		4BFF48741D2D190200713E42 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BFF48691D2D190200713E42 /* WeiboSDK.bundle */; };
 		4BFF48751D2D190200713E42 /* shareIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFF486C1D2D190200713E42 /* shareIcon.png */; };
 		4BFF48761D2D190200713E42 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BFF486D1D2D190200713E42 /* TencentOpenAPI.framework */; };
 		4BFF48771D2D190200713E42 /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4BFF486E1D2D190200713E42 /* TencentOpenApi_IOS_Bundle.bundle */; };
@@ -121,6 +120,8 @@
 		4B83F3C61D1A95ED00F065D2 /* DMMineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMMineViewController.m; sourceTree = "<group>"; };
 		4B83F3C81D1B743A00F065D2 /* DMCopySubViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMCopySubViewController.h; sourceTree = "<group>"; };
 		4B83F3C91D1B743A00F065D2 /* DMCopySubViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMCopySubViewController.m; sourceTree = "<group>"; };
+		4B840F921D62A8A300EE1CF1 /* DMShareNumView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareNumView.h; sourceTree = "<group>"; };
+		4B840F931D62A8A300EE1CF1 /* DMShareNumView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMShareNumView.m; sourceTree = "<group>"; };
 		4B852A321D29FCA400069418 /* DMCopyDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMCopyDetailViewController.h; sourceTree = "<group>"; };
 		4B852A331D29FCA400069418 /* DMCopyDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMCopyDetailViewController.m; sourceTree = "<group>"; };
 		4B852A351D2A035D00069418 /* DMCopyDetailCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMCopyDetailCollectionViewCell.h; sourceTree = "<group>"; };
@@ -208,9 +209,6 @@
 		4BFF48611D2CEFD400713E42 /* DMGuideCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMGuideCollectionViewCell.xib; sourceTree = "<group>"; };
 		4BFF48641D2D013500713E42 /* CommonShareView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonShareView.h; sourceTree = "<group>"; };
 		4BFF48651D2D013500713E42 /* CommonShareView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonShareView.m; sourceTree = "<group>"; };
-		4BFF48681D2D190200713E42 /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeiboSDK.a; sourceTree = "<group>"; };
-		4BFF48691D2D190200713E42 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = WeiboSDK.bundle; sourceTree = "<group>"; };
-		4BFF486A1D2D190200713E42 /* WeiboSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeiboSDK.h; sourceTree = "<group>"; };
 		4BFF486C1D2D190200713E42 /* shareIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shareIcon.png; sourceTree = "<group>"; };
 		4BFF486D1D2D190200713E42 /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
 		4BFF486E1D2D190200713E42 /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
@@ -229,7 +227,6 @@
 				7408595D0696E06C3634C98E /* libPods-DrawMaster.a in Frameworks */,
 				4BFF48761D2D190200713E42 /* TencentOpenAPI.framework in Frameworks */,
 				4BFF48781D2D190200713E42 /* libWeChatSDK.a in Frameworks */,
-				4BFF48731D2D190200713E42 /* libWeiboSDK.a in Frameworks */,
 				4BA18D0F1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,7 +269,6 @@
 			isa = PBXGroup;
 			children = (
 				4BA18D0C1D34C1C200B041B1 /* UMessage_Sdk_1.3.0 */,
-				4BFF48671D2D190200713E42 /* libWeiboSDK */,
 				4BFF486B1D2D190200713E42 /* QQSDK */,
 				4BFF486F1D2D190200713E42 /* WeChatSDK_64 */,
 				4B7621911D2602AE006F252E /* HJCActionSheet */,
@@ -451,6 +447,8 @@
 				4BABBFAA1D4F2F0F0080579C /* DMShareCollectionViewCell.h */,
 				4BABBFAB1D4F2F0F0080579C /* DMShareCollectionViewCell.m */,
 				4BABBFAC1D4F2F0F0080579C /* DMShareCollectionViewCell.xib */,
+				4B840F921D62A8A300EE1CF1 /* DMShareNumView.h */,
+				4B840F931D62A8A300EE1CF1 /* DMShareNumView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -481,16 +479,6 @@
 				4BA18D0E1D34C1C200B041B1 /* UMessage.h */,
 			);
 			path = UMessage_Sdk_1.3.0;
-			sourceTree = "<group>";
-		};
-		4BFF48671D2D190200713E42 /* libWeiboSDK */ = {
-			isa = PBXGroup;
-			children = (
-				4BFF48681D2D190200713E42 /* libWeiboSDK.a */,
-				4BFF48691D2D190200713E42 /* WeiboSDK.bundle */,
-				4BFF486A1D2D190200713E42 /* WeiboSDK.h */,
-			);
-			path = libWeiboSDK;
 			sourceTree = "<group>";
 		};
 		4BFF486B1D2D190200713E42 /* QQSDK */ = {
@@ -605,7 +593,6 @@
 				4BFF485D1D2CEF5D00713E42 /* splash0.jpg in Resources */,
 				4BABBFAE1D4F2F0F0080579C /* DMShareCollectionViewCell.xib in Resources */,
 				4B852A391D2A035D00069418 /* DMCopyDetailCollectionViewCell.xib in Resources */,
-				4BFF48741D2D190200713E42 /* WeiboSDK.bundle in Resources */,
 				4B97F0EB1D1A2492004F4686 /* Info.plist in Resources */,
 				4BFF48751D2D190200713E42 /* shareIcon.png in Resources */,
 				4B78DF5E1D2BDAA700E4ABB6 /* DMShopCollectionViewCell.xib in Resources */,
@@ -714,6 +701,7 @@
 				4B97F0EC1D1A2492004F4686 /* main.m in Sources */,
 				4B8744A21D1C0FF700ABB590 /* DMBaseModel.m in Sources */,
 				4BB103571D2B92AA00CCD29F /* DMShopModel.m in Sources */,
+				4B840F941D62A8A300EE1CF1 /* DMShareNumView.m in Sources */,
 				4B7621901D260277006F252E /* UIImage+Addition.m in Sources */,
 				4B90265C1D22AAA900BC1DAD /* DMWithCanvasBtnViewController.m in Sources */,
 				4BFF48661D2D013500713E42 /* CommonShareView.m in Sources */,

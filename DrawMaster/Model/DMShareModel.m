@@ -290,14 +290,15 @@
     NSArray *urlsubs = [self.original_pic componentsSeparatedByString:@"/"];
     for(int j = 0;j<urlsubs.count-1;j++)
     {
-        bigurl = [NSString stringWithFormat:@"%@%@/",bigurl,urlsubs[j]];
+        //bigurl = [NSString stringWithFormat:@"%@%@/",bigurl,urlsubs[j]];
         if(j<urlsubs.count-2)
         {
             smallurl = [NSString stringWithFormat:@"%@%@/",smallurl,urlsubs[j]];
         }
     }
-    
-    smallurl = [NSString stringWithFormat:@"%@thumbnail/",smallurl];
+    bigurl =smallurl;
+    bigurl = [NSString stringWithFormat:@"%@large/",bigurl];
+    smallurl = [NSString stringWithFormat:@"%@orj480/",smallurl];
     
     NSMutableArray * smallPics = [NSMutableArray array];
     NSMutableArray * bigPics = [NSMutableArray array];

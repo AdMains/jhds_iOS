@@ -123,9 +123,6 @@
 /*---------------------------------第三方登录-------------------------------------*/
 
 #define kSinaKey @"3129504298"
-#define kREDIRECT_URL @"http://www.csdn.net"
-#define KSECRET @"d46e7112516d4fa1ae504abaf7b24868"
-#define kWeboTypeLogin @"CSDNInteractionWeboLoginType"
 
 #define kWeixin_Parther @"1261353101"
 #define kWeixinAppKey @"wxd9d724f78ea966a8"

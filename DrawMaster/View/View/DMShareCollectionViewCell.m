@@ -13,6 +13,11 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    
+    
 }
 
+- (IBAction)gotoImgDetail:(UIButton *)sender {
+    [self.delegate gotoImgDetail:sender.tag indexRow:self.tag];
+}
 @end
