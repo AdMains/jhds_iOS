@@ -12,7 +12,7 @@
 #import "DMMineSaveDetailViewController.h"
 #import "WeiboSDK.h"
 #import "WeiboSDK+Statistics.h"
-
+#import "WeiboUser.h"
 @interface DMShareViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,DMShareCollectionViewCellDelegate>
 @property (nonatomic,readwrite,strong) UICollectionView * collecttionView;
 @property (nonatomic,readwrite,strong) DMShareViewModel * viewModel;
@@ -152,6 +152,24 @@
         
     }
     [self.collecttionView triggerPullToRefresh];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSinaLogin:) name:kSinaLoginNotification object:nil];
+}
+
+- (void)didSinaLogin:(NSNotification*)sender
+{
+    [self.collecttionView reloadData];
+    
+    [WBHttpRequest requestForUserProfile:[[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboCurrentUserID"]  withAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"]  andOtherProperties:nil queue:nil withCompletionHandler:^(WBHttpRequest *httpRequest, id result, NSError *error) {
+        
+        if(result )
+        {
+            WeiboUser *u = (WeiboUser *)result;
+            self.titleLabel.text = u.screenName;
+            
+        }
+        
+    }];
 }
 
 - (void)didReceiveMemoryWarning {

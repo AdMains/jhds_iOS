@@ -42,8 +42,8 @@
 
 
 /*---------------------------------程序全局通知-------------------------------------*/
-//重新登录通知
-#define kReLoginNotification    @"ReLoginNotification"
+//新浪登录通知
+#define kSinaLoginNotification    @"SinaLoginNotification"
 #define kVideoDownloadUpdateNotification @"VideoDownloadUpdateNotification"
 #define kLessonDetailInputCommentNotification @"LessonDetailInputCommentNotification"
 #define kCointProductPayedNotification @"kCointProductPayedNotification"

@@ -174,13 +174,13 @@
         }
     } else if ([response isKindOfClass:WBAuthorizeResponse.class])
     {
-        NSString *title = NSLocalizedString(@"认证结果", nil);
-        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-                                                        message:message
-                                                       delegate:nil
-                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
-                                              otherButtonTitles:nil];
+//        NSString *title = NSLocalizedString(@"认证结果", nil);
+//        NSString *message = [NSString stringWithFormat:@"%@: %d\nresponse.userId: %@\nresponse.accessToken: %@\n%@: %@\n%@: %@", NSLocalizedString(@"响应状态", nil), (int)response.statusCode,[(WBAuthorizeResponse *)response userID], [(WBAuthorizeResponse *)response accessToken],  NSLocalizedString(@"响应UserInfo数据", nil), response.userInfo, NSLocalizedString(@"原请求UserInfo数据", nil), response.requestUserInfo];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+//                                                        message:message
+//                                                       delegate:nil
+//                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
+//                                              otherButtonTitles:nil];
         
         self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
         [[NSUserDefaults standardUserDefaults] setObject:self.wbtoken forKey:@"DMWeiboAccessToken"];
@@ -191,7 +191,9 @@
         [[NSUserDefaults standardUserDefaults] setObject:self.wbRefreshToken forKey:@"DMWeiboRefreshToken"];
         self.wbExpirationDate = [(WBAuthorizeResponse *)response expirationDate];
         [[NSUserDefaults standardUserDefaults] setObject:self.wbExpirationDate forKey:@"DMWeiboExpirationDate"];
-        [alert show];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSinaLoginNotification object:nil userInfo:nil];
+//        [alert show];
     }
 
     
