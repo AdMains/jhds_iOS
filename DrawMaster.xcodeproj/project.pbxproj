@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B0E638A1D1BEA820086F87A /* DMHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0E63891D1BEA820086F87A /* DMHomeViewController.m */; };
+		4B5FE46A1D912617001B4C97 /* DMShareDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5FE4691D912617001B4C97 /* DMShareDetailViewController.m */; };
 		4B72ECBC1D24BAA4008934BB /* DMBrushView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B72ECBB1D24BAA4008934BB /* DMBrushView.m */; };
 		4B72ECBF1D250070008934BB /* ISColorWheel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B72ECBE1D250070008934BB /* ISColorWheel.m */; };
 		4B76218C1D2601D8006F252E /* UIViewController+MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B76218B1D2601D8006F252E /* UIViewController+MBProgressHUD.m */; };
@@ -86,6 +87,8 @@
 		1C6646B2A4C24D13FF923331 /* Pods-DrawMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrawMaster.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DrawMaster/Pods-DrawMaster.debug.xcconfig"; sourceTree = "<group>"; };
 		4B0E63881D1BEA820086F87A /* DMHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMHomeViewController.h; sourceTree = "<group>"; };
 		4B0E63891D1BEA820086F87A /* DMHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMHomeViewController.m; sourceTree = "<group>"; };
+		4B5FE4681D912617001B4C97 /* DMShareDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareDetailViewController.h; sourceTree = "<group>"; };
+		4B5FE4691D912617001B4C97 /* DMShareDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMShareDetailViewController.m; sourceTree = "<group>"; };
 		4B61F9311D197C0000AFF155 /* DrawMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B72ECBA1D24BAA4008934BB /* DMBrushView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMBrushView.h; sourceTree = "<group>"; };
 		4B72ECBB1D24BAA4008934BB /* DMBrushView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMBrushView.m; sourceTree = "<group>"; };
@@ -401,6 +404,8 @@
 				4BFC16D61D2F79DB00DB55AD /* DMNavigationController.m */,
 				4BABBF9E1D4EE72B0080579C /* DMShareViewController.h */,
 				4BABBF9F1D4EE72B0080579C /* DMShareViewController.m */,
+				4B5FE4681D912617001B4C97 /* DMShareDetailViewController.h */,
+				4B5FE4691D912617001B4C97 /* DMShareDetailViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -553,6 +558,8 @@
 				TargetAttributes = {
 					4B61F9301D197C0000AFF155 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = WUT8C6U8X9;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -710,6 +717,7 @@
 				4BABBFA01D4EE72B0080579C /* DMShareViewController.m in Sources */,
 				4BB1035D1D2BA65200CCD29F /* DMProtectBabyViewModel.m in Sources */,
 				4BB103421D2B441E00CCD29F /* DMMineBaseViewController.m in Sources */,
+				4B5FE46A1D912617001B4C97 /* DMShareDetailViewController.m in Sources */,
 				4B83F3BB1D1A889E00F065D2 /* DMSplashViewController.m in Sources */,
 				4BB1035A1D2BA63400CCD29F /* DMNewsViewModel.m in Sources */,
 				4BFC16D71D2F79DB00DB55AD /* DMNavigationController.m in Sources */,
@@ -816,6 +824,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: ruquan zhang (M4Z2375ZX6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = WUT8C6U8X9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -834,7 +843,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.quange.DrawMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f2824d1-34a2-41d2-9750-da4ee523ebae";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -847,6 +857,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: ruquan zhang (M4Z2375ZX6)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = WUT8C6U8X9;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -865,7 +876,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.quange.DrawMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "8f2824d1-34a2-41d2-9750-da4ee523ebae";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};

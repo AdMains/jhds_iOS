@@ -60,9 +60,13 @@
                             <constraint firstItem="yBB-F2-xjD" firstAttribute="top" secondItem="kk2-Sa-YO3" secondAttribute="top" constant="4" id="ul8-g6-8BN"/>
                         </constraints>
                     </view>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="sss" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xJT-3e-yE9">
+                    <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" text="sss" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xJT-3e-yE9">
                         <rect key="frame" x="8" y="48" width="408" height="90"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <accessibility key="accessibilityConfiguration">
+                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                            <bool key="isElement" value="NO"/>
+                        </accessibility>
                         <constraints>
                             <constraint firstAttribute="height" constant="90" id="oAb-Xs-MZ7"/>
                         </constraints>

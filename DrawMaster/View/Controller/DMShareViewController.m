@@ -10,6 +10,7 @@
 #import "DMShareViewModel.h"
 #import "DMShareCollectionViewCell.h"
 #import "DMMineSaveDetailViewController.h"
+#import "DMShareDetailViewController.h"
 #import "WeiboSDK.h"
 #import "WeiboSDK+Statistics.h"
 #import "WeiboUser.h"
@@ -120,6 +121,7 @@
             [self.collecttionView addPullToRefreshWithActionHandler:^{
                 @strongify(self)
                 [[self.viewModel fetchDataWithMore:NO] subscribeNext:^(id x) {
+                    [self.cellHeightCache removeAllObjects];
                     [self.collecttionView  reloadData];
                     [self.collecttionView.pullToRefreshView stopAnimating];
                 } error:^(NSError *error) {
@@ -323,7 +325,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
-   
+    UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    DMShareDetailViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMShareDetailViewController"];
+    
+    [self.navigationController pushViewController:modal animated:YES];
     
 }
 @end
