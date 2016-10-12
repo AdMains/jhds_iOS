@@ -229,8 +229,8 @@
     cell.backgroundColor =mRGBToColor(0xdddddd);
     cell.nickName.text = [self.viewModel nickNameWithRow:indexPath.row];
     cell.createAtTime.text = [self.viewModel createTimeWithRow:indexPath.row];
-    
-    
+    cell.nickName.textColor = [UIColor orangeColor];
+    cell.createAtTime.textColor = [UIColor lightGrayColor];
     cell.shareText.attributedText = [self.viewModel contentWithRow:indexPath.row];
     NSArray *smallpics = [self.viewModel  smallPicsWithRow:indexPath.row];
     cell.imgTopBox.hidden = !(smallpics.count>0) ;
@@ -286,7 +286,7 @@
     
     
     
-    CGFloat w = mIsPad?(mScreenWidth-32-15)/2:(mScreenWidth-16-10);
+    CGFloat w = mIsPad?(mScreenWidth-32-5)/2:(mScreenWidth-16);
     
     //return CGSizeMake(w, 400);
     CGFloat h = 0;
@@ -296,7 +296,7 @@
     }
     else
     {
-        h = 48 + [self.viewModel contentHeightWithRow:indexPath.row];
+        h = kCellUserBarHeight + [self.viewModel contentHeightWithRow:indexPath.row];
         NSArray *smallpics = [self.viewModel  smallPicsWithRow:indexPath.row];
         if((smallpics.count>6))
             h =h+ ((w-16)*(15.0f/32.0f))*3;
@@ -327,6 +327,27 @@
 {
     UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DMShareDetailViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMShareDetailViewController"];
+    modal.headNickName = [self.viewModel nickNameWithRow:indexPath.row];
+    modal.headUserIcon = [self.viewModel userIconWithRow:indexPath.row];
+    modal.headCreateAtTime = [self.viewModel createTimeWithRow:indexPath.row];
+    modal.headShareText = [self.viewModel contentWithRow:indexPath.row];
+    modal.headSmallPic = [self.viewModel smallPicsWithRow:indexPath.row];
+    modal.headBigPic = [self.viewModel bigPicsWithRow:indexPath.row];
+    CGFloat w = mScreenWidth-16;
+   
+    CGFloat h = kCellUserBarHeight + [modal.headShareText boundingRectWithSize:CGSizeMake(w-16-10, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) context:nil].size.height;
+    NSArray *smallpics = [self.viewModel  smallPicsWithRow:indexPath.row];
+    CGFloat imgw = (mScreenWidth-4*8)/3;
+    CGFloat imgh = imgw*1.5;
+    
+    if((smallpics.count>6))
+        h =h+ (imgh +8)*3;
+    else if((smallpics.count>3))
+        h =h+ (imgh +8)*2;
+    else if((smallpics.count>0))
+        h =h+ (imgh +8)*1;
+
+    modal.headHeight = h;
     
     [self.navigationController pushViewController:modal animated:YES];
     

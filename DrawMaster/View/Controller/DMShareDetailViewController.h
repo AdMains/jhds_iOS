@@ -9,5 +9,13 @@
 #import <UIKit/UIKit.h>
 
 @interface DMShareDetailViewController : UIViewController
+@property (nonatomic,readwrite,assign) CGFloat headHeight;
+@property (nonatomic,readwrite,strong) NSString* headNickName;
+@property (nonatomic,readwrite,strong) NSString* headUserIcon;
+@property (nonatomic,readwrite,strong) NSString* headCreateAtTime;
+@property (nonatomic,readwrite,strong) NSAttributedString* headShareText;
+@property (nonatomic,readwrite,strong) NSArray* headSmallPic;
+@property (nonatomic,readwrite,strong) NSArray* headBigPic;
 
+@property (nonatomic,readwrite,assign) NSUInteger selectMenumIndex;
 @end

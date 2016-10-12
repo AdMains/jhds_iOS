@@ -110,11 +110,8 @@
 #define kNavIconWith                    24 //导航条上的图标的大小
 #define kNavIconSpace                   24 //导航条上的图标之间的间距
 #define kNavLeftOrRightEdgeInset        24 //导航条左右控件的默认边距
-#define kLessonWidth                    200//课程单元的宽度
-#define kLessonHeight                   200//课程单元的高度
-#define kBuyBtnWidth                    170//购买按钮的宽度
 #define kNavHeight                      65
-
+#define kCellUserBarHeight              48
 #define kCellNum 12
 
 

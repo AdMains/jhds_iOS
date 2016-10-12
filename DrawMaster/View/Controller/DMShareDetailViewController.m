@@ -7,6 +7,8 @@
 //
 
 #import "DMShareDetailViewController.h"
+#define MenumBarHeight 50
+
 
 @interface DMShareDetailViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,readwrite,strong) UILabel * titleLabel;
@@ -21,8 +23,11 @@
 @property (nonatomic,readwrite,assign) CGFloat repostOffsety;
 @property (nonatomic,readwrite,assign) CGFloat commentOffsety;
 @property (nonatomic,readwrite,assign) CGFloat goodOffsety;
-@property (nonatomic,readwrite,assign) BOOL menuBarLock;
-@property (nonatomic,readwrite,assign) CGFloat headHeight;
+
+@property (nonatomic,readwrite,strong) UIView *btnBox;
+@property (nonatomic,readwrite,strong) UIView *lineBox;
+@property (nonatomic,readwrite,strong) MASConstraint *bottomLineLeft;
+
 @end
 
 @implementation DMShareDetailViewController
@@ -30,8 +35,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.menuBarLock = NO;
-    self.headHeight = 400;
+ 
+    @weakify(self)
+    
+    if(self.selectMenumIndex == 0)
+        self.selectMenumIndex = 12;
     self.topBar = [[UIView alloc] init];
     {
         self.repostsArray = [NSMutableArray array];
@@ -43,7 +51,7 @@
             [self.goodsArray addObject:@"CCCCCCCC"];
         }
         
-        self.view.tag = 11;
+        
         [self.view addSubview:self.topBar];
         [self.topBar mas_makeConstraints:^(MASConstraintMaker *make) {
             make.left.right.top.mas_equalTo(0);
@@ -109,76 +117,277 @@
             make.left.right.bottom.mas_equalTo(0);
             make.top.mas_equalTo(65);
         }];
-        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, mScreenWidth, 465)];
-        headView.backgroundColor = [UIColor orangeColor];
+        UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, mScreenWidth, self.headHeight+MenumBarHeight)];
+        {
+            UIButton * userIcon = [[UIButton alloc] init];
+            {
+                [headView addSubview:userIcon];
+                [userIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.mas_equalTo(8);
+                    make.top.mas_equalTo(4);
+                    make.height.width.mas_equalTo(40);
+                }];
+                [userIcon sd_setImageWithURL:[NSURL URLWithString:self.headUserIcon] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"home_share"]];
+                
+            }
+            
+            UILabel *userName = [[UILabel alloc] init];
+            {
+                [headView addSubview:userName];
+                [userName mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(userIcon.mas_right).offset(8);
+                    make.top.mas_equalTo(4);
+                    make.height.mas_equalTo(20);
+                    make.right.mas_equalTo(-8);
+                }];
+                userName.text = self.headNickName;
+                userName.font = [UIFont systemFontOfSize:14];
+                userName.textColor = [UIColor orangeColor];
+                
+            }
+            
+            UILabel *creatTime = [[UILabel alloc] init];
+            {
+                [headView addSubview:creatTime];
+                [creatTime mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.equalTo(userIcon.mas_right).offset(8);
+                    make.top.equalTo(userName.mas_bottom);
+                    make.height.mas_equalTo(20);
+                    make.right.mas_equalTo(-8);
+                }];
+                creatTime.text = self.headCreateAtTime;
+                creatTime.font = [UIFont systemFontOfSize:12];
+                creatTime.textColor = [UIColor lightGrayColor];
+                
+            }
+            
+            UITextView *content = [[UITextView alloc] init];
+            {
+                [headView addSubview:content];
+                [content mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.mas_equalTo(8);
+                    make.right.mas_equalTo(-8);
+                    make.top.equalTo(creatTime.mas_bottom);
+                    make.height.mas_equalTo([self.headShareText boundingRectWithSize:CGSizeMake(mScreenWidth-16-10, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) context:nil].size.height);
+                   
+                }];
+                content.attributedText = self.headShareText;
+
+            }
+            
+            for (NSUInteger i = 0; i<self.headSmallPic.count; i++) {
+                UIButton * img = [[UIButton alloc] init];
+                {
+                    [headView addSubview:img];
+                    CGFloat imgw = (mScreenWidth-4*8)/3;
+                    CGFloat imgh = imgw*1.5;
+                    [img mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.top.equalTo(content.mas_bottom).offset((i/3)* (imgh+8)-10);
+                        NSUInteger index = i%3;
+                        make.left.mas_equalTo(index*imgw+(index+1)*8);
+                        make.width.mas_equalTo(imgw);
+                        make.height.mas_equalTo(imgh);
+                    }];
+                    
+                    [img sd_setImageWithURL:[NSURL URLWithString:self.headSmallPic[i]] forState:UIControlStateNormal placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xeeeeee) size:CGSizeMake(300, 300)]];
+                }
+                
+            }
+            
+        }
+        headView.backgroundColor = mRGBToColor(0xffffff);
         self.tableView.tableHeaderView = headView;
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
+        self.tableView.showsVerticalScrollIndicator = NO;
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
         
         
         self.menuBar = [[UIView alloc] init];
         {
-            self.menuBar.backgroundColor = [UIColor blueColor];
+            CGFloat grayh =10;
+            self.menuBar.backgroundColor = mRGBToColor(0xeeeeee);
             [self.tableView addSubview:self.menuBar];
             [self.menuBar mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.left.mas_equalTo(0);
                 self.menuBarTop = make.top.mas_equalTo(self.headHeight);
-                make.height.mas_equalTo(65);
+                make.height.mas_equalTo(MenumBarHeight);
                 make.width.mas_equalTo(mScreenWidth);
             }];
             
-            UIButton * repostBtn = [[UIButton alloc] init];
+            UIView *line = [[UIView alloc] init];
             {
-                [self.menuBar addSubview:repostBtn];
-                repostBtn.tag = 11;
-                [repostBtn setTitle:@"转发" forState:UIControlStateNormal];
-                [repostBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.left.mas_equalTo(20);
-                    make.width.mas_equalTo(70);
-                    make.height.mas_equalTo(40);
-                    make.centerY.mas_equalTo(0);
-                    
+                [self.menuBar addSubview:line];
+                line.backgroundColor = mRGBToColor(0xaaaaaa);
+                [line mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.right.top.mas_equalTo(0);
+                    make.height.mas_equalTo(0.5);
                 }];
-                [repostBtn addTarget:self action:@selector(selectMenum:) forControlEvents:UIControlEventTouchUpInside];
             }
-            
-            UIButton * commentsBtn = [[UIButton alloc] init];
+            UIView *line2 = [[UIView alloc] init];
             {
-                [self.menuBar addSubview:commentsBtn];
-                commentsBtn.tag = 12;
-                [commentsBtn setTitle:@"评论" forState:UIControlStateNormal];
-                [commentsBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.centerX.mas_equalTo(0);
-                    make.width.mas_equalTo(70);
-                    make.height.mas_equalTo(40);
-                    make.centerY.mas_equalTo(0);
-                    
+                [self.menuBar addSubview:line2];
+                line2.backgroundColor = mRGBToColor(0xaaaaaa);
+                [line2 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.right.mas_equalTo(0);
+                    make.height.mas_equalTo(0.5);
+                    make.top.mas_equalTo(grayh);
                 }];
-                [commentsBtn addTarget:self action:@selector(selectMenum:) forControlEvents:UIControlEventTouchUpInside];
             }
-            
-            UIButton * goodBtn = [[UIButton alloc] init];
+            self.btnBox = [[UIView alloc] init];
             {
-                [self.menuBar addSubview:goodBtn];
-                goodBtn.tag = 13;
-                [goodBtn setTitle:@"赞" forState:UIControlStateNormal];
-                [goodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
-                    make.right.mas_equalTo(-20);
-                    make.width.mas_equalTo(70);
-                    make.height.mas_equalTo(40);
-                    make.centerY.mas_equalTo(0);
-                    
+                [self.menuBar addSubview:self.btnBox];
+                self.btnBox.backgroundColor = mRGBToColor(0xffffff);
+                [self.btnBox mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.right.mas_equalTo(0);
+                    make.height.mas_equalTo(MenumBarHeight-grayh-1);
+                    make.top.mas_equalTo(grayh+0.5);
                 }];
                 
-                [goodBtn addTarget:self action:@selector(selectMenum:) forControlEvents:UIControlEventTouchUpInside];
+                UIButton * repostBtn = [[UIButton alloc] init];
+                {
+                    [self.btnBox addSubview:repostBtn];
+                    repostBtn.tag = 11;
+                    [repostBtn setTitle:@"转发0" forState:UIControlStateNormal];
+                    [repostBtn setTitleColor:mRGBToColor(0x999999) forState:UIControlStateNormal];
+                    repostBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+                    //[repostBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+                    [repostBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.left.mas_equalTo(8);
+                        make.width.mas_equalTo(60);
+                        make.height.mas_equalTo(30);
+                        make.centerY.mas_equalTo(0);
+                        
+                    }];
+                    
+                    [repostBtn addTarget:self action:@selector(selectMenum:) forControlEvents:UIControlEventTouchUpInside];
+                    if(self.selectMenumIndex == repostBtn.tag)
+                    {
+                        [self selectMenum:repostBtn];
+                    }
+                }
+                
+                UIButton * commentsBtn = [[UIButton alloc] init];
+                {
+                    [self.btnBox addSubview:commentsBtn];
+                    commentsBtn.tag = 12;
+                    [commentsBtn setTitle:@"评论0" forState:UIControlStateNormal];
+                    [commentsBtn setTitleColor:mRGBToColor(0x999999) forState:UIControlStateNormal];
+                    commentsBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+                    //[commentsBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+                    [commentsBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.left.mas_equalTo(68);
+                        make.width.mas_equalTo(60);
+                        make.height.mas_equalTo(30);
+                        make.centerY.mas_equalTo(0);
+                        
+                    }];
+                    [commentsBtn addTarget:self action:@selector(selectMenum:) forControlEvents:UIControlEventTouchUpInside];
+                    if(self.selectMenumIndex == commentsBtn.tag)
+                    {
+                        [self selectMenum:commentsBtn];
+                    }
+                }
+                
+                UIButton * goodBtn = [[UIButton alloc] init];
+                {
+                    [self.btnBox addSubview:goodBtn];
+                    goodBtn.tag = 13;
+                    [goodBtn setTitle:@"赞0" forState:UIControlStateNormal];
+                    [goodBtn setTitleColor:mRGBToColor(0x999999) forState:UIControlStateNormal];
+                    goodBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+                    //[goodBtn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentRight];
+                    [goodBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+                        make.right.mas_equalTo(-8);
+                        make.width.mas_equalTo(60);
+                        make.height.mas_equalTo(30);
+                        make.centerY.mas_equalTo(0);
+                        
+                    }];
+                    
+                    [goodBtn addTarget:self action:@selector(selectMenum:) forControlEvents:UIControlEventTouchUpInside];
+                    
+                    if(self.selectMenumIndex == goodBtn.tag)
+                    {
+                        [self selectMenum:goodBtn];
+                    }
+                }
+                
+
             }
+            
+            UIView *line3 = [[UIView alloc] init];
+            {
+                [self.menuBar addSubview:line3];
+                line3.backgroundColor = mRGBToColor(0xaaaaaa);
+                [line3 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.right.mas_equalTo(0);
+                    make.height.mas_equalTo(0.5);
+                    make.bottom.mas_equalTo(0);
+                }];
+            }
+            
+            self.lineBox = [[UIView alloc] init];
+            {
+                [self.menuBar addSubview:self.lineBox];
+                [self.lineBox mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.left.mas_equalTo(0);
+                    make.right.mas_equalTo(0);
+                    make.bottom.mas_equalTo(-0.5);
+                    make.height.mas_equalTo(1.5);
+                }];
+            }
+            UIView *line4 = [[UIView alloc] init];
+            {
+                [self.lineBox addSubview:line4];
+                line4.backgroundColor = [UIColor orangeColor];
+                [line4 mas_makeConstraints:^(MASConstraintMaker *make) {
+                    self.bottomLineLeft = make.left.mas_equalTo(8);
+                    make.height.mas_equalTo(1.5);
+                    make.bottom.mas_equalTo(0);
+                    make.width.mas_equalTo(60);
+                }];
+            }
+            
+            [RACObserve(self.view, tag) subscribeNext:^(id x) {
+                @strongify(self)
+                switch ([x intValue]) {
+                    case 11:
+                        {
+                            [UIView animateWithDuration:0.2 animations:^{
+                                self.bottomLineLeft.mas_equalTo(8);
+                                [self.lineBox layoutIfNeeded];
+                            }];
+                        }
+                        break;
+                    case 12:
+                        {
+                            [UIView animateWithDuration:0.2 animations:^{
+                                self.bottomLineLeft.mas_equalTo(68);
+                                [self.lineBox layoutIfNeeded];
+                            }];
+                        }
+                        
+                        break;
+                    case 13:
+                        {
+                            [UIView animateWithDuration:0.2 animations:^{
+                                self.bottomLineLeft.mas_equalTo(mScreenWidth - 68);
+                                [self.lineBox layoutIfNeeded];
+                            }];
+                        }
+                        
+                        break;
+                    default:
+                        break;
+                }
+            }];
 
         }
         
         
     }
-    [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    
     
     
 
@@ -189,6 +398,7 @@
     switch (self.view.tag) {
         case 11:
             self.repostOffsety =self.tableView.contentOffset.y;
+            
             break;
         case 12:
             self.commentOffsety =self.tableView.contentOffset.y;
@@ -199,8 +409,17 @@
         default:
             break;
     }
-    
+    if(self.view.tag != 0)
+    {
+        [(UIButton*)[self.btnBox viewWithTag:self.view.tag] setTitleColor:mRGBToColor(0x999999) forState:UIControlStateNormal];
+        ((UIButton*)[self.btnBox viewWithTag:self.view.tag]).titleLabel.font = [UIFont systemFontOfSize:14];
+    }
     self.view.tag = sender.tag;
+    if(self.view.tag != 0)
+    {
+        [(UIButton*)[self.btnBox viewWithTag:self.view.tag] setTitleColor:mRGBToColor(0x000000) forState:UIControlStateNormal];
+        ((UIButton*)[self.btnBox viewWithTag:self.view.tag]).titleLabel.font = [UIFont boldSystemFontOfSize:14];
+    }
     switch (sender.tag) {
         case 11:
             if(self.repostOffsety<self.headHeight && self.tableView.contentOffset.y>self.headHeight)
@@ -316,5 +535,21 @@
 {
     
 }
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.tableView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.tableView removeObserver:self forKeyPath:@"contentOffset"];
+
+    
+}
+
 
 @end

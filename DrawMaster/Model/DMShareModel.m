@@ -310,8 +310,8 @@
     self.smallPics = smallPics;
     self.bigPics = bigPics;
     
-    CGFloat w = mIsPad?(mScreenWidth-32-15)/2:(mScreenWidth-16-10);
-    self.textHeight = [self.attributedText boundingRectWithSize:CGSizeMake(w-16-10, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) context:nil].size.height;
+    CGFloat w = mIsPad?(mScreenWidth-32*2-5-10*2)/2:(mScreenWidth-32-10);
+    self.textHeight = [self.attributedText boundingRectWithSize:CGSizeMake(w, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) context:nil].size.height;
     return self;
 }
 @end
