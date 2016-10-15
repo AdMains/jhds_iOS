@@ -40,5 +40,10 @@ typedef NS_ENUM(NSInteger, DMAPIReturnType)
 
 - (RACSignal *)fetchShareNum;
 - (RACSignal *)fetchShareListWithPageIndex:(NSString*)page;
+
+- (RACSignal *)fetchWeiboNumWithIdstr:(NSString*)idstr;
+- (RACSignal *)fetchWeiboCommentsWithIdstr:(NSString*)idstr PageIndex:(NSString*)page;
+- (RACSignal *)fetchWeiboRepostWithIdstr:(NSString*)idstr PageIndex:(NSString*)page;
+
 + (ALAssetsLibrary *)defaultAssetsLibrary;
 @end

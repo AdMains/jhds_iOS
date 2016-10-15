@@ -7,6 +7,9 @@
 //
 
 #import "DMShareDetailViewController.h"
+#import "DMAPIManager.h"
+#import "DMShareDetailViewModel.h"
+#import "DMShareCmTableViewCell.h"
 #define MenumBarHeight 50
 
 
@@ -17,9 +20,7 @@
 @property (nonatomic,readwrite,strong) UIView *menuBar;
 @property (nonatomic,readwrite,strong) MASConstraint *menuBarTop;
 @property (nonatomic,readwrite,strong) UITableView *tableView;
-@property (nonatomic,readwrite,strong) NSMutableArray *repostsArray;
-@property (nonatomic,readwrite,strong) NSMutableArray *commentsArray;
-@property (nonatomic,readwrite,strong) NSMutableArray *goodsArray;
+
 @property (nonatomic,readwrite,assign) CGFloat repostOffsety;
 @property (nonatomic,readwrite,assign) CGFloat commentOffsety;
 @property (nonatomic,readwrite,assign) CGFloat goodOffsety;
@@ -27,6 +28,7 @@
 @property (nonatomic,readwrite,strong) UIView *btnBox;
 @property (nonatomic,readwrite,strong) UIView *lineBox;
 @property (nonatomic,readwrite,strong) MASConstraint *bottomLineLeft;
+@property (nonatomic,readwrite,strong) DMShareDetailViewModel* viewModel;
 
 @end
 
@@ -40,17 +42,11 @@
     
     if(self.selectMenumIndex == 0)
         self.selectMenumIndex = 12;
+    
+    self.viewModel = [[DMShareDetailViewModel alloc] initWithWeiboIdstr:self.weiboIdstr];
     self.topBar = [[UIView alloc] init];
     {
-        self.repostsArray = [NSMutableArray array];
-        self.commentsArray = [NSMutableArray array];
-        self.goodsArray = [NSMutableArray array];
-        for (int i = 0; i<300; ++i) {
-            [self.repostsArray addObject:@"AAAAAAAA"];
-            [self.commentsArray addObject:@"BBBBBBB"];
-            [self.goodsArray addObject:@"CCCCCCCC"];
-        }
-        
+     
         
         [self.view addSubview:self.topBar];
         [self.topBar mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -197,10 +193,13 @@
         }
         headView.backgroundColor = mRGBToColor(0xffffff);
         self.tableView.tableHeaderView = headView;
+        self.tableView.tableFooterView = [[UIView alloc] init];
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
         self.tableView.showsVerticalScrollIndicator = NO;
-        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        //[self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
+        [self.tableView registerNib:[UINib nibWithNibName:NSStringFromClass([DMShareCmTableViewCell class]) bundle:[NSBundle mainBundle]] forCellReuseIdentifier:NSStringFromClass([DMShareCmTableViewCell class])];
         
         
         self.menuBar = [[UIView alloc] init];
@@ -305,12 +304,22 @@
                         
                     }];
                     
-                    [goodBtn addTarget:self action:@selector(selectMenum:) forControlEvents:UIControlEventTouchUpInside];
+                    //[goodBtn addTarget:self action:@selector(selectMenum:) forControlEvents:UIControlEventTouchUpInside];
                     
                     if(self.selectMenumIndex == goodBtn.tag)
                     {
                         [self selectMenum:goodBtn];
                     }
+                }
+                
+                if (self.logined)
+                {
+                    [[[DMAPIManager sharedManager] fetchWeiboNumWithIdstr:self.weiboIdstr] subscribeNext:^(NSArray* x) {
+                        
+                        [repostBtn setTitle:[NSString stringWithFormat:@"%@%@",@"转发",[[x objectAtIndex:0] stringValue]] forState:UIControlStateNormal];
+                        [commentsBtn setTitle:[NSString stringWithFormat:@"%@%@",@"评论",[[x objectAtIndex:1] stringValue]] forState:UIControlStateNormal];
+                        [goodBtn setTitle:[NSString stringWithFormat:@"%@%@",@"赞",[[x objectAtIndex:2] stringValue]] forState:UIControlStateNormal];
+                    }];
                 }
                 
 
@@ -388,7 +397,12 @@
         
     }
     
-    
+    [[self.viewModel fetchDataWithMore:NO] subscribeNext:^(id x) {
+        @strongify(self)
+        [self.tableView reloadData];
+    } error:^(NSError *error) {
+        
+    }];
     
 
 }
@@ -415,6 +429,7 @@
         ((UIButton*)[self.btnBox viewWithTag:self.view.tag]).titleLabel.font = [UIFont systemFontOfSize:14];
     }
     self.view.tag = sender.tag;
+    self.viewModel.selectIndex = sender.tag;
     if(self.view.tag != 0)
     {
         [(UIButton*)[self.btnBox viewWithTag:self.view.tag] setTitleColor:mRGBToColor(0x000000) forState:UIControlStateNormal];
@@ -450,8 +465,6 @@
     if([keyPath isEqualToString:@"contentOffset"]) {
         if([[change valueForKey:NSKeyValueChangeNewKey] CGPointValue].y >self.headHeight)
         {
-            
-
             self.menuBarTop.mas_equalTo(self.headHeight + [[change valueForKey:NSKeyValueChangeNewKey] CGPointValue].y-self.headHeight);
         }
         else
@@ -482,52 +495,29 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    NSMutableArray * array = nil;
-    switch (self.view.tag) {
-        case 11:
-            array =  self.repostsArray;
-            break;
-        case 12:
-            array =  self.commentsArray;
-            break;
-        case 13:
-            array =  self.goodsArray;
-            break;
-        default:
-            break;
-    }
-    return array.count;
+    
+    return [self.viewModel commentNum];
+    
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class])];
-    NSMutableArray * array = nil;
-    switch (self.view.tag) {
-        case 11:
-            array =  self.repostsArray;
-            break;
-        case 12:
-            array =  self.commentsArray;
-            break;
-        case 13:
-            array =  self.goodsArray;
-            break;
-        default:
-            break;
-    }
-    cell.textLabel.text = [NSString stringWithFormat:@"%@%@",[array objectAtIndex:indexPath.row],@(indexPath.row)];
-    cell.textLabel.font = [UIFont systemFontOfSize:14];
-    cell.textLabel.textColor = mRGBToColor(0x666666);
+    DMShareCmTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([DMShareCmTableViewCell class])];
     
-    cell.accessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"list_arrow"]];
+    cell.contentText.attributedText = [self.viewModel commentTextWithIndex:indexPath.row];
+    [cell.userIcon sd_setImageWithURL:[NSURL URLWithString:[self.viewModel commentUserIconWithIndex:indexPath.row]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"home_share"]];
+    cell.userNickName.textColor = [UIColor orangeColor];
+    cell.userNickName.text = [self.viewModel commentNickNameWithIndex:indexPath.row];
+    cell.createAt.text = [self.viewModel commentTimeWithIndex:indexPath.row];
+    cell.contentTextHeight.constant = [self.viewModel commentTextHeightWithIndex:indexPath.row];
+
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    return 55;
+    return 100;
 }
 
 

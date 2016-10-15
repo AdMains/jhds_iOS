@@ -54,7 +54,7 @@
             if(shareNumHidden)
                 self.titleLabel.text = @"未登录";
             else
-                self.titleLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"];
+                self.titleLabel.text = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboNickName"];
             self.titleLabel.font = [UIFont boldSystemFontOfSize:17];
             self.titleLabel.textColor = mRGBToColor(0x333333);
             self.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -168,6 +168,7 @@
         {
             WeiboUser *u = (WeiboUser *)result;
             self.titleLabel.text = u.screenName;
+            [[NSUserDefaults standardUserDefaults] setObject:self.titleLabel.text forKey:@"DMWeiboNickName"];
             
         }
         
@@ -270,8 +271,27 @@
             [cell.commentNumBtn setTitle:[commentNum integerValue]==0?@"评论":[commentNum stringValue] forState:UIControlStateNormal];
             [cell.atrributeNumBtn setTitle:[attributeNum integerValue]==0?@"赞":[attributeNum stringValue] forState:UIControlStateNormal];
         }];
+    @weakify(self)
+    cell.repostNumBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self)
+        [self selectOneShare:indexPath onBtnIndex:11];
+        return [RACSignal empty];
+    }];
+    cell.commentNumBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self)
+        [self selectOneShare:indexPath onBtnIndex:12];
+        return [RACSignal empty];
+    }];
+    cell.atrributeNumBtn.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+        @strongify(self)
+        [self selectOneShare:indexPath onBtnIndex:12];
+        return [RACSignal empty];
+    }];
+    
     return cell;
 }
+
+
 
 - (void)gotoPicDetail:(NSInteger)index Pics:(NSArray*)pics
 {
@@ -325,6 +345,12 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath;
 {
+    [self selectOneShare:indexPath onBtnIndex:12];
+    
+}
+
+- (void)selectOneShare:(NSIndexPath *)indexPath onBtnIndex:(int)btnIndex
+{
     UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DMShareDetailViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMShareDetailViewController"];
     modal.headNickName = [self.viewModel nickNameWithRow:indexPath.row];
@@ -333,8 +359,18 @@
     modal.headShareText = [self.viewModel contentWithRow:indexPath.row];
     modal.headSmallPic = [self.viewModel smallPicsWithRow:indexPath.row];
     modal.headBigPic = [self.viewModel bigPicsWithRow:indexPath.row];
+    modal.weiboIdstr = [self.viewModel idstrWithRow:indexPath.row];
+    modal.selectMenumIndex = btnIndex;
+    Boolean shareNumHidden = YES;
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"] && [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboExpirationDate"])
+    {
+        if([[NSDate date] compare:[[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboExpirationDate"]] == NSOrderedAscending)
+            shareNumHidden = FALSE;
+    }
+    
+    modal.logined = !shareNumHidden;
     CGFloat w = mScreenWidth-16;
-   
+    
     CGFloat h = kCellUserBarHeight + [modal.headShareText boundingRectWithSize:CGSizeMake(w-16-10, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) context:nil].size.height;
     NSArray *smallpics = [self.viewModel  smallPicsWithRow:indexPath.row];
     CGFloat imgw = (mScreenWidth-4*8)/3;
@@ -346,10 +382,9 @@
         h =h+ (imgh +8)*2;
     else if((smallpics.count>0))
         h =h+ (imgh +8)*1;
-
+    
     modal.headHeight = h;
     
     [self.navigationController pushViewController:modal animated:YES];
-    
 }
 @end

@@ -38,7 +38,7 @@
 {
     if(weiboID ==nil)
     {
-        success(@"",@"",@"");
+        success(@(0),@(0),@(0));
         return;
     }
     [self cancelImageRequestOperation];

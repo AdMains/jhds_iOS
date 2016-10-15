@@ -50,6 +50,10 @@
 		4B97F0EC1D1A2492004F4686 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97F0DE1D1A2492004F4686 /* main.m */; };
 		4B97F0ED1D1A2492004F4686 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0E11D1A2492004F4686 /* Assets.xcassets */; };
 		4B97F0EF1D1A2492004F4686 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B97F0E71D1A2492004F4686 /* Main.storyboard */; };
+		4B9D6BCD1DAFB926008085DD /* DMShareCommentModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D6BCC1DAFB926008085DD /* DMShareCommentModel.m */; };
+		4B9D6BD31DAFC0E8008085DD /* DMShareDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D6BD21DAFC0E8008085DD /* DMShareDetailViewModel.m */; };
+		4B9D6BD71DAFDF04008085DD /* DMShareCmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9D6BD51DAFDF04008085DD /* DMShareCmTableViewCell.m */; };
+		4B9D6BD81DAFDF04008085DD /* DMShareCmTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B9D6BD61DAFDF04008085DD /* DMShareCmTableViewCell.xib */; };
 		4BA18D0F1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA18D0D1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a */; };
 		4BABBFA01D4EE72B0080579C /* DMShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BABBF9F1D4EE72B0080579C /* DMShareViewController.m */; };
 		4BABBFA31D4EFCB20080579C /* DMShareModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BABBFA21D4EFCB20080579C /* DMShareModel.m */; };
@@ -167,6 +171,13 @@
 		4B97F0DE1D1A2492004F4686 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4B97F0E11D1A2492004F4686 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4B97F0E71D1A2492004F4686 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		4B9D6BCB1DAFB926008085DD /* DMShareCommentModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareCommentModel.h; sourceTree = "<group>"; };
+		4B9D6BCC1DAFB926008085DD /* DMShareCommentModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMShareCommentModel.m; sourceTree = "<group>"; };
+		4B9D6BD11DAFC0E8008085DD /* DMShareDetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareDetailViewModel.h; sourceTree = "<group>"; };
+		4B9D6BD21DAFC0E8008085DD /* DMShareDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMShareDetailViewModel.m; sourceTree = "<group>"; };
+		4B9D6BD41DAFDF04008085DD /* DMShareCmTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareCmTableViewCell.h; sourceTree = "<group>"; };
+		4B9D6BD51DAFDF04008085DD /* DMShareCmTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMShareCmTableViewCell.m; sourceTree = "<group>"; };
+		4B9D6BD61DAFDF04008085DD /* DMShareCmTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DMShareCmTableViewCell.xib; sourceTree = "<group>"; };
 		4BA18D0D1D34C1C200B041B1 /* libUMessage_Sdk_1.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMessage_Sdk_1.3.0.a; sourceTree = "<group>"; };
 		4BA18D0E1D34C1C200B041B1 /* UMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMessage.h; sourceTree = "<group>"; };
 		4BABBF9E1D4EE72B0080579C /* DMShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMShareViewController.h; sourceTree = "<group>"; };
@@ -336,6 +347,8 @@
 				4BB103561D2B92AA00CCD29F /* DMShopModel.m */,
 				4BABBFA11D4EFCB20080579C /* DMShareModel.h */,
 				4BABBFA21D4EFCB20080579C /* DMShareModel.m */,
+				4B9D6BCB1DAFB926008085DD /* DMShareCommentModel.h */,
+				4B9D6BCC1DAFB926008085DD /* DMShareCommentModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -454,6 +467,9 @@
 				4BABBFAC1D4F2F0F0080579C /* DMShareCollectionViewCell.xib */,
 				4B840F921D62A8A300EE1CF1 /* DMShareNumView.h */,
 				4B840F931D62A8A300EE1CF1 /* DMShareNumView.m */,
+				4B9D6BD41DAFDF04008085DD /* DMShareCmTableViewCell.h */,
+				4B9D6BD51DAFDF04008085DD /* DMShareCmTableViewCell.m */,
+				4B9D6BD61DAFDF04008085DD /* DMShareCmTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -473,6 +489,8 @@
 				4B78DF601D2BDEF600E4ABB6 /* DMShopViewModel.m */,
 				4BABBFA41D4EFDCC0080579C /* DMShareViewModel.h */,
 				4BABBFA51D4EFDCC0080579C /* DMShareViewModel.m */,
+				4B9D6BD11DAFC0E8008085DD /* DMShareDetailViewModel.h */,
+				4B9D6BD21DAFC0E8008085DD /* DMShareDetailViewModel.m */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -590,6 +608,7 @@
 				4BFF485E1D2CEF5D00713E42 /* splash3.jpg in Resources */,
 				4B8744C31D1D0D9E00ABB590 /* DMLearnCollectionViewCell.xib in Resources */,
 				4BFF48581D2CE80500713E42 /* splash1.jpg in Resources */,
+				4B9D6BD81DAFDF04008085DD /* DMShareCmTableViewCell.xib in Resources */,
 				4BFF48591D2CE80500713E42 /* splash2.jpg in Resources */,
 				4B8744C81D1D2BFE00ABB590 /* DMMineTableViewCell.xib in Resources */,
 				4B8744BE1D1CDFF200ABB590 /* DMCopyCollectionViewCell.xib in Resources */,
@@ -678,6 +697,7 @@
 				4B852A3C1D2A3C2900069418 /* DMBigImgBoxView.m in Sources */,
 				4B72ECBF1D250070008934BB /* ISColorWheel.m in Sources */,
 				4B852A341D29FCA400069418 /* DMCopyDetailViewController.m in Sources */,
+				4B9D6BD71DAFDF04008085DD /* DMShareCmTableViewCell.m in Sources */,
 				4B97F0EA1D1A2492004F4686 /* AppDelegate.m in Sources */,
 				4B852A381D2A035D00069418 /* DMCopyDetailCollectionViewCell.m in Sources */,
 				4B8744C21D1D0D9E00ABB590 /* DMLearnCollectionViewCell.m in Sources */,
@@ -724,8 +744,10 @@
 				4B83F3C41D1A93DE00F065D2 /* DMLearnViewController.m in Sources */,
 				4B83F3C71D1A95ED00F065D2 /* DMMineViewController.m in Sources */,
 				4BB103451D2B443B00CCD29F /* DMMineSaveViewController.m in Sources */,
+				4B9D6BCD1DAFB926008085DD /* DMShareCommentModel.m in Sources */,
 				4BABBFA61D4EFDCC0080579C /* DMShareViewModel.m in Sources */,
 				4B83F3C11D1A93CB00F065D2 /* DMCopyViewController.m in Sources */,
+				4B9D6BD31DAFC0E8008085DD /* DMShareDetailViewModel.m in Sources */,
 				4B8744C71D1D2BFE00ABB590 /* DMMineTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

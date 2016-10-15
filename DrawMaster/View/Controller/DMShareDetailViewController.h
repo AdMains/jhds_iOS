@@ -16,6 +16,7 @@
 @property (nonatomic,readwrite,strong) NSAttributedString* headShareText;
 @property (nonatomic,readwrite,strong) NSArray* headSmallPic;
 @property (nonatomic,readwrite,strong) NSArray* headBigPic;
-
+@property (nonatomic,readwrite,strong) NSString* weiboIdstr;
+@property (nonatomic,readwrite,assign) BOOL logined;
 @property (nonatomic,readwrite,assign) NSUInteger selectMenumIndex;
 @end

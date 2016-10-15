@@ -407,4 +407,55 @@
         return [MTLJSONAdapter modelsOfClass:objc_getClass("DMShareModel") fromJSONArray:value error:nil];
     }];
 }
+
+- (RACSignal *)fetchWeiboNumWithIdstr:(NSString*)idstr
+{
+    
+    
+    return [[self fetchDataWithURLString:@"https://api.weibo.com/2/statuses/count.json"
+                                  params:@{@"ids":idstr,
+                                           @"access_token": [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"]}
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
+        NSDictionary *item = [value objectAtIndex:0]?[value objectAtIndex:0]:@{};
+        if(item.count>0)
+        {
+            return @[item[@"reposts"],item[@"comments"],item[@"attitudes"]];
+        }
+        else
+            return @[@(0),@(0),@(0)];
+        
+    }];
+    
+}
+
+- (RACSignal *)fetchWeiboCommentsWithIdstr:(NSString*)idstr PageIndex:(NSString*)page
+{
+    
+    return [[self fetchDataWithURLString:@"https://api.weibo.com/2/comments/show.json"
+                                  params:@{@"id":idstr,
+                                           @"page":page,
+                                           @"access_token": [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"]}
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeDic httpMethod:@"get"] map:^id(id value) {
+        
+        return [MTLJSONAdapter modelsOfClass:objc_getClass("DMShareCommentModel") fromJSONArray:[value objectForKey:@"comments"]error:nil];
+
+    }];
+
+}
+
+- (RACSignal *)fetchWeiboRepostWithIdstr:(NSString*)idstr PageIndex:(NSString*)page
+{
+    return [[self fetchDataWithURLString:@"https://api.weibo.com/2/statuses/repost_timeline.json"
+                                  params:@{@"id":idstr,
+                                           @"page":page,
+                                           @"access_token": [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"]}
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeDic httpMethod:@"get"] map:^id(id value) {
+        return [MTLJSONAdapter modelsOfClass:objc_getClass("DMShareCommentModel") fromJSONArray:[value objectForKey:@"reposts"]error:nil];
+
+    }];
+
+}
 @end
