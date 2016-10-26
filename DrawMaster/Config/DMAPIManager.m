@@ -408,24 +408,33 @@
     }];
 }
 
+- (RACSignal *)fetchTopWeiboInfo
+{
+    NSString * str = @"images/jhds/weibo/weiboTag.txt";
+    return [[self fetchDataWithURLString:mUrlString(str)
+                                  params:@{@"errorReturnCache":@(YES)}
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeDic httpMethod:@"get"] map:^id(NSDictionary* value) {
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"idstr"] forKey:@"top_idstr"];
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"text"] forKey:@"top_text"];
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"pic_urls"] forKey:@"top_pic_urls"];
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"userIcon"] forKey:@"top_userIcon"];
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"nickName"] forKey:@"top_nickName"];
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"userId"] forKey:@"top_userId"];
+        [[NSUserDefaults standardUserDefaults] setObject:[value objectForKey:@"original_pic"] forKey:@"top_original_pic"];
+        return value;
+    }];
+}
+
 - (RACSignal *)fetchWeiboNumWithIdstr:(NSString*)idstr
 {
     
     
-    return [[self fetchDataWithURLString:@"https://api.weibo.com/2/statuses/count.json"
+    return [self fetchDataWithURLString:@"https://api.weibo.com/2/statuses/count.json"
                                   params:@{@"ids":idstr,
                                            @"access_token": [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"]}
                                  headers:nil
-                              returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"] map:^id(id value) {
-        NSDictionary *item = [value objectAtIndex:0]?[value objectAtIndex:0]:@{};
-        if(item.count>0)
-        {
-            return @[item[@"reposts"],item[@"comments"],item[@"attitudes"]];
-        }
-        else
-            return @[@(0),@(0),@(0)];
-        
-    }];
+                              returnType:DMAPIManagerReturnTypeArray httpMethod:@"get"];
     
 }
 
@@ -457,5 +466,36 @@
 
     }];
 
+}
+
+- (RACSignal *)repostWeiboWithIdstr:(NSString*)idstr  Content:(NSString*)content
+{
+    
+    return [[self fetchDataWithURLString:@"https://api.weibo.com/2/statuses/repost.json"
+                                  params:@{@"id":idstr,
+                                           @"status":content,
+                                           @"access_token": [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"]}
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeDic httpMethod:@"post"] map:^id(id value) {
+        
+        return [MTLJSONAdapter modelOfClass:objc_getClass("DMShareCommentModel") fromJSONDictionary:value error:nil];
+        
+    }];
+    
+}
+
+- (RACSignal *)commentWeiboWithIdstr:(NSString*)idstr Content:(NSString*)content
+{
+    
+    return [[self fetchDataWithURLString:@"https://api.weibo.com/2/comments/create.json"
+                                  params:@{@"id":idstr,
+                                           @"comment":content,
+                                           @"access_token":[[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"]}
+                                 headers:nil
+                              returnType:DMAPIManagerReturnTypeDic httpMethod:@"post"] map:^id(id value) {
+        
+        return [MTLJSONAdapter modelOfClass:objc_getClass("DMShareCommentModel") fromJSONDictionary:value error:nil];
+        
+    }];
 }
 @end

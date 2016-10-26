@@ -40,7 +40,7 @@
     self.nickName = tmpUser.screenName;
     self.userIcon = tmpUser.profileImageUrl;
     self.created_at = [[self dateFromString:self.created_at] qgocc_timestampForDate];
-    self.text = [NSString stringWithFormat:@"<meta charset=\"UTF-8\"> <p style=\"line-height: 1.5;font-size:12px;\">%@</p>",self.text];
+    self.text = [NSString stringWithFormat:@"<meta charset=\"UTF-8\"> <p style=\"line-height: 1.5;font-size:13px;\">%@</p>",self.text];
     NSString *path = [[NSBundle mainBundle]pathForResource:@"splash0" ofType:@"jpg"];
     path = [path substringToIndex:path.length - @"splash0.jpg".length];
     

@@ -30,6 +30,7 @@
         self.repostsAry = [NSMutableArray array];
         self.mCurPageOfReposts= 1;
         self.selectIndex = 12;
+        self.weiboNumFetched = NO;
     }
     
     return self;
@@ -100,5 +101,52 @@
     return c.textHeight;
 }
 
+- (RACSignal*)commentWithBody:(NSString*)body
+{
+    return  [[[DMAPIManager sharedManager]  commentWeiboWithIdstr:self.weiboIdstr Content:body] map:^id(id value) {
+        
+        if(value != nil)
+        {
+            [self.commentsAry addObject:value];
+            self.commentNum ++;
+        }
+        return value;
+    }];
+}
+
+- (RACSignal*)repostWithBody:(NSString*)body
+{
+    return [[[DMAPIManager sharedManager] repostWeiboWithIdstr:self.weiboIdstr Content:body] map:^id(id value) {
+        if(value != nil)
+        {
+            [self.repostsAry addObject:value];
+            self.repostNum ++;
+            
+        }
+        return value;
+
+    }];
+}
+
+- (RACSignal*)fetchWeiboNum
+{
+    return [[[DMAPIManager sharedManager] fetchWeiboNumWithIdstr:self.weiboIdstr] map:^id(NSArray * value) {
+    
+        NSDictionary *item = [value objectAtIndex:0]?[value objectAtIndex:0]:@{};
+        if(item.count>0)
+        {
+            self.repostNum = [item[@"reposts"] integerValue];
+            self.commentNum = [item[@"comments"] integerValue];
+            self.goodNum = [item[@"attitudes"] integerValue];
+            
+            self.weiboNumFetched = YES;
+            return @[item[@"reposts"],item[@"comments"],item[@"attitudes"]];
+        }
+        else
+            return @[@(0),@(0),@(0)];
+        
+        return value;
+    }];
+}
 
 @end

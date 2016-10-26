@@ -31,6 +31,9 @@
         //NSLog(@"闪屏页数据偷偷加载完成");
     }];
     
+    [[[DMAPIManager sharedManager] fetchTopWeiboInfo] subscribeNext:^(id x) {
+        //NSLog(@"闪屏页数据偷偷加载完成");
+    }];
     
     NSString* firstInstall = [[NSUserDefaults standardUserDefaults] objectForKey:@"DMFirstInstall"];
     if(firstInstall==nil)

@@ -26,6 +26,39 @@
     self = [super initWithDictionary:dictionaryValue error:error];
     if (self == nil) return nil;
     
+    [self updateTextIcon];
+    NSString* smallurl= @"";
+    NSString* bigurl= @"";
+    NSArray *urlsubs = [self.original_pic componentsSeparatedByString:@"/"];
+    for(int j = 0;j<urlsubs.count-1;j++)
+    {
+        //bigurl = [NSString stringWithFormat:@"%@%@/",bigurl,urlsubs[j]];
+        if(j<urlsubs.count-2)
+        {
+            smallurl = [NSString stringWithFormat:@"%@%@/",smallurl,urlsubs[j]];
+        }
+    }
+    bigurl =smallurl;
+    bigurl = [NSString stringWithFormat:@"%@large/",bigurl];
+    smallurl = [NSString stringWithFormat:@"%@orj480/",smallurl];
+    
+    NSMutableArray * smallPics = [NSMutableArray array];
+    NSMutableArray * bigPics = [NSMutableArray array];
+    for (NSString *idstr in self.pic_ids) {
+        [smallPics addObject:[NSString stringWithFormat:@"%@%@.jpg",smallurl,idstr]];
+        [bigPics addObject:[NSString stringWithFormat:@"%@%@.jpg",bigurl,idstr]];
+    }
+   
+    self.smallPics = smallPics;
+    self.bigPics = bigPics;
+    
+   
+    return self;
+}
+
+- (void)updateTextIcon
+{
+    
     self.text = [NSString stringWithFormat:@"<meta charset=\"UTF-8\"> <p style=\"line-height: 1.5;font-size:14px;\">%@</p>",self.text];
     NSString *path = [[NSBundle mainBundle]pathForResource:@"splash0" ofType:@"jpg"];
     path = [path substringToIndex:path.length - @"splash0.jpg".length];
@@ -282,36 +315,11 @@
     self.text = [self.text stringByReplacingOccurrencesOfString:@"[炸弹]" withString:[NSString stringWithFormat:@"<img style=\"max-width:20;vertical-align:-5px;\" src=\"file://%@/emoji/bomb.png\"/>",path]];
     self.text = [self.text stringByReplacingOccurrencesOfString:@"[钻石]" withString:[NSString stringWithFormat:@"<img style=\"max-width:20;vertical-align:-5px;\" src=\"file://%@/emoji/gem.png\"/>",path]];
     self.attributedText = [[NSAttributedString alloc]
-     initWithData: [self.text dataUsingEncoding:NSUTF8StringEncoding]
-     options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType}
-     documentAttributes:nil error:nil];
-    NSString* smallurl= @"";
-    NSString* bigurl= @"";
-    NSArray *urlsubs = [self.original_pic componentsSeparatedByString:@"/"];
-    for(int j = 0;j<urlsubs.count-1;j++)
-    {
-        //bigurl = [NSString stringWithFormat:@"%@%@/",bigurl,urlsubs[j]];
-        if(j<urlsubs.count-2)
-        {
-            smallurl = [NSString stringWithFormat:@"%@%@/",smallurl,urlsubs[j]];
-        }
-    }
-    bigurl =smallurl;
-    bigurl = [NSString stringWithFormat:@"%@large/",bigurl];
-    smallurl = [NSString stringWithFormat:@"%@orj480/",smallurl];
-    
-    NSMutableArray * smallPics = [NSMutableArray array];
-    NSMutableArray * bigPics = [NSMutableArray array];
-    for (NSString *idstr in self.pic_ids) {
-        [smallPics addObject:[NSString stringWithFormat:@"%@%@.jpg",smallurl,idstr]];
-        [bigPics addObject:[NSString stringWithFormat:@"%@%@.jpg",bigurl,idstr]];
-    }
-   
-    self.smallPics = smallPics;
-    self.bigPics = bigPics;
+                           initWithData: [self.text dataUsingEncoding:NSUTF8StringEncoding]
+                           options:@{NSDocumentTypeDocumentAttribute:NSHTMLTextDocumentType}
+                           documentAttributes:nil error:nil];
     
     CGFloat w = mIsPad?(mScreenWidth-32*2-5-10*2)/2:(mScreenWidth-32-10);
     self.textHeight = [self.attributedText boundingRectWithSize:CGSizeMake(w, CGFLOAT_MAX) options:(NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading) context:nil].size.height;
-    return self;
 }
 @end

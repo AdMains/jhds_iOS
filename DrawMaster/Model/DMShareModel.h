@@ -21,4 +21,6 @@
 @property (nonatomic,readwrite,strong) NSArray * smallPics;
 @property (nonatomic,readwrite,strong) NSArray * bigPics;
 @property (nonatomic,readwrite,assign) CGFloat textHeight;
+
+- (void)updateTextIcon;
 @end

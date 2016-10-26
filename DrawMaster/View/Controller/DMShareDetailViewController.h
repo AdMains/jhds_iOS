@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "DMShareDetailViewModel.h"
 @interface DMShareDetailViewController : UIViewController
 @property (nonatomic,readwrite,assign) CGFloat headHeight;
 @property (nonatomic,readwrite,strong) NSString* headNickName;
@@ -19,4 +19,5 @@
 @property (nonatomic,readwrite,strong) NSString* weiboIdstr;
 @property (nonatomic,readwrite,assign) BOOL logined;
 @property (nonatomic,readwrite,assign) NSUInteger selectMenumIndex;
+@property (nonatomic,readwrite,strong) DMShareDetailViewModel* viewModel;
 @end

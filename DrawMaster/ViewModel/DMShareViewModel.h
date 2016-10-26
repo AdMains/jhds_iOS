@@ -16,10 +16,12 @@
 - (CGFloat)contentHeightWithRow:(NSInteger)row;
 - (NSString*)nickNameWithRow:(NSInteger)row;
 - (NSString*)idstrWithRow:(NSInteger)row;
+- (NSString*)idstr;
 - (NSString*)userIconWithRow:(NSInteger)row;
 - (NSArray*)picIDsWithRow:(NSInteger)row;
 - (NSArray*)smallPicsWithRow:(NSInteger)row;
 - (NSArray*)bigPicsWithRow:(NSInteger)row;
 - (NSString*)createTimeWithRow:(NSInteger)row;
+-(void)fetchWeiboNum:(NSString*)weiboID success:(void (^)( NSNumber *repostNum,NSNumber *commentNum,NSNumber *attributeNum))success;
 
 @end

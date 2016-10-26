@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DMShareNumView : UIView
--(void)fetchWeiboNum:(NSString*)weiboID success:(void (^)( NSNumber *repostNum,NSNumber *commentNum,NSNumber *attributeNum))success;
+-(void)fetchWeiboNum:(NSString*)weiboID idStr:(NSString*)str success:(void (^)( NSNumber *repostNum,NSNumber *commentNum,NSNumber *attributeNum))success;
 @end

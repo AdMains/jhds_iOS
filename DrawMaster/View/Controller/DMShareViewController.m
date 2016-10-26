@@ -14,6 +14,7 @@
 #import "WeiboSDK.h"
 #import "WeiboSDK+Statistics.h"
 #import "WeiboUser.h"
+#import "DMButton.h"
 @interface DMShareViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,DMShareCollectionViewCellDelegate>
 @property (nonatomic,readwrite,strong) UICollectionView * collecttionView;
 @property (nonatomic,readwrite,strong) DMShareViewModel * viewModel;
@@ -148,6 +149,7 @@
             [self.collecttionView.pullToRefreshView setTitle:@"释放更新" forState:SVPullToRefreshStateTriggered];
             [self.collecttionView.pullToRefreshView setTitle:@"卖力加载中" forState:SVPullToRefreshStateLoading];
             [self.collecttionView registerNib:[UINib nibWithNibName:NSStringFromClass([DMShareCollectionViewCell class]) bundle:[NSBundle mainBundle]]  forCellWithReuseIdentifier:NSStringFromClass([DMShareCollectionViewCell class])];
+            [self.collecttionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:NSStringFromClass([UICollectionViewCell class])];
             
             
         }
@@ -224,12 +226,214 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)cv cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    DMShareCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:NSStringFromClass([DMShareCollectionViewCell class]) forIndexPath:indexPath];
+    UICollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:NSStringFromClass([UICollectionViewCell class]) forIndexPath:indexPath];
+    cell.backgroundColor =mRGBToColor(0xffffff);
+    Boolean shareNumHidden = YES;
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"] && [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboExpirationDate"])
+    {
+        if([[NSDate date] compare:[[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboExpirationDate"]] == NSOrderedAscending)
+            shareNumHidden = FALSE;
+    }
+    if(cell.contentView.subviews.count == 0)
+    {
+        UIButton * userIcon = [[UIButton alloc] init];
+        {
+            userIcon.layer.cornerRadius = 20;
+            userIcon.clipsToBounds = YES;
+            [cell.contentView addSubview:userIcon];
+            userIcon.tag = 1024;
+            [userIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.mas_equalTo(8);
+                make.top.mas_equalTo(4);
+                make.height.width.mas_equalTo(40);
+            }];
+            
+            
+        }
+        
+        UILabel *userName = [[UILabel alloc] init];
+        {
+            [cell.contentView addSubview:userName];
+            userName.tag = 1025;
+            [userName mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(userIcon.mas_right).offset(8);
+                make.top.mas_equalTo(4);
+                make.height.mas_equalTo(20);
+                make.right.mas_equalTo(-8);
+            }];
+            
+            userName.font = [UIFont systemFontOfSize:14];
+            userName.textColor = [UIColor orangeColor];
+            
+        }
+        
+        UILabel *creatTime = [[UILabel alloc] init];
+        {
+            [cell.contentView addSubview:creatTime];
+            creatTime.tag = 1026;
+            [creatTime mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.equalTo(userIcon.mas_right).offset(8);
+                make.top.equalTo(userName.mas_bottom);
+                make.height.mas_equalTo(20);
+                make.right.mas_equalTo(-8);
+            }];
+            
+            creatTime.font = [UIFont systemFontOfSize:12];
+            creatTime.textColor = [UIColor lightGrayColor];
+            
+        }
+        
+        UITextView *content = [[UITextView alloc] init];
+        {
+            content.scrollEnabled = NO;
+            content.editable = NO;
+            content.userInteractionEnabled = NO;
+            [cell.contentView addSubview:content];
+            content.tag = 1027;
+            
+        }
+        
+        CGFloat w = mIsPad?(mScreenWidth-32-5)/2:(mScreenWidth-16);
+        for (NSUInteger i = 0; i<9; i++) {
+            DMButton * img = [[DMButton alloc] init];
+            {
+                img.tag = 1028+i;
+                [cell.contentView addSubview:img];
+                CGFloat imgw = (w-4*8)/3;
+                CGFloat imgh = imgw*1.5;
+                [img mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.top.equalTo(content.mas_bottom).offset((i/3)* (imgh+8)-10);
+                    NSUInteger index = i%3;
+                    make.left.mas_equalTo(index*imgw+(index+1)*8);
+                    make.width.mas_equalTo(imgw);
+                    make.height.mas_equalTo(imgh);
+                }];
+                [img addTarget:self action:@selector(onPicClickBtn:) forControlEvents:UIControlEventTouchUpInside];
+                
+            }
+            
+        }
+        
+        for (NSUInteger i = 0; i<3; i++) {
+            DMButton * btn = [[DMButton alloc] init];
+            {
+                btn.tag = 2048+i;
+                [cell.contentView addSubview:btn];
+                btn.titleLabel.font = [UIFont systemFontOfSize:14];
+                [btn mas_makeConstraints:^(MASConstraintMaker *make) {
+                    make.bottom.mas_equalTo(0);
+                    make.left.mas_equalTo(i*(w/3));
+                    make.width.mas_equalTo(w/3);
+                    make.height.mas_equalTo(40);
+                }];
+                [btn addTarget:self action:@selector(onclickBtn:) forControlEvents:UIControlEventTouchUpInside];
+                [btn setTitleEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+                [btn setTitleColor:mRGBToColor(0xaaaaaa) forState:UIControlStateNormal];
+                if(i==0)
+                    [btn setImage:[UIImage imageNamed:@"timeline_icon_retweet"] forState:UIControlStateNormal];
+                else if(i == 1)
+                    [btn setImage:[UIImage imageNamed:@"timeline_icon_comment"] forState:UIControlStateNormal];
+                else if(i == 2)
+                    [btn setImage:[UIImage imageNamed:@"timeline_icon_unlike"] forState:UIControlStateNormal];
+
+            }
+        }
+        
+        UIView * line = [[UIView alloc] init];
+        {
+            [cell.contentView addSubview:line];
+            line.tag = 1001;
+            line.backgroundColor = mRGBToColor(0xdddddd);
+            [line mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.bottom.mas_equalTo(-40);
+                make.left.mas_equalTo(0);
+                make.right.mas_equalTo(0);
+                make.height.mas_equalTo(0.5);
+            }];
+        }
+        
+    }
+    [cell.contentView viewWithTag:1001].hidden = shareNumHidden;
+    [(UIButton*)[cell.contentView viewWithTag:1024] sd_setImageWithURL:[NSURL URLWithString:[self.viewModel userIconWithRow:indexPath.row]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"home_share"]];
+    ((UILabel*)[cell.contentView viewWithTag:1025]).text = [self.viewModel nickNameWithRow:indexPath.row];
+    if(indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] objectForKey:@"top_idstr"] != nil)
+    {
+        ((UILabel*)[cell.contentView viewWithTag:1026]).text = @"刚刚";
+    }
+    else
+    {
+        ((UILabel*)[cell.contentView viewWithTag:1026]).text = [self.viewModel createTimeWithRow:indexPath.row];
+    }
+    
+    [[cell.contentView viewWithTag:1027] mas_updateConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(8);
+        make.right.mas_equalTo(-8);
+        make.top.equalTo([cell.contentView viewWithTag:1026].mas_bottom);
+        make.height.mas_equalTo([self.viewModel contentHeightWithRow:indexPath.row]);
+    }];
+    [(UITextView*)[cell.contentView viewWithTag:1027] setAttributedText:[self.viewModel contentWithRow:indexPath.row]];
+    NSArray *smallpics = [self.viewModel  smallPicsWithRow:indexPath.row];
+    for (int i = 0; i<9; ++i) {
+        [((DMButton*)[cell.contentView viewWithTag:1028+i]).customArgs removeAllObjects];
+        [((DMButton*)[cell.contentView viewWithTag:1028+i]).customArgs addObject:indexPath];
+        [cell.contentView viewWithTag:1028+i].hidden = !(i<smallpics.count);
+        if(i<smallpics.count)
+            [(UIButton *)[cell.contentView viewWithTag:1028+i] sd_setImageWithURL:[NSURL URLWithString:smallpics[i]] forState:UIControlStateNormal placeholderImage:[UIImage qgocc_imageWithColor:mRGBToColor(0xeeeeee) size:CGSizeMake(300, 300)]];
+    }
+   
+    if(!shareNumHidden)
+        [self.viewModel fetchWeiboNum:[self.viewModel idstrWithRow:indexPath.row] success:^(NSNumber *repostNum, NSNumber *commentNum, NSNumber *attributeNum) {
+           
+            [((UIButton*)[cell.contentView viewWithTag:2048]) setTitle:[repostNum integerValue]==0?@"转发":[repostNum stringValue] forState:UIControlStateNormal];
+            [((UIButton*)[cell.contentView viewWithTag:2049]) setTitle:[commentNum integerValue]==0?@"评论":[commentNum stringValue] forState:UIControlStateNormal];
+            [((UIButton*)[cell.contentView viewWithTag:2050]) setTitle:[attributeNum integerValue]==0?@"赞":[attributeNum stringValue] forState:UIControlStateNormal];
+        }];
+    
+    [((DMButton*)[cell.contentView viewWithTag:2048]).customArgs removeAllObjects];
+    [((DMButton*)[cell.contentView viewWithTag:2048]).customArgs addObject:indexPath];
+    [((DMButton*)[cell.contentView viewWithTag:2049]).customArgs removeAllObjects];
+    [((DMButton*)[cell.contentView viewWithTag:2049]).customArgs addObject:indexPath];
+    [((DMButton*)[cell.contentView viewWithTag:2050]).customArgs removeAllObjects];
+    [((DMButton*)[cell.contentView viewWithTag:2050]).customArgs addObject:indexPath];
+    
+    ((UIButton*)[cell.contentView viewWithTag:2048]).hidden=shareNumHidden;
+    ((UIButton*)[cell.contentView viewWithTag:2049]).hidden=shareNumHidden;
+    ((UIButton*)[cell.contentView viewWithTag:2050]).hidden=shareNumHidden;
+    
+//    @weakify(self)
+//    ((UIButton*)[cell.contentView viewWithTag:2048]).rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+//        @strongify(self)
+//        [self selectOneShare:indexPath onBtnIndex:11];
+//        return [RACSignal empty];
+//    }];
+//    ((UIButton*)[cell.contentView viewWithTag:2049]).rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+//        @strongify(self)
+//        [self selectOneShare:indexPath onBtnIndex:12];
+//        return [RACSignal empty];
+//    }];
+//    ((UIButton*)[cell.contentView viewWithTag:2050]).rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+//        @strongify(self)
+//        [self selectOneShare:indexPath onBtnIndex:12];
+//        return [RACSignal empty];
+//    }];
+    
+    
+    
+    
+    /*DMShareCollectionViewCell *cell = [cv dequeueReusableCellWithReuseIdentifier:NSStringFromClass([DMShareCollectionViewCell class]) forIndexPath:indexPath];
     cell.delegate = self;
     cell.tag = indexPath.row;
     cell.backgroundColor =mRGBToColor(0xdddddd);
+    if(indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] objectForKey:@"top_idstr"] != nil)
+    {
+        cell.createAtTime.text = @"刚刚";
+    }
+    else
+    {
+        cell.createAtTime.text = [self.viewModel createTimeWithRow:indexPath.row];
+    }
     cell.nickName.text = [self.viewModel nickNameWithRow:indexPath.row];
-    cell.createAtTime.text = [self.viewModel createTimeWithRow:indexPath.row];
+    
     cell.nickName.textColor = [UIColor orangeColor];
     cell.createAtTime.textColor = [UIColor lightGrayColor];
     cell.shareText.attributedText = [self.viewModel contentWithRow:indexPath.row];
@@ -254,6 +458,21 @@
     cell.shareTextHeight.constant = [self.viewModel contentHeightWithRow:indexPath.row];
     if([self.cellHeightCache objectForKey:indexPath])
         cell.shareNumBoxViewTop.constant = [[self.cellHeightCache objectForKey:indexPath] floatValue] - 40;
+    else
+    {
+        CGFloat w = mIsPad?(mScreenWidth-32-5)/2:(mScreenWidth-16);
+        CGFloat h = 0;
+        h = kCellUserBarHeight + [self.viewModel contentHeightWithRow:indexPath.row];
+        NSArray *smallpics = [self.viewModel  smallPicsWithRow:indexPath.row];
+        if((smallpics.count>6))
+            h =h+ ((w-16)*(15.0f/32.0f))*3;
+        else if((smallpics.count>3))
+            h =h+ ((w-16)*(15.0f/32.0f))*2;
+        else if((smallpics.count>0))
+            h =h+ ((w-16)*(15.0f/32.0f))*1;
+        cell.shareNumBoxViewTop.constant = h;
+        
+    }
     Boolean shareNumHidden = YES;
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"] && [[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboExpirationDate"])
     {
@@ -265,7 +484,7 @@
     [cell.commentNumBtn setTitleColor:mRGBToColor(0xaaaaaa) forState:UIControlStateNormal];
     [cell.atrributeNumBtn setTitleColor:mRGBToColor(0xaaaaaa) forState:UIControlStateNormal];
     if(!shareNumHidden)
-        [cell.shareNumBoxView fetchWeiboNum:[self.viewModel idstrWithRow:indexPath.row] success:^(NSNumber *repostNum, NSNumber *commentNum, NSNumber *attributeNum) {
+        [cell.shareNumBoxView fetchWeiboNum:[self.viewModel idstrWithRow:indexPath.row] idStr:[self.viewModel idstr] success:^(NSNumber *repostNum, NSNumber *commentNum, NSNumber *attributeNum) {
             NSLog(@"%@========%@",repostNum,commentNum);
             [cell.repostNumBtn setTitle:[repostNum integerValue]==0?@"转发":[repostNum stringValue] forState:UIControlStateNormal];
             [cell.commentNumBtn setTitle:[commentNum integerValue]==0?@"评论":[commentNum stringValue] forState:UIControlStateNormal];
@@ -287,10 +506,19 @@
         [self selectOneShare:indexPath onBtnIndex:12];
         return [RACSignal empty];
     }];
-    
+    */
     return cell;
 }
 
+- (void)onclickBtn:(DMButton*)btn
+{
+    [self selectOneShare:btn.customArgs[0] onBtnIndex:(btn.tag-(2048 -11))==13?12:(btn.tag-(2048 -11))];
+}
+
+- (void)onPicClickBtn:(DMButton*)btn
+{
+    [self gotoPicDetail:btn.tag - 1028 Pics:[self.viewModel  bigPicsWithRow:((NSIndexPath*)btn.customArgs[0]).row]];
+}
 
 
 - (void)gotoPicDetail:(NSInteger)index Pics:(NSArray*)pics
@@ -349,13 +577,20 @@
     
 }
 
-- (void)selectOneShare:(NSIndexPath *)indexPath onBtnIndex:(int)btnIndex
+- (void)selectOneShare:(NSIndexPath *)indexPath onBtnIndex:(NSUInteger)btnIndex
 {
     UIStoryboard* mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     DMShareDetailViewController* modal=[mainStoryboard instantiateViewControllerWithIdentifier:@"DMShareDetailViewController"];
     modal.headNickName = [self.viewModel nickNameWithRow:indexPath.row];
     modal.headUserIcon = [self.viewModel userIconWithRow:indexPath.row];
-    modal.headCreateAtTime = [self.viewModel createTimeWithRow:indexPath.row];
+    if(indexPath.row == 0 && [[NSUserDefaults standardUserDefaults] objectForKey:@"top_idstr"] != nil)
+    {
+        modal.headCreateAtTime = @"刚刚";
+    }
+    else
+    {
+        modal.headCreateAtTime = [self.viewModel createTimeWithRow:indexPath.row];
+    }
     modal.headShareText = [self.viewModel contentWithRow:indexPath.row];
     modal.headSmallPic = [self.viewModel smallPicsWithRow:indexPath.row];
     modal.headBigPic = [self.viewModel bigPicsWithRow:indexPath.row];

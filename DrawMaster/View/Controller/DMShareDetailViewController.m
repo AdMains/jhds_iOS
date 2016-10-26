@@ -8,8 +8,9 @@
 
 #import "DMShareDetailViewController.h"
 #import "DMAPIManager.h"
-#import "DMShareDetailViewModel.h"
+
 #import "DMShareCmTableViewCell.h"
+#import "DMShareInputCommentViewController.h"
 #define MenumBarHeight 50
 
 
@@ -28,7 +29,7 @@
 @property (nonatomic,readwrite,strong) UIView *btnBox;
 @property (nonatomic,readwrite,strong) UIView *lineBox;
 @property (nonatomic,readwrite,strong) MASConstraint *bottomLineLeft;
-@property (nonatomic,readwrite,strong) DMShareDetailViewModel* viewModel;
+@property (nonatomic,readwrite,strong) UIView *tableBootomView;
 
 @end
 
@@ -105,6 +106,17 @@
         
     }
     
+    
+    self.tableBootomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, mScreenWidth, 100)];
+    {
+        UILabel * tip = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, mScreenWidth, 20)];
+        tip.tag = 1024;
+        tip.font = [UIFont systemFontOfSize:14];
+        tip.textColor = mRGBToColor(0xdddddd);
+        tip.textAlignment = NSTextAlignmentCenter;
+        [self.tableBootomView addSubview:tip];
+    }
+    
     self.tableView = [[UITableView alloc] init];
     {
        
@@ -118,6 +130,8 @@
             UIButton * userIcon = [[UIButton alloc] init];
             {
                 [headView addSubview:userIcon];
+                userIcon.layer.cornerRadius = 20;
+                userIcon.clipsToBounds = YES;
                 [userIcon mas_makeConstraints:^(MASConstraintMaker *make) {
                     make.left.mas_equalTo(8);
                     make.top.mas_equalTo(4);
@@ -314,7 +328,7 @@
                 
                 if (self.logined)
                 {
-                    [[[DMAPIManager sharedManager] fetchWeiboNumWithIdstr:self.weiboIdstr] subscribeNext:^(NSArray* x) {
+                    [[self.viewModel fetchWeiboNum] subscribeNext:^(NSArray* x) {
                         
                         [repostBtn setTitle:[NSString stringWithFormat:@"%@%@",@"转发",[[x objectAtIndex:0] stringValue]] forState:UIControlStateNormal];
                         [commentsBtn setTitle:[NSString stringWithFormat:@"%@%@",@"评论",[[x objectAtIndex:1] stringValue]] forState:UIControlStateNormal];
@@ -397,25 +411,170 @@
         
     }
     
-    [[self.viewModel fetchDataWithMore:NO] subscribeNext:^(id x) {
-        @strongify(self)
-        [self.tableView reloadData];
-    } error:^(NSError *error) {
+    UIView *bottomBox = [[UIView alloc] init];
+    {
+        bottomBox.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:bottomBox];
+        [bottomBox mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.right.bottom.mas_equalTo(0);
+            make.height.mas_equalTo(40);
+            
+            
+        }];
+        UIView *topline = [[UIView alloc] init];
+        {
+            topline.backgroundColor = mRGBToColor(0xdddddd);
+            [bottomBox addSubview:topline];
+            [topline mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.left.right.top.mas_equalTo(0);
+                make.height.mas_equalTo(1);
+            }];
+        }
         
-    }];
+        UIView *centerline = [[UIView alloc] init];
+        {
+            centerline.backgroundColor = mRGBToColor(0xdddddd);
+            [bottomBox addSubview:centerline];
+            [centerline mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(10);
+                make.bottom.mas_equalTo(-10);
+                make.centerX.mas_equalTo(0);
+                make.width.mas_equalTo(1);
+            }];
+        }
+        
+        UIButton * left = [[UIButton alloc] init];
+        {
+            [bottomBox addSubview:left];
+            [left setTitle:@"  转发" forState:UIControlStateNormal];
+            left.titleLabel.font = [UIFont systemFontOfSize:14];
+            [left setTitleColor:mRGBToColor(0x555555) forState:UIControlStateNormal];
+            [left setImage:[UIImage imageNamed:@"timeline_icon_retweet"] forState:UIControlStateNormal];
+            [left mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(0);
+                make.bottom.mas_equalTo(0);
+                make.left.mas_equalTo(0);
+                make.width.mas_equalTo(mScreenWidth/2-2);
+            }];
+            
+            left.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+                if (self.logined)
+                {
+                    [self showLoadAlertView:@"正在转发" imageName:nil autoHide:NO];
+                    [[self.viewModel repostWithBody:@"哎呦，不错哦"] subscribeNext:^(NSDictionary* x) {
+                        
+                        if(x ==nil)
+                        {
+                            [self hideLoadAlertView];
+                           [self showLoadAlertView:@"转发失败，请稍后再试" imageName:nil autoHide:YES];
+                        }
+                        else
+                        {
+                            [self hideLoadAlertView];
+                            [self showLoadAlertView:@"转发成功" imageName:nil autoHide:YES];
+                        }
+                    } error:^(NSError *error) {
+                        [self hideLoadAlertView];
+                        [self showLoadAlertView:@"转发失败，请稍后再试" imageName:nil autoHide:YES];
+                    }];
+                }
+                else
+                {
+                    [self showLoadAlertView:@"还没登录，请先登录" imageName:nil autoHide:YES];
+                }
+                return [RACSignal empty];
+            }];
+        }
+        
+        UIButton * right = [[UIButton alloc] init];
+        {
+            [bottomBox addSubview:right];
+            [right setTitle:@"  评论" forState:UIControlStateNormal];
+            right.titleLabel.font = [UIFont systemFontOfSize:14];
+            [right setImage:[UIImage imageNamed:@"timeline_icon_comment"] forState:UIControlStateNormal];
+            [right setTitleColor:mRGBToColor(0x555555) forState:UIControlStateNormal];
+            [right mas_makeConstraints:^(MASConstraintMaker *make) {
+                make.top.mas_equalTo(0);
+                make.bottom.mas_equalTo(0);
+                make.right.mas_equalTo(0);
+                make.width.mas_equalTo(mScreenWidth/2-2);
+            }];
+            
+            right.rac_command = [[RACCommand alloc] initWithSignalBlock:^RACSignal *(id input) {
+                @strongify(self)
+                if (self.logined)
+                {
+                    DMShareInputCommentViewController* modal = [[DMShareInputCommentViewController alloc] init];
+                    modal.viewModel = self.viewModel;
+                    [self.navigationController pushViewController:modal animated:YES];
+                }
+                else
+                {
+                    [self showLoadAlertView:@"还没登录，请先登录" imageName:nil autoHide:YES];
+                }
+                return [RACSignal empty];
+            }];
+
+        }
+
+        
+    }
     
+    
+    [self updateData];
+    
+    [self.tableView addInfiniteScrollingWithActionHandler:^{
+        @strongify(self);
+        [[self.viewModel fetchDataWithMore:YES] subscribeNext:^(id x) {
+            [self.tableView  reloadData];
+            [self.tableView.infiniteScrollingView stopAnimating];
+        } error:^(NSError *error) {
+            [self.tableView.infiniteScrollingView stopAnimating];
+            
+            
+        }];
+
+    }];
+
 
 }
 
+- (void)updateData
+{
+    @weakify(self)
+    [RACObserve(self.viewModel, repostNum) subscribeNext:^(id x) {
+        @strongify(self)
+        if(self.viewModel.weiboNumFetched)
+        {
+            [(UIButton*)[self.btnBox viewWithTag:11] setTitle:[NSString stringWithFormat:@"%@%@",@"转发",[x stringValue]] forState:UIControlStateNormal];
+            
+            [self selectMenum:[self.btnBox viewWithTag:11] ];
+        }
+    }];
+    
+    [RACObserve(self.viewModel, commentNum) subscribeNext:^(id x) {
+        @strongify(self)
+        if(self.viewModel.weiboNumFetched)
+        {
+            [(UIButton*)[self.btnBox viewWithTag:12] setTitle:[NSString stringWithFormat:@"%@%@",@"评论",[x stringValue]] forState:UIControlStateNormal];
+            
+            [self selectMenum:[self.btnBox viewWithTag:12] ];
+        }
+    }];
+    }
+
 - (void)selectMenum:(UIButton*)sender
 {
+    @weakify(self)
     switch (self.view.tag) {
         case 11:
             self.repostOffsety =self.tableView.contentOffset.y;
             
+            
             break;
         case 12:
             self.commentOffsety =self.tableView.contentOffset.y;
+            
             break;
         case 13:
             self.goodOffsety =self.tableView.contentOffset.y;
@@ -441,12 +600,15 @@
                 self.tableView.contentOffset = CGPointMake(self.tableView.contentOffset.x, self.headHeight);
             else
                 self.tableView.contentOffset = CGPointMake(self.tableView.contentOffset.x, self.repostOffsety);
+            
+            [(UILabel*)[self.tableBootomView viewWithTag:1024] setText:self.logined? @"快来转发精彩内容吧":@"您还没有登录，请先返回登录吧"];
             break;
         case 12:
             if(self.commentOffsety<self.headHeight && self.tableView.contentOffset.y>self.headHeight)
                 self.tableView.contentOffset = CGPointMake(self.tableView.contentOffset.x, self.headHeight);
             else
                 self.tableView.contentOffset = CGPointMake(self.tableView.contentOffset.x, self.commentOffsety);
+            [(UILabel*)[self.tableBootomView viewWithTag:1024] setText:self.logined? @"快来发表你的评论吧":@"您还没有登录，请先返回登录吧"];
             break;
         case 13:
             if(self.goodOffsety<self.headHeight && self.tableView.contentOffset.y>self.headHeight)
@@ -458,6 +620,32 @@
             break;
     }
     [self.tableView reloadData];
+    
+    NSInteger  num = [self.viewModel commentNum];
+    if(num == 0)
+    {
+        self.tableView.tableFooterView = self.tableBootomView;
+        
+        if (self.logined)
+        {
+            [[self.viewModel fetchDataWithMore:NO] subscribeNext:^(id x) {
+                @strongify(self)
+                [self.tableView reloadData];
+                if([self.viewModel commentNum] == 0)
+                    self.tableView.tableFooterView = self.tableBootomView;
+                else
+                    self.tableView.tableFooterView = [[UIView alloc] init];
+            } error:^(NSError *error) {
+                
+            }];
+        }
+    }
+    else
+    {
+        self.tableView.tableFooterView = [[UIView alloc] init];
+    }
+    
+    
 }
 
 
@@ -504,7 +692,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DMShareCmTableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([DMShareCmTableViewCell class])];
-    
+    cell.userIcon.layer.cornerRadius = 20;
+    cell.userIcon.clipsToBounds = YES;
     cell.contentText.attributedText = [self.viewModel commentTextWithIndex:indexPath.row];
     [cell.userIcon sd_setImageWithURL:[NSURL URLWithString:[self.viewModel commentUserIconWithIndex:indexPath.row]] forState:UIControlStateNormal placeholderImage:[UIImage imageNamed:@"home_share"]];
     cell.userNickName.textColor = [UIColor orangeColor];
@@ -512,12 +701,12 @@
     cell.createAt.text = [self.viewModel commentTimeWithIndex:indexPath.row];
     cell.contentTextHeight.constant = [self.viewModel commentTextHeightWithIndex:indexPath.row];
 
-    return cell;
+    return cell;                                                                                                                                                                                                                                                                                                                                 
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    return 100;
+    return [self.viewModel commentTextHeightWithIndex:indexPath.row]+50;
 }
 
 

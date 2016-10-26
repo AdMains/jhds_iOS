@@ -10,9 +10,18 @@
 
 @interface DMShareDetailViewModel : RVMViewModel
 @property (nonatomic,readwrite,assign) NSInteger selectIndex;
+@property (nonatomic,readwrite,assign) NSInteger repostNum;
+@property (nonatomic,readwrite,assign) NSInteger commentNum;
+@property (nonatomic,readwrite,assign) NSInteger goodNum;
+@property (nonatomic,readwrite,assign) BOOL weiboNumFetched;;
+
 - (instancetype)initWithWeiboIdstr:(NSString *)idStr;
 
 - (RACSignal*)fetchDataWithMore:(BOOL)more;
+- (RACSignal*)commentWithBody:(NSString*)body;
+- (RACSignal*)repostWithBody:(NSString*)body;
+- (RACSignal*)fetchWeiboNum;
+
 
 - (NSInteger)commentNum;
 - (NSAttributedString *)commentTextWithIndex:(NSInteger)index;
