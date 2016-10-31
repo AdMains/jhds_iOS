@@ -181,19 +181,31 @@
 //                                                       delegate:nil
 //                                              cancelButtonTitle:NSLocalizedString(@"确定", nil)
 //                                              otherButtonTitles:nil];
-        
-        self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
-        [[NSUserDefaults standardUserDefaults] setObject:self.wbtoken forKey:@"DMWeiboAccessToken"];
-        
-        self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
-        [[NSUserDefaults standardUserDefaults] setObject:self.wbCurrentUserID forKey:@"DMWeiboCurrentUserID"];
-        self.wbRefreshToken = [(WBAuthorizeResponse *)response refreshToken];
-        [[NSUserDefaults standardUserDefaults] setObject:self.wbRefreshToken forKey:@"DMWeiboRefreshToken"];
-        self.wbExpirationDate = [(WBAuthorizeResponse *)response expirationDate];
-        [[NSUserDefaults standardUserDefaults] setObject:self.wbExpirationDate forKey:@"DMWeiboExpirationDate"];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSinaLoginNotification object:nil userInfo:nil];
-//        [alert show];
+        if(response.statusCode == WeiboSDKResponseStatusCodeUserCancel)
+        {
+            UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
+            UIViewController *vc = [navigationControll childViewControllers].lastObject;
+            [vc showLoadAlertView:@"您已经取消登录" imageName:nil autoHide:YES];
+        }
+        else
+        {
+            self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
+            [[NSUserDefaults standardUserDefaults] setObject:self.wbtoken forKey:@"DMWeiboAccessToken"];
+            
+            self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
+            [[NSUserDefaults standardUserDefaults] setObject:self.wbCurrentUserID forKey:@"DMWeiboCurrentUserID"];
+            self.wbRefreshToken = [(WBAuthorizeResponse *)response refreshToken];
+            [[NSUserDefaults standardUserDefaults] setObject:self.wbRefreshToken forKey:@"DMWeiboRefreshToken"];
+            self.wbExpirationDate = [(WBAuthorizeResponse *)response expirationDate];
+            [[NSUserDefaults standardUserDefaults] setObject:self.wbExpirationDate forKey:@"DMWeiboExpirationDate"];
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSinaLoginNotification object:nil userInfo:nil];
+
+            UINavigationController * navigationControll =(UINavigationController *)self.window.rootViewController;
+            UIViewController *vc = [navigationControll childViewControllers].lastObject;
+            [vc showLoadAlertView:@"登录成功" imageName:nil autoHide:YES];
+        }
+       //        [alert show];
     }
 
     

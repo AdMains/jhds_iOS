@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="OO2-TL-8HX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="OO2-TL-8HX">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Splash View Controller-->
@@ -14,9 +15,9 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" id="N49-gG-vsE"/>
                 </viewController>
@@ -33,15 +34,15 @@
                         <viewControllerLayoutGuide type="bottom" id="gLD-t5-rLP"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="mVP-IN-ocy">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0X5-ZK-rs3" customClass="QGCollectionMenu">
-                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0X5-ZK-rs3" customClass="QGCollectionMenu">
+                                <frame key="frameInset" minY="20" width="600" height="531"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0X5-ZK-rs3" firstAttribute="leading" secondItem="mVP-IN-ocy" secondAttribute="leading" id="IuI-y2-RIy"/>
                             <constraint firstItem="gLD-t5-rLP" firstAttribute="top" secondItem="0X5-ZK-rs3" secondAttribute="bottom" id="bAB-QS-SVn"/>
@@ -67,19 +68,19 @@
                         <viewControllerLayoutGuide type="bottom" id="kye-7H-A2c"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ae6-DV-M4x">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="yjl-1P-BIK">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="yjl-1P-BIK">
+                                <frame key="frameInset" width="600" height="551"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="dataSource" destination="9UH-cV-OVb" id="oGC-vZ-cQO"/>
                                     <outlet property="delegate" destination="9UH-cV-OVb" id="UsE-qG-JIT"/>
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="yjl-1P-BIK" firstAttribute="top" secondItem="ae6-DV-M4x" secondAttribute="top" id="2bS-qw-ftp"/>
                             <constraint firstItem="yjl-1P-BIK" firstAttribute="leading" secondItem="ae6-DV-M4x" secondAttribute="leading" id="8av-Ab-dWG"/>
@@ -105,18 +106,18 @@
                         <viewControllerLayoutGuide type="bottom" id="qeB-UJ-V1T"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4jL-8F-mwJ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LN3-jA-piB">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LN3-jA-piB">
+                                <frame key="frameInset" width="600" height="600"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aCo-rT-Gmp" customClass="DMDrawView">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aCo-rT-Gmp" customClass="DMDrawView">
+                                        <frame key="frameInset" width="600" height="600"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="aCo-rT-Gmp" secondAttribute="trailing" id="0Tx-a9-w9i"/>
                                     <constraint firstItem="aCo-rT-Gmp" firstAttribute="leading" secondItem="LN3-jA-piB" secondAttribute="leading" id="Wzf-CC-iIx"/>
@@ -124,48 +125,47 @@
                                     <constraint firstItem="aCo-rT-Gmp" firstAttribute="top" secondItem="LN3-jA-piB" secondAttribute="top" id="uhw-xI-yx1"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T7a-MX-8Ok">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T7a-MX-8Ok">
+                                <frame key="frameInset" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LY4-W0-Sst">
-                                <rect key="frame" x="16" y="545" width="45" height="45"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LY4-W0-Sst">
+                                <frame key="frameInset" minX="16" minY="545" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="Ulk-Yi-kx2"/>
                                     <constraint firstAttribute="height" constant="45" id="gnL-lC-sAW"/>
                                 </constraints>
                                 <state key="normal" title="＋">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ufg-5M-2CQ">
-                                <rect key="frame" x="539" y="545" width="45" height="45"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ufg-5M-2CQ">
+                                <frame key="frameInset" minX="539" minY="545" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="gN9-nH-B11"/>
                                     <constraint firstAttribute="width" constant="45" id="qI2-Nf-JOl"/>
                                 </constraints>
                                 <state key="normal" title="－">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y0p-lH-LMr">
-                                <rect key="frame" x="16" y="36" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Lin-Wo-VwC"/>
                                     <constraint firstAttribute="width" constant="45" id="dKr-dH-TAC"/>
                                 </constraints>
                                 <state key="normal" image="back"/>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9HZ-dX-T7l" customClass="DMBrushView">
-                                <rect key="frame" x="539" y="36" width="45" height="45"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9HZ-dX-T7l" customClass="DMBrushView">
+                                <frame key="frameInset" minX="539" minY="36" width="45" height="45"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="9Fr-WZ-mcJ"/>
                                     <constraint firstAttribute="height" constant="45" id="NTR-Cd-ef2"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="LN3-jA-piB" secondAttribute="trailing" id="0Uh-Zy-HCe"/>
                             <constraint firstItem="9HZ-dX-T7l" firstAttribute="top" secondItem="K0u-qG-5wq" secondAttribute="bottom" constant="16" id="0jC-lW-5dt"/>
@@ -208,9 +208,9 @@
                         <viewControllerLayoutGuide type="bottom" id="LZg-sy-QZw"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="csH-k1-Zkn">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="3Ae-CC-Ago"/>
                 </viewController>
@@ -227,9 +227,9 @@
                         <viewControllerLayoutGuide type="bottom" id="cR5-iS-6WK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8qq-gu-LIz">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xld-K5-mIl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -245,26 +245,25 @@
                         <viewControllerLayoutGuide type="bottom" id="Hgo-SC-fRb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="N3C-YC-SyQ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IiQ-lU-aiR">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IiQ-lU-aiR">
+                                <frame key="frameInset" width="600" height="600"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oE7-Zm-vTN" customClass="DMDrawView">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oE7-Zm-vTN" customClass="DMDrawView">
+                                        <frame key="frameInset" width="600" height="600"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N90-e0-lXS" customClass="DMBigImgBoxView">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="600" id="meR-8e-SPw"/>
                                             <constraint firstAttribute="height" constant="600" id="nuJ-g0-r4r"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="oE7-Zm-vTN" firstAttribute="top" secondItem="IiQ-lU-aiR" secondAttribute="top" id="9lC-X2-ILy"/>
                                     <constraint firstAttribute="trailing" secondItem="oE7-Zm-vTN" secondAttribute="trailing" id="GkN-Of-dk6"/>
@@ -274,48 +273,47 @@
                                     <constraint firstItem="oE7-Zm-vTN" firstAttribute="leading" secondItem="IiQ-lU-aiR" secondAttribute="leading" id="s19-sP-gHy"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EsR-zv-BNV">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EsR-zv-BNV">
+                                <frame key="frameInset" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TPa-LZ-qZR">
-                                <rect key="frame" x="8" y="22" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="WMb-p0-V2L"/>
                                     <constraint firstAttribute="width" constant="45" id="uOn-7B-YGO"/>
                                 </constraints>
                                 <state key="normal" image="back"/>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hpn-3m-7dx">
-                                <rect key="frame" x="16" y="535" width="45" height="45"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hpn-3m-7dx">
+                                <frame key="frameInset" minX="16" minY="535" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="45" id="8mi-kF-U3S"/>
                                     <constraint firstAttribute="height" constant="45" id="WxW-lQ-aeZ"/>
                                 </constraints>
                                 <state key="normal" title="＋">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRP-gC-ffC">
-                                <rect key="frame" x="539" y="535" width="45" height="45"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oRP-gC-ffC">
+                                <frame key="frameInset" minX="539" minY="535" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="3Iq-3E-tWT"/>
                                     <constraint firstAttribute="width" constant="45" id="98c-rr-D1D"/>
                                 </constraints>
                                 <state key="normal" title="－">
-                                    <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tH7-RV-yT1" customClass="DMBrushView">
-                                <rect key="frame" x="547" y="22" width="45" height="45"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tH7-RV-yT1" customClass="DMBrushView">
+                                <frame key="frameInset" minX="547" minY="22" width="45" height="45"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="cT2-O2-aQG"/>
                                     <constraint firstAttribute="width" constant="45" id="xYO-Tc-Hfu"/>
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="Hgo-SC-fRb" firstAttribute="top" secondItem="Hpn-3m-7dx" secondAttribute="bottom" constant="20" id="1cj-Q0-XVL"/>
                             <constraint firstItem="EsR-zv-BNV" firstAttribute="leading" secondItem="N3C-YC-SyQ" secondAttribute="leading" id="4KH-GP-U1g"/>
@@ -373,15 +371,15 @@
                         <viewControllerLayoutGuide type="bottom" id="yyw-wF-jmV"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="xDx-dS-tdi">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cJ6-vv-NnW" customClass="QGCollectionMenu">
-                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cJ6-vv-NnW" customClass="QGCollectionMenu">
+                                <frame key="frameInset" minY="20" width="600" height="531"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="yyw-wF-jmV" firstAttribute="top" secondItem="cJ6-vv-NnW" secondAttribute="bottom" id="WhX-Nm-rwc"/>
                             <constraint firstItem="cJ6-vv-NnW" firstAttribute="top" secondItem="O3X-9r-dH5" secondAttribute="bottom" id="lj9-s9-H8u"/>
@@ -405,7 +403,7 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" id="rX6-v5-T7y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="zj2-tw-uZ8" kind="relationship" relationship="viewControllers" id="bp7-An-SKr"/>

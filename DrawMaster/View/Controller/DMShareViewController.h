@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "DMWithCanvasBtnViewController.h"
 
-
-@interface DMShareViewController : UIViewController
+@interface DMShareViewController : DMWithCanvasBtnViewController
 
 @end

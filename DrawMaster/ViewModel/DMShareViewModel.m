@@ -45,6 +45,7 @@
                 if(!more)
                 {
                     [self.sharesAry removeAllObjects];
+                    [self.dataDic removeAllObjects];
                     if([[NSUserDefaults standardUserDefaults] objectForKey:@"top_idstr"])
                     {
                         DMShareModel * share = [[DMShareModel alloc] init];

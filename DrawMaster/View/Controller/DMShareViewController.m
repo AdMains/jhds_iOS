@@ -27,7 +27,7 @@
 
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];//
     self.viewModel = [[DMShareViewModel alloc] init];
@@ -158,12 +158,14 @@
     [self.collecttionView triggerPullToRefresh];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didSinaLogin:) name:kSinaLoginNotification object:nil];
+    [super viewDidLoad];
 }
 
 - (void)didSinaLogin:(NSNotification*)sender
 {
+    [self.cellHeightCache removeAllObjects];
     [self.collecttionView reloadData];
-    
+    self.titleLabel.text = @"获取昵称中....";
     [WBHttpRequest requestForUserProfile:[[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboCurrentUserID"]  withAccessToken:[[NSUserDefaults standardUserDefaults] objectForKey:@"DMWeiboAccessToken"]  andOtherProperties:nil queue:nil withCompletionHandler:^(WBHttpRequest *httpRequest, id result, NSError *error) {
         
         if(result )
@@ -172,6 +174,10 @@
             self.titleLabel.text = u.screenName;
             [[NSUserDefaults standardUserDefaults] setObject:self.titleLabel.text forKey:@"DMWeiboNickName"];
             
+        }
+        else
+        {
+            self.titleLabel.text = @"获取昵称失败";
         }
         
     }];
@@ -200,6 +206,7 @@
 
 - (void)ssoButtonPressed
 {
+    
     WBAuthorizeRequest *request = [WBAuthorizeRequest request];
     request.redirectURI = @"https://api.weibo.com/oauth2/default.html";
     request.scope = @"all";
