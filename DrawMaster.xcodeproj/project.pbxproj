@@ -587,7 +587,7 @@
 					4B61F9301D197C0000AFF155 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = WUT8C6U8X9;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -855,10 +855,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: ruquan zhang (M4Z2375ZX6)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ruquan zhang (WUT8C6U8X9)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = WUT8C6U8X9;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -888,8 +888,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: ruquan zhang (M4Z2375ZX6)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: ruquan zhang (WUT8C6U8X9)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = WUT8C6U8X9;
 				ENABLE_BITCODE = NO;
@@ -910,8 +910,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.quange.DrawMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "e72d1ee5-56b2-4ed6-a085-7b73213ce1bc";
+				PROVISIONING_PROFILE_SPECIFIER = fabu;
 			};
 			name = Release;
 		};
