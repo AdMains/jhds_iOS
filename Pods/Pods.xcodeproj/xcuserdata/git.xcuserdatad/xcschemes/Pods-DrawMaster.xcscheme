@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '1CCE55E5EC065A8413C49867184FCF1C'
+               BlueprintIdentifier = 'B30C45ABD646F1CDE9CFF56C2267DC00'
                BlueprintName = 'Pods-DrawMaster'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-DrawMaster.a'>

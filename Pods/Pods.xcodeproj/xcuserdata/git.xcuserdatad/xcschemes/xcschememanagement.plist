@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>KYAnimatedPageControl.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -34,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>QGCollectionMenu.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>QGOCCategory.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -45,6 +55,11 @@
 			<false/>
 		</dict>
 		<key>ReactiveViewModel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -72,32 +87,32 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0F5009BAFD06830E6D2230131009FCE2</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>17392667E38E4938ACA525E988BB433B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>19AE7FA812B4EC87DA222F38C2C64FCE</key>
+		<key>191F57DDB9A0703377927CB6ACD7857B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1CCE55E5EC065A8413C49867184FCF1C</key>
+		<key>32880CB3CEA688B7A6CE417A5CD0F0C3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>31301365FD6ACFF09DA753BA47019621</key>
+		<key>374508A83670F65E3D9FCDE991F2050A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3E96F3D6B8AB3D40826DB2E04DDD269F</key>
+		<key>38B595F38283570BDBAA343280F94617</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3F8EA6FA2CB34D21E5A8EC0E315FD464</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -117,17 +132,32 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5423B46AC3E6DD02CBA29586D43D83D8</key>
+		<key>8309E46BCA7A1FFE4856E979EB1F9C6A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>73C90D9B5BAC48B1BED552F8A1BCCF24</key>
+		<key>B30C45ABD646F1CDE9CFF56C2267DC00</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AD56727CFDE377FE0C6B084915BE852E</key>
+		<key>C51EA91E6279D206075A133A50FE1A92</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C6B105D1B0DEB7DFD38D2986AB3BFD51</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F9C86A2A96DB9D657E56EEA016F8A697</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FA0163707BD84662CE86863B194FA29B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

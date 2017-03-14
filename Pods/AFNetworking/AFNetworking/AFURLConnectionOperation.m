@@ -490,6 +490,7 @@ static inline BOOL AFStateTransitionIsValid(AFOperationState fromState, AFOperat
 - (void)cancel {
     [self.lock lock];
     if (![self isFinished] && ![self isCancelled]) {
+        NSLog(@"－－－－－－取消请求－－－－－－－－－－");
         [super cancel];
 
         if ([self isExecuting]) {

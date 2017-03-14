@@ -10,12 +10,16 @@ def pods
 	pod 'Masonry'
 	pod 'QGOCCategory', git: 'https://github.com/QuanGe/QGOCCategory'
 	pod 'SVPullToRefresh', git: 'https://github.com/QuanGe/SVPullToRefresh'
+    pod 'QGCollectionMenu', :git => 'https://github.com/QuanGe/QGCollectionMenu.git'
+    pod 'WeiboSDK', :git => 'https://github.com/sinaweibosdk/weibo_ios_sdk.git'
 	pod 'Mantle', '~> 1.5'
 	pod 'pop'
 	pod 'Shimmer'
+    pod 'SDWebImage', '~>3.8'
 	pod 'FXBlurView'
 	pod 'Fabric'
 	pod 'Crashlytics'
+    pod 'KYAnimatedPageControl', '~> 1.0.5'
 end
 target 'DrawMaster' do
   pods
