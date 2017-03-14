@@ -1,5 +1,7 @@
 ##联系方式
 
+email: zhang_ru_quan@163.com
+
 QQ: 569979266
 
 TEL: 15210774970
